@@ -1,1 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
+.page-wrapper{
+  overflow:hidden;
+  background:#e5e5e5;
+  padding-bottom:8vh
+}
+
+.page-container{
+  background:#e5e5e5;
+  padding-left:200px
+}
+
+.main-content{
+  padding-top:116px;
+  min-height:100vh
+}
+
+.md-pills .nav-link.active {
+  color: #fff;
+  background-color: #616161;
+}
+button.close {
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  padding-right: 1rem;
+  padding-top: .6rem;
+}
+
+.pills-blue-teal .nav-item .nav-link.active {
+  background-color: #4fc3f7;
+  -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+  animation-name: example;
+  animation-duration: 4s;
+}
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+  from {background-color: #4fc3f7;}
+  to {background-color: #009688;}
+}
+
+/* Standard syntax */
+@keyframes example {
+  from {background-color: #4fc3f7;}
+  to {background-color: #009688;}
+}
