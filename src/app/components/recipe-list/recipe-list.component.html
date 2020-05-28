@@ -5,7 +5,7 @@
   <section>
 
     <!--Tab panels-->
-    <div class="tab-content mb-5">
+    <div class="tab-content mb-3 mt-2">
 
       <!--Panel 1-->
       <div class="tab-pane fade show in active" id="panel31" role="tabpanel">
@@ -48,5 +48,21 @@
   <div *ngIf="recipes?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
     Brak receptur.
   </div>
+
+  <!-- Pagination -->
+  <nav class="mb-5">
+    <ul class="pagination pg-blue justify-content-center">
+      <li class="page-item disabled">
+        <a class="page-link" tabindex="-1">Previous</a>
+      </li>
+      <li class="page-item"><a class="page-link">1</a></li>
+      <li class="page-item"><a class="page-link">2</a></li>
+      <li class="page-item"><a class="page-link">3</a></li>
+      <li class="page-item">
+        <a class="page-link">Next</a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.Pagination -->
 
 </div>
