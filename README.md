@@ -12,8 +12,10 @@ Current progress: <br>
 - loaded example recipes on main page comming form h2 embedded database on Spring Boot <br>
 - added recipe details view
 
-Screens:
+Main Page View:
 
 ![alt text](https://i.imgur.com/BqdWc6M.png?1)
+
+Detail View:
 
 ![alt text](https://i.imgur.com/7kcYcYt.png?1)
