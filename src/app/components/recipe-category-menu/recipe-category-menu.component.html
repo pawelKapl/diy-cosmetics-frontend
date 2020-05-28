@@ -1,0 +1,20 @@
+<!--First row-->
+<div class="row">
+
+  <!--First column-->
+  <div class="col-12">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-pills flex-center flex-wrap mb-5 mt-3" role="tablist">
+      <li *ngFor="let tempRecipeCategory of recipeCategoryList" class="nav-item">
+        <a routerLink="/recipeCategory/{{tempRecipeCategory.id}}" class="nav-link font-weight-bold text-uppercase text-black-50"
+           data-toggle="tab" role="tab">{{tempRecipeCategory.categoryName}}</a>
+      </li>
+    </ul>
+
+  </div>
+  <!--First column-->
+
+</div>
+<!--First row-->
+

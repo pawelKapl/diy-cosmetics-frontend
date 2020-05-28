@@ -1,34 +1,8 @@
-<div class="container my-5">
+<div class="container my-2">
+
+  <app-recipe-category-menu></app-recipe-category-menu>
 
   <section>
-
-    <!--First row-->
-    <div class="row">
-
-      <!--First column-->
-      <div class="col-12">
-
-        <!-- Nav tabs -->
-        <ul class="nav nav-pills flex-center flex-wrap mx-0 mb-5" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active font-weight-bold text-uppercase mdb-color lighten-2" data-toggle="tab" href="#panel31" role="tab">Wszystkie</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link font-weight-bold text-uppercase black-text" data-toggle="tab" href="#panel32" role="tab">Do Ciała</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link font-weight-bold text-uppercase black-text" data-toggle="tab" href="#panel33" role="tab">Do Włosów</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link font-weight-bold text-uppercase black-text" data-toggle="tab" href="#panel33" role="tab">Inne</a>
-          </li>
-        </ul>
-
-      </div>
-      <!--First column-->
-
-    </div>
-    <!--First row-->
 
     <!--Tab panels-->
     <div class="tab-content mb-5">
@@ -46,7 +20,7 @@
             <a class="card hoverable mb-4" data-toggle="modal" data-target="#basicExampleModal">
 
               <!-- Card image -->
-              <img class="card-img-top" src="{{recipe.imageUrl}}" alt="Card image cap">
+              <img routerLink="/recipe/{{recipe.id}}" class="card-img-top" src="{{recipe.imageUrl}}" alt="Card image cap">
 
               <!-- Card content -->
               <div class="card-body">
@@ -57,9 +31,11 @@
 
 
               </div>
-
             </a>
             <!-- Card -->
+
+
+
           </div>
         </div>
       </div>
@@ -68,5 +44,9 @@
 
   </section>
   <!-- Section -->
+
+  <div *ngIf="recipes?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
+    Brak receptur.
+  </div>
 
 </div>

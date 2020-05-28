@@ -1,7 +1,9 @@
 import {Difficulty} from './difficulty.enum';
 
 export class Recipe {
+  id: number;
   name: string;
+  intro: string;
   description: string;
   difficulty: Difficulty;
   prepTime: number;

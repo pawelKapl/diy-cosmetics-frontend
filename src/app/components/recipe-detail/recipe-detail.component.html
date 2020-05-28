@@ -1,0 +1,105 @@
+<div class="container my-5">
+
+
+  <!--Section: Content-->
+  <section class="magazine-section dark-grey-text">
+
+    <!-- Section heading -->
+    <h3 class="text-center font-weight-bold mb-4 pb-2">{{recipe.name}}</h3>
+    <!-- Section description -->
+    <p class="text-center w-responsive mx-auto ">{{recipe.intro}}</p>
+    <p class="text-center w-responsive mx-auto mb-5">trudność:
+      <span class="font-weight-bold dark-grey-text">{{recipe.difficulty}}</span></p>
+
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-lg-6 col-md-12 mb-4">
+
+        <!-- Featured news -->
+        <div class="single-news">
+
+          <!-- Image -->
+          <div class="view overlay rounded z-depth-1-half mb-4">
+            <img class="img-fluid" src="{{recipe.imageUrl}}" alt="Sample image">
+            <a>
+              <div class="mask rgba-white-slight"></div>
+            </a>
+          </div>
+
+          <!-- Data -->
+          <div class="news-data d-flex justify-content-between">
+            <div class="deep-orange-text">
+              <h6 class="font-weight-bold"><i class="fas fa-clock pr-2"></i>{{recipe.prepTime}} min</h6>
+            </div>
+            <p class="font-weight-bold dark-grey-text"><i class="fas fa-clock-o pr-2"></i>{{recipe.dateUpdated}}</p>
+          </div>
+
+          <!-- Excerpt -->
+          <h3 class="font-weight-bold dark-grey-text mb-3"><a>O kosmetyku słów kilka...</a></h3>
+          <p class="dark-grey-text">{{recipe.description}}</p>
+
+        </div>
+        <!-- Featured news -->
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-lg-6 col-md-12 mb-4">
+      <p class="font-weight-bold dark-grey-text">Lista składników (100ml produktu):</p>
+        <!-- Small news -->
+        <div *ngFor="let tempIngredient of recipeIngredientQuantities" class="single-news mb-4">
+
+          <!-- Grid row -->
+          <div class="row">
+
+            <!-- Grid column -->
+            <div class="col-md-3">
+
+              <!--Image-->
+              <div class="view overlay rounded z-depth-1 mb-4">
+                <img class="img-fluid" src="{{tempIngredient.ingredient.imageUrl}}" alt="Sample image">
+                <a>
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-9">
+
+              <!-- Excerpt -->
+              <p class="font-weight-bold dark-grey-text">{{tempIngredient.ingredient.name}}</p>
+              <div class="d-flex justify-content-between">
+                <div class="col-11 text-truncate pl-0 mb-3">
+                  <a href="#!" class="dark-grey-text">Potrzebna ilość: <span class="font-weight-bold dark-grey-text">
+                    {{tempIngredient.amount}} {{tempIngredient.unitOfMeasure.uom}}</span></a>
+                </div>
+                <a><i class="fas fa-angle-double-right"></i></a>
+              </div>
+
+            </div>
+            <!-- Grid column -->
+
+          </div>
+          <!-- Grid row -->
+
+        </div>
+        <!-- Small news -->
+
+
+      </div>
+      <!--Grid column-->
+
+    </div>
+    <!-- Grid row -->
+
+  </section>
+  <!--Section: Content-->
+
+
+</div>
