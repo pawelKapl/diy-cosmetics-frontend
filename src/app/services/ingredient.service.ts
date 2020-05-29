@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {IngredientQuantity} from '../models/ingredient-quantity';
-import {Recipe} from '../models/recipe';
 import {map} from 'rxjs/operators';
 
 @Injectable({

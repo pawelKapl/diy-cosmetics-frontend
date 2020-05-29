@@ -18,4 +18,4 @@ Main Page View(in progress):
 
 Detail View(in progress):
 
-![alt text](https://i.imgur.com/b6BrOWZ.png?1)
+![alt text](https://i.imgur.com/TDVhETK.png?1)

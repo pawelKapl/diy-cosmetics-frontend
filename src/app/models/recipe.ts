@@ -1,4 +1,6 @@
 import {Difficulty} from './difficulty.enum';
+import {Tool} from './tool';
+import {Step} from './step';
 
 export class Recipe {
   id: number;
@@ -10,5 +12,7 @@ export class Recipe {
   dateCreated: Date;
   dateUpdated: Date;
   imageUrl: string;
+  tools: Tool[];
+  steps: Step[];
 
 }

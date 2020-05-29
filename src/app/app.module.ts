@@ -11,6 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { RecipeDetailComponent } from './components/recipe-detail/recipe-detail.component';
 import {IngredientService} from './services/ingredient.service';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   {path: 'recipeCategory/:id', component: RecipeListComponent},
@@ -32,7 +33,8 @@ const routes: Routes = [
         BrowserModule,
         HttpClientModule,
         MDBBootstrapModule.forRoot(),
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes),
+        NgbModule
     ],
   providers: [RecipeService, IngredientService],
   bootstrap: [AppComponent]

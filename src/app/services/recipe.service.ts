@@ -22,10 +22,19 @@ export class RecipeService {
     );
   }
 
-  getFullRecipeList(): Observable<Recipe[]> {
-    return this.httpClient.get<GetResponseRecipes>(`${this.baseUrl}?size=6`).pipe(
-      map(response => response._embedded.recipes)
-    );
+  getRecipeListByCategoryPaginate(thePage: number,
+                                  thePageSize: number,
+                                  categoryId: number): Observable<GetResponseRecipes> {
+    const searchUrl = `${this.baseUrl}/search/findByCategoriesId?id=${categoryId}`
+                      + `&size=${thePageSize}&page=${thePage}`;
+    return this.httpClient.get<GetResponseRecipes>(searchUrl);
+  }
+
+  getFullRecipeListPaginate(thePage: number,
+                            thePageSize: number): Observable<GetResponseRecipes> {
+    const recipesUrl = `${this.baseUrl}?size=${thePageSize}&page=${thePage}`;
+    return this.httpClient
+                .get<GetResponseRecipes>(recipesUrl);
   }
 
   getRecipeSearchResults(query: string): Observable<Recipe[]> {
@@ -49,6 +58,12 @@ export class RecipeService {
 interface GetResponseRecipes {
   _embedded: {
     recipes: Recipe[];
+  },
+  page: {
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
   };
 }
 

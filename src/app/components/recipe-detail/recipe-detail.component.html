@@ -5,17 +5,17 @@
   <section class="magazine-section dark-grey-text">
 
     <!-- Section heading -->
-    <h3 class="text-center font-weight-bold mb-4 pb-2">{{recipe.name}}</h3>
-    <!-- Section description -->
-    <p class="text-center w-responsive mx-auto ">{{recipe.intro}}</p>
-    <p class="text-center w-responsive mx-auto mb-5">trudność:
-      <span class="font-weight-bold dark-grey-text">{{recipe.difficulty}}</span></p>
+    <h3 class="font-weight-bold text-center dark-grey-text pb-2">{{recipe.name}}</h3>
+    <hr class="w-header my-4">
+    <p class="lead text-center text-muted pt-2 mb-5">{{recipe.intro}}</p>
+<!--    <p class="text-center w-responsive mx-auto mb-5">trudność:-->
+<!--      <span class="font-weight-bold dark-grey-text">{{recipe.difficulty}}</span></p>-->
 
     <!-- Grid row -->
     <div class="row">
 
       <!-- Grid column -->
-      <div class="col-lg-6 col-md-12 mb-4">
+      <div class="col-lg-7 col-md-12 mb-4">
 
         <!-- Featured news -->
         <div class="single-news">
@@ -46,10 +46,11 @@
       </div>
       <!-- Grid column -->
 
+
       <!-- Grid column -->
-      <div class="col-lg-6 col-md-12 mb-4">
+      <div class="col-lg-5 col-md-12 mb-4">
       <p class="font-weight-bold dark-grey-text">Lista składników (100ml produktu):</p>
-        <!-- Small news -->
+        <!-- Ingredients -->
         <div *ngFor="let tempIngredient of recipeIngredientQuantities" class="single-news mb-4">
 
           <!-- Grid row -->
@@ -89,7 +90,34 @@
           <!-- Grid row -->
 
         </div>
-        <!-- Small news -->
+        <!-- /.Ingredients -->
+        <br><br>
+        <p class="font-weight-bold dark-grey-text">Lista przydatnego wyposażenia:</p>
+        <!-- Tools -->
+        <div class="single-news mb-4">
+
+          <!-- Grid row -->
+          <div class="row">
+            <div class="col-md-12">
+
+              <!-- Excerpt -->
+              <ul class="list-group list-group-flush">
+                <li *ngFor="let tempTool of recipe.tools" class="list-group-item">
+                  <p style="display: inline;" class="fas fa-arrow-right form-inline"></p>
+                  <p style="display: inline;" class="font-weight-bold dark-grey-text ">&nbsp; {{tempTool.name}}</p>
+                  <p style="text-indent: 23px;">{{tempTool.description}}</p>
+                </li>
+              </ul>
+
+            </div>
+            <!-- Grid column -->
+
+          </div>
+          <!-- Grid row -->
+
+        </div>
+
+        <!-- /.Tools -->
 
 
       </div>
@@ -97,6 +125,44 @@
 
     </div>
     <!-- Grid row -->
+
+    <!-- Steps Section -->
+    <div class="container my-5 pt-5 pb-3 px-5">
+
+      <!-- Section -->
+      <section>
+
+        <h3 class="font-weight-bold text-center dark-grey-text pb-2">Instrukcja przygotowania</h3>
+        <hr class="w-header my-4">
+        <p class="lead text-center text-muted pt-2 mb-5">Postępuj zgodnie z poniższymi wskazówkami by uzyskać najlepszy rezultat.</p>
+
+        <div class="row align-items-center">
+
+          <div class="col-lg-12 mb-4">
+
+            <ol class="step pl-0">
+              <li *ngFor="let tempStep of recipe.steps" class="step-element pb-0">
+                <div class="step-number">
+                  <span class="number">{{recipe.steps.indexOf(tempStep)+1}}</span>
+                </div>
+                <div class="step-excerpt">
+                  <h6 class="font-weight-bold dark-grey-text mb-3">{{tempStep.name}}</h6>
+                  <p class="text-muted">{{tempStep.detail}}</p>
+                </div>
+              </li>
+            </ol>
+
+          </div>
+
+        </div>
+
+      </section>
+      <!-- Section -->
+
+    </div>
+
+
+    <!-- /.Steps Section -->
 
   </section>
   <!--Section: Content-->
