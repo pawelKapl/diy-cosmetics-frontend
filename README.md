@@ -9,7 +9,7 @@ Backend: Spring Boot - repo: https://github.com/darkonion/diy-cosmetics-database
 
 Current progress: <br>
 - initial main page mdbootstrap layout <br>
-- loaded example recipes on main page comming form h2 embedded database on Spring Boot <br>
+- loaded example recipes on the main page comming from h2 embedded database on Spring Boot <br>
 - added recipe details view
 - pagination support
 
