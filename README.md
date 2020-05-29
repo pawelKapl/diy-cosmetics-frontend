@@ -11,6 +11,7 @@ Current progress: <br>
 - initial main page mdbootstrap layout <br>
 - loaded example recipes on main page comming form h2 embedded database on Spring Boot <br>
 - added recipe details view
+- pagination support
 
 Main Page View(in progress):
 
@@ -18,4 +19,9 @@ Main Page View(in progress):
 
 Detail View(in progress):
 
+![alt text](https://i.imgur.com/VPjgAJV.png?1)
+
+Detail View(in progress):
+
 ![alt text](https://i.imgur.com/TDVhETK.png?1)
+
