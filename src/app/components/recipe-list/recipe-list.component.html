@@ -48,11 +48,14 @@
   </div>
 
 </div>
-<div *ngIf="theTotalElements > 6" class="pagination pg-blue-grey d-flex justify-content-center">
-  <ngb-pagination class="" [(page)]="thePageNumber"
-                    [pageSize]="thePageSize"
-                    [collectionSize]="theTotalElements"
-                    (pageChange)="getRecipeList()">
-  </ngb-pagination>
+<div>
+  <div *ngIf="theTotalElements > 6" class="pagination pg-blue-grey d-flex justify-content-center">
+    <ngb-pagination class="" [(page)]="thePageNumber"
+                      [pageSize]="thePageSize"
+                      [collectionSize]="theTotalElements"
+                      (pageChange)="getRecipeList()">
+    </ngb-pagination>
+  </div>
 </div>
+
 
