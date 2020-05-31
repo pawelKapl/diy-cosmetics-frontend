@@ -12,8 +12,11 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { RecipeDetailComponent } from './components/recipe-detail/recipe-detail.component';
 import {IngredientService} from './services/ingredient.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { IngredientListComponent } from './components/ingredient-list/ingredient-list.component';
+
 
 const routes: Routes = [
+  {path: 'ingredients', component: IngredientListComponent},
   {path: 'recipeCategory/:id', component: RecipeListComponent},
   {path: 'recipeCategory', component: RecipeListComponent},
   {path: 'search/:query', component: RecipeListComponent},
@@ -27,15 +30,16 @@ const routes: Routes = [
     RecipeListComponent,
     RecipeCategoryMenuComponent,
     SearchBarComponent,
-    RecipeDetailComponent
+    RecipeDetailComponent,
+    IngredientListComponent,
   ],
     imports: [
         BrowserModule,
         HttpClientModule,
         MDBBootstrapModule.forRoot(),
         RouterModule.forRoot(routes),
-        NgbModule
-    ],
+        NgbModule,
+  ],
   providers: [RecipeService, IngredientService],
   bootstrap: [AppComponent]
 })

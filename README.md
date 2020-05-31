@@ -12,6 +12,7 @@ Current progress: <br>
 - loaded example recipes on the main page comming from h2 embedded database on Spring Boot <br>
 - added recipe details view
 - pagination support
+- added ingredients list page view and service
 
 Main Page View(in progress):
 
@@ -25,3 +26,6 @@ Detail View(in progress):
 
 ![alt text](https://i.imgur.com/TDVhETK.png?1)
 
+Ingredients view(in progress):
+
+![alt text](https://i.imgur.com/Oo2tocl.png?1) 
