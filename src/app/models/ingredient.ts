@@ -1,4 +1,5 @@
 export class Ingredient {
+  id: number;
   name: string;
   latinName: string;
   description: string;

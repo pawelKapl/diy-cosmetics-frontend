@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Ingredient} from '../../models/ingredient';
 import {IngredientService} from '../../services/ingredient.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-ingredient-list',
@@ -16,15 +17,29 @@ export class IngredientListComponent implements OnInit {
   theTotalElements = 0;
   order = 'asc';
 
-  constructor(private ingredientService: IngredientService) { }
+  constructor(private ingredientService: IngredientService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getIngredients();
+    this.route.paramMap.subscribe(() => this.getIngredients());
   }
 
   getIngredients() {
-    this.ingredientService.getFullIngredientList(this.thePageNumber - 1, this.thePageSize, this.order)
-                          .subscribe(this.processResults());
+    let id: number = +this.route.snapshot.paramMap.get('id');
+
+    if (id > 0) {
+
+      console.log(`ingredient id: ${id}`);
+
+      this.ingredients.splice(0, this.ingredients.length);
+
+      this.ingredientService.getIngredientById(id).subscribe(
+        data => this.ingredients.push(data)
+      );
+
+    } else {
+      this.ingredientService.getFullIngredientList(this.thePageNumber - 1, this.thePageSize, this.order)
+        .subscribe(this.processResults());
+    }
   }
 
   inverseOrder(): void {

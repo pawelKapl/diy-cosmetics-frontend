@@ -13,9 +13,17 @@ import { RecipeDetailComponent } from './components/recipe-detail/recipe-detail.
 import {IngredientService} from './services/ingredient.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { IngredientListComponent } from './components/ingredient-list/ingredient-list.component';
+import { AddNewIngredientFormComponent } from './components/add-new-ingredient-form/add-new-ingredient-form.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import { AddNewToolFormComponent } from './components/add-new-tool-form/add-new-tool-form.component';
+import { AddNewRecipeFormComponent } from './components/add-new-recipe-form/add-new-recipe-form.component';
 
 
 const routes: Routes = [
+  {path: 'recipes/new', component: AddNewRecipeFormComponent},
+  {path: 'tools/new', component: AddNewToolFormComponent},
+  {path: 'ingredients/new', component: AddNewIngredientFormComponent},
+  {path: 'ingredients/:id', component: IngredientListComponent},
   {path: 'ingredients', component: IngredientListComponent},
   {path: 'recipeCategory/:id', component: RecipeListComponent},
   {path: 'recipeCategory', component: RecipeListComponent},
@@ -32,6 +40,9 @@ const routes: Routes = [
     SearchBarComponent,
     RecipeDetailComponent,
     IngredientListComponent,
+    AddNewIngredientFormComponent,
+    AddNewToolFormComponent,
+    AddNewRecipeFormComponent,
   ],
     imports: [
         BrowserModule,
@@ -39,6 +50,7 @@ const routes: Routes = [
         MDBBootstrapModule.forRoot(),
         RouterModule.forRoot(routes),
         NgbModule,
+        ReactiveFormsModule
   ],
   providers: [RecipeService, IngredientService],
   bootstrap: [AppComponent]

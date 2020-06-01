@@ -13,6 +13,7 @@ Current progress: <br>
 - added recipe details view
 - pagination support
 - added ingredients list page view and service
+- added ingredient add form and service, fully armed
 
 Main Page View(in progress):
 
@@ -25,6 +26,10 @@ Detail View(in progress):
 Detail View(in progress):
 
 ![alt text](https://i.imgur.com/TDVhETK.png?1)
+
+Ingredient add form view: 
+
+![alt text](https://i.imgur.com/ffjN3We.png?1)
 
 Ingredients view(in progress):
 

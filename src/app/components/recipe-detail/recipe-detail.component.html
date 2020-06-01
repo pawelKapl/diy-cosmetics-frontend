@@ -8,8 +8,6 @@
     <h3 class="font-weight-bold text-center dark-grey-text pb-2">{{recipe.name}}</h3>
     <hr class="w-header text-center w-75 my-4">
     <p class="lead text-center text-muted pt-2 mb-5">{{recipe.intro}}</p>
-<!--    <p class="text-center w-responsive mx-auto mb-5">trudność:-->
-<!--      <span class="font-weight-bold dark-grey-text">{{recipe.difficulty}}</span></p>-->
 
     <!-- Grid row -->
     <div class="row">
@@ -80,7 +78,9 @@
                   <a href="#!" class="dark-grey-text">Potrzebna ilość: <span class="font-weight-bold dark-grey-text">
                     {{tempIngredient.amount}} {{tempIngredient.unitOfMeasure.uom}}</span></a>
                 </div>
-                <a><i class="fas fa-angle-double-right"></i></a>
+                <a routerLink="/ingredients/{{tempIngredient.ingredient.id}}">
+                  <i class="fas fa-angle-double-right dark-grey-text"></i>
+                </a>
               </div>
 
             </div>

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {IngredientQuantity} from '../models/ingredient-quantity';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {Ingredient} from '../models/ingredient';
+import {AbstractControl} from '@angular/forms';
+import {Encoding} from 'tslint/lib/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,17 @@ export class IngredientService {
 
     return this.httpClient.get<GetResponseIngredients>(`${this.baseIngredientsUrl}` +
       `?sort=name,${order}&size=${thePageSize}&page=${thePage}`);
+  }
+
+  getIngredientById(id: number): Observable<Ingredient> {
+    return this.httpClient.get<Ingredient>(`${this.baseIngredientsUrl}/${id}`);
+  }
+
+  saveIngredient(value: AbstractControl) {
+    console.log(value.value);
+    this.httpClient.post(this.baseIngredientsUrl, JSON.stringify(value.value), {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    }).subscribe( data => console.log(`Saved Ingredient: ${data}`));
   }
 }
 
