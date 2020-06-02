@@ -37,7 +37,7 @@ export class IngredientService {
     console.log(value.value);
     this.httpClient.post(this.baseIngredientsUrl, JSON.stringify(value.value), {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
-    }).subscribe(data => console.log(`Saved Ingredient: ${data}`));
+    }).subscribe(data => console.log(`Saved Ingredient: ${JSON.stringify(data)}`));
   }
 }
 

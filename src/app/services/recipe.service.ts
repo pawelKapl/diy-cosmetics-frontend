@@ -50,7 +50,7 @@ export class RecipeService {
     console.log(recipe.value);
     this.httpClient.post(this.baseUrl, JSON.stringify(recipe.value), {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
-    }).subscribe( data => console.log(`Saved Recipe: ${data}`));
+    }).subscribe( data => console.log(`Saved Recipe: ${JSON.stringify(data)}`));
   }
 }
 
