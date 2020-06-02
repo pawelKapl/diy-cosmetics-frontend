@@ -17,9 +17,3 @@ export class ToolService {
     return this.httpClient.get<Tool[]>(this.baseUrl);
   }
 }
-
-// interface GetResponseTools {
-//   _embedded: {
-//     tools: Tool[];
-//   };
-// }

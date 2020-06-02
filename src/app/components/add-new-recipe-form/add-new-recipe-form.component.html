@@ -18,26 +18,26 @@
       </div>
 
       <label for="defaultSaveFormFirstName">Nazwa</label>
-      <input formControlName="name" type="text" id="defaultSaveFormFirstName" class="form-control" placeholder="Nazwa kosmetyku"><br>
+      <input formControlName="name" type="text" id="defaultSaveFormFirstName" class="form-control" placeholder="Nazwa receptury"><br>
 
       <label for="defaultSaveFormShortDescription">Krótki opis</label>
-      <input formControlName="intro" type="text" id="defaultSaveFormShortDescription" class="form-control" placeholder="Krótki wstęp"><br>
+      <input formControlName="intro" type="text" id="defaultSaveFormShortDescription" class="form-control" placeholder="Wstępny opis"><br>
 
       <label for="defaultSaveFormDescription">Pełny opis</label>
-      <textarea formControlName="description" id="defaultSaveFormDescription" class="form-control" placeholder="Opis kosmetyku"></textarea><br>
+      <textarea formControlName="description" id="defaultSaveFormDescription" class="form-control" placeholder="Opis receptury"></textarea><br>
 
       <label for="defaultSaveFormPrepTime">Czas przygotowania</label>
-      <input formControlName="prepTime" type="email" id="defaultSaveFormPrepTime" class="form-control mb-4 col-sm-1" placeholder="min">
+      <input formControlName="prepTime" type="email" id="defaultSaveFormPrepTime" class="form-control mb-4 col-sm-1" placeholder="sec">
 
       <label for="textInput">Adres do zdjęcia</label>
-      <input formControlName="imageUrl" type="text" id="textInput" class="form-control mb-4" placeholder="Adres www zdjęcia"><br>
+      <input formControlName="imageUrl" type="text" id="textInput" class="form-control mb-2" placeholder="Adres www zdjęcia"><br>
 
       <hr class="w-header my-4 text-center mb-2">
 
       <label for="defaultSaveFormDifficulty">Trudność</label>
       <div class="mb-4">
-        <select formControlName="difficulty" class="custom-select" id="defaultSaveFormDifficulty" >
-          <option value="" disabled>Poziom trudności</option>
+        <select class="form-control" id="defaultSaveFormDifficulty" formControlName="difficulty">
+          <option selected disabled [ngValue]=null>Poziom trudnosci</option>
           <option value="EASY">EASY</option>
           <option value="MODERATE">MODERATE</option>
           <option value="HARD">HARD</option>
@@ -45,7 +45,7 @@
       </div>
 
       <label for="defaultFormCategory">Lista potrzebych narzędzi</label>
-      <div class="mb-4">
+      <div class="mb-5">
         <select multiple formControlName="tools" class="custom-select" id="defaultFormCategory">
           <option [ngValue]="null" disabled>Wybierz narzędzia (można wybrać kilka)</option>
           <option *ngFor="let tempTool of toolsList" [ngValue]="tempTool">
@@ -54,6 +54,66 @@
         </select>
       </div>
 
+      <hr class="w-header text-center mb-4 mt-5">
+
+      <label for="defaultFormSteps">Kroki</label>
+      <table class="table table-borderless" formArrayName="steps" id="defaultFormSteps">
+        <tr>
+          <td width="80%"></td>
+          <td><a (click)="addStep()" class="ml-3 text-info">+Dodaj Krok</a></td>
+        </tr>
+        <tr *ngFor="let step of steps().controls; let i=index" [formGroupName]="i">
+
+          <label for="defaultFormSteps">Nazwa kroku {{i + 1}}</label>
+          <input type="text" formControlName="name" class="form-control mb-4" placeholder="Nazwa kroku">
+
+          <label for="defaultFormSteps">Opis</label>
+          <textarea class="form-control" placeholder="Opis kroku" formControlName="detail" class="form-control mb-4"></textarea>
+          <hr class="w-header my-4 text-center mb-2">
+
+          <td class="align-middle">
+            <button (click)="removeStep(i)" class="ml-5 btn btn-danger btn-sm">
+              <i class="far fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </table>
+
+      <label for="defaultFormIngredients">Składniki</label>
+      <table class="table table-borderless" formArrayName="ingredientQuantities" id="defaultFormIngredients">
+        <tr>
+          <td width="80%"></td>
+          <td><a (click)="addQuantity()" class="ml-3 text-info">+Dodaj Składnik</a></td>
+        </tr>
+
+        <tr *ngFor="let step of quantities().controls; let i=index" [formGroupName]="i">
+          <label for="defaultFormIngredients">Nazwa składnika {{i + 1}}</label>
+          <select class="form-control mb-5" formControlName="ingredient">
+            <option disabled selected [ngValue]=null>Składniki</option>
+            <option *ngFor="let tempIngredient of ingredientList" [ngValue]="tempIngredient">{{tempIngredient.name}}</option>
+          </select>
+
+          <label for="defaultFormIngredients">Ilość</label>
+          <div class="form-inline mb-4">
+            <input class="form-control" placeholder="Ilosc" class="form-control col-sm-1" formControlName="amount">
+
+            <select class="form-control col-sm-2 ml-2" formControlName="unitOfMeasure">
+              <option disabled selected [ngValue]=null>Jednostka</option>
+              <option *ngFor="let tempUom of unitOfMeasureList" [ngValue]="tempUom">{{tempUom.uom}}</option>
+            </select>
+          </div>
+
+          <hr class="w-header my-4 text-center mb-2">
+
+          <td class="align-middle">
+            <button (click)="removeQuantity(i)" class="ml-5 btn btn-danger btn-sm">
+              <i class="far fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </table>
+      <br>
+      <hr class="w-header my-4 text-center mb-2">
       <button (click)="onSubmit()" routerLink="/ingredients" class="btn btn-light" type="submit">Dodaj recepturę</button>
 
     </div>

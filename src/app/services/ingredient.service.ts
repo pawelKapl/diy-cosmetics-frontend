@@ -6,32 +6,29 @@ import {catchError, map} from 'rxjs/operators';
 import {Ingredient} from '../models/ingredient';
 import {AbstractControl} from '@angular/forms';
 import {Encoding} from 'tslint/lib/utils';
+import {UnitOfMeasure} from '../models/unit-of-measure';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IngredientService {
 
-  private baseUrl = 'http://localhost:8082/api/recipes';
   private baseIngredientsUrl = 'http://localhost:8082/api/ingredients';
-  private baseQuantitiesUrl = 'http://localhost:8082/api/ingredientQuantities';
+  private baseUomUrl = 'http://localhost:8082/api/units';
 
 
   constructor(private httpClient: HttpClient) {
   }
 
-  getIngredientQuantitiesForRecipe(id: number): Observable<IngredientQuantity[]> {
-    const searchUrl = `${this.baseUrl}/${id}/ingredientQuantities`;
-    return this.httpClient.get<GetResponseIngredientQuantities>(searchUrl).pipe(
-      map(response => response._embedded.ingredientQuantities)
-    );
+  getUnitsOfMeasure(): Observable<UnitOfMeasure[]> {
+    return this.httpClient.get<UnitOfMeasure[]>(this.baseUomUrl);
   }
 
   getFullIngredientList(thePage: number,
                         thePageSize: number, order: string): Observable<GetResponseIngredients> {
-
+    console.log(`pageSize: ${thePageSize} pageNumber: ${thePage} order: ${order}`);
     return this.httpClient.get<GetResponseIngredients>(`${this.baseIngredientsUrl}` +
-      `?sort=name,${order}&size=${thePageSize}&page=${thePage}`);
+      `?sort=${order}&size=${thePageSize}&page=${thePage}`);
   }
 
   getIngredientById(id: number): Observable<Ingredient> {
@@ -42,33 +39,14 @@ export class IngredientService {
     console.log(value.value);
     this.httpClient.post(this.baseIngredientsUrl, JSON.stringify(value.value), {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
-    }).subscribe( data => console.log(`Saved Ingredient: ${data}`));
+    }).subscribe(data => console.log(`Saved Ingredient: ${data}`));
   }
-
-  saveQuantity(ingredientQuantities: any): Observable<IngredientQuantity[]> {
-    var json = JSON.stringify(ingredientQuantities);
-    console.log(json.substr(1, json.length - 2));
-
-    return this.httpClient.post<IngredientQuantity[]>(this.baseQuantitiesUrl, json.substr(1, json.length - 2), {
-      headers: new HttpHeaders().set('Content-Type', 'application/json')
-    });
-  }
-}
-
-interface GetResponseIngredientQuantities {
-  _embedded: {
-    ingredientQuantities: IngredientQuantity[];
-  };
 }
 
 interface GetResponseIngredients {
-  _embedded: {
-    ingredients: Ingredient[];
-  };
-  page: {
+    content: Ingredient[];
     size: number;
     totalElements: number;
     totalPages: number;
     number: number;
-  };
 }

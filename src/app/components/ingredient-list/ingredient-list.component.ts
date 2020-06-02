@@ -53,9 +53,9 @@ export class IngredientListComponent implements OnInit {
 
   private processResults() {
     return data  => {
-      this.ingredients = data._embedded.ingredients;
-      this.thePageNumber = data.page.number + 1;
-      this.theTotalElements = data.page.totalElements;
+      this.ingredients = data.content;
+      this.thePageNumber = data.number + 1;
+      this.theTotalElements = data.totalElements;
     };
   }
 

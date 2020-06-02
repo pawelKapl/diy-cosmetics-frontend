@@ -1,8 +1,7 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Recipe} from '../../models/recipe';
 import {RecipeService} from '../../services/recipe.service';
 import {ActivatedRoute} from '@angular/router';
-import {IngredientQuantity} from '../../models/ingredient-quantity';
 import {IngredientService} from '../../services/ingredient.service';
 
 @Component({
@@ -13,7 +12,6 @@ import {IngredientService} from '../../services/ingredient.service';
 export class RecipeDetailComponent implements OnInit {
 
   recipe: Recipe = new Recipe();
-  recipeIngredientQuantities: IngredientQuantity[];
   private recipeId: number;
 
   constructor(private recipeService: RecipeService,
@@ -22,23 +20,16 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => this.loadRecipe());
-    this.loadRecipeIngredientsList();
   }
 
   private loadRecipe() {
     this.recipeId = +this.route.snapshot.paramMap.get('id');
 
+    console.log(`loading recipe with id: ${this.recipeId}`);
+
     this.recipeService.getRecipe(this.recipeId).subscribe(
       data => {
         this.recipe = data;
-      }
-    );
-  }
-
-  private loadRecipeIngredientsList() {
-    this.ingredientService.getIngredientQuantitiesForRecipe(this.recipeId).subscribe(
-      data => {
-        this.recipeIngredientQuantities = data;
       }
     );
   }

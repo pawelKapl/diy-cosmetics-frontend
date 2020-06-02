@@ -71,10 +71,10 @@ export class RecipeListComponent implements OnInit {
 
   private processResult() {
     return data => {
-      this.recipes = data._embedded.recipes;
-      this.thePageNumber = data.page.number + 1;
-      this.thePageSize = data.page.size;
-      this.theTotalElements = data.page.totalElements;
+      this.recipes = data.content;
+      this.thePageNumber = data.number + 1;
+      this.thePageSize = data.size;
+      this.theTotalElements = data.totalElements;
     };
   }
 }

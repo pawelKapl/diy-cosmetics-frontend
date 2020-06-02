@@ -19,9 +19,13 @@ export class RecipeService {
   getRecipeListByCategoryPaginate(thePage: number,
                                   thePageSize: number,
                                   categoryId: number): Observable<GetResponseRecipes> {
-    const searchUrl = `${this.baseUrl}/search/findByRecipeCategoriesId?id=${categoryId}`
+    const searchUrl = `${this.baseUrl}?cat=${categoryId}`
                       + `&size=${thePageSize}&page=${thePage}`;
     return this.httpClient.get<GetResponseRecipes>(searchUrl);
+  }
+
+  getRecipeCategoriesList(): Observable<RecipeCategory[]> {
+    return this.httpClient.get<RecipeCategory[]>(this.categoriesUrl);
   }
 
   getFullRecipeListPaginate(thePage: number,
@@ -32,14 +36,8 @@ export class RecipeService {
   }
 
   getRecipeSearchResults(query: string): Observable<Recipe[]> {
-    const queryUrl = `${this.baseUrl}/search/findByNameContainingIgnoreCase?query=${query}`;
-    return this.httpClient.get<GetResponseRecipes>(queryUrl).pipe(
-      map(response => response._embedded.recipes)
-    );
-  }
-
-  getRecipeCategoriesList(): Observable<RecipeCategory[]> {
-    return this.httpClient.get<RecipeCategory[]>(this.categoriesUrl);
+    const queryUrl = `${this.baseUrl}/search?query=${query}`;
+    return this.httpClient.get<Recipe[]>(queryUrl);
   }
 
   getRecipe(id: number): Observable<Recipe> {
@@ -55,14 +53,11 @@ export class RecipeService {
 }
 
 interface GetResponseRecipes {
-  _embedded: {
-    recipes: Recipe[];
-  },
-  page: {
+
+    content: Recipe[];
     size: number;
     totalElements: number;
     totalPages: number;
     number: number;
-  };
 }
 

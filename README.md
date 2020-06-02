@@ -27,7 +27,7 @@ Detail View(in progress):
 
 Recipe add form view: 
 
-![alt text](https://i.imgur.com/8R9BGrZ.png?1)
+![alt text](https://i.imgur.com/OjwSyYs.png?1)
 
 Ingredient add form view: 
 
