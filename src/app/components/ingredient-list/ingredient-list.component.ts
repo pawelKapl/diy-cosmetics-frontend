@@ -43,12 +43,7 @@ export class IngredientListComponent implements OnInit {
   }
 
   inverseOrder(): void {
-    if (this.order === 'asc') {
-      this.order = 'desc';
-    } else {
-      this.order = 'asc';
-    }
-    this.getIngredients();
+    this.order = this.order === 'asc' ? 'desc' : 'asc';
   }
 
   private processResults() {

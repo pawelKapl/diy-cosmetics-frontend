@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IngredientQuantity} from '../models/ingredient-quantity';
-import {catchError, map} from 'rxjs/operators';
 import {Ingredient} from '../models/ingredient';
 import {AbstractControl} from '@angular/forms';
-import {Encoding} from 'tslint/lib/utils';
 import {UnitOfMeasure} from '../models/unit-of-measure';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IngredientService {
 
-  private baseIngredientsUrl = 'http://localhost:8082/api/ingredients';
-  private baseUomUrl = 'http://localhost:8082/api/units';
+  private baseIngredientsUrl = `${environment.baseURI}/ingredients`;
+  private baseUomUrl = `${environment.baseURI}/units`;
 
 
   constructor(private httpClient: HttpClient) {
