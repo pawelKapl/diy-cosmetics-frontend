@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Recipe} from '../models/recipe';
 import {map} from 'rxjs/operators';
 import {RecipeCategory} from '../models/recipe-category';
+import {AbstractControl} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +16,10 @@ export class RecipeService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getRecipeListByCategory(id: number): Observable<Recipe[]> {
-    const queryUrl = `${this.baseUrl}/search/findByCategoriesId?size=6&id=${id}`;
-    return this.httpClient.get<GetResponseRecipes>(queryUrl).pipe(
-      map(response => response._embedded.recipes)
-    );
-  }
-
   getRecipeListByCategoryPaginate(thePage: number,
                                   thePageSize: number,
                                   categoryId: number): Observable<GetResponseRecipes> {
-    const searchUrl = `${this.baseUrl}/search/findByCategoriesId?id=${categoryId}`
+    const searchUrl = `${this.baseUrl}/search/findByRecipeCategoriesId?id=${categoryId}`
                       + `&size=${thePageSize}&page=${thePage}`;
     return this.httpClient.get<GetResponseRecipes>(searchUrl);
   }
@@ -45,13 +39,18 @@ export class RecipeService {
   }
 
   getRecipeCategoriesList(): Observable<RecipeCategory[]> {
-    return this.httpClient.get<GetResponseRecipeCategories>(this.categoriesUrl).pipe(
-      map(response => response._embedded.recipeCategories)
-    );
+    return this.httpClient.get<RecipeCategory[]>(this.categoriesUrl);
   }
 
   getRecipe(id: number): Observable<Recipe> {
     return this.httpClient.get<Recipe>(`${this.baseUrl}/${id}`);
+  }
+
+  saveRecipe(recipe: AbstractControl) {
+    console.log(recipe.value);
+    this.httpClient.post(this.baseUrl, JSON.stringify(recipe.value), {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    }).subscribe( data => console.log(`Saved Recipe: ${data}`));
   }
 }
 
@@ -67,8 +66,3 @@ interface GetResponseRecipes {
   };
 }
 
-interface GetResponseRecipeCategories {
-  _embedded: {
-    recipeCategories: RecipeCategory[];
-  };
-}

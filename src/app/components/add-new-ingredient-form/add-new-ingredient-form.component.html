@@ -1,0 +1,30 @@
+<div class="container my-5">
+  <h3 class="font-weight-bold text-center dark-grey-text pb-2">Nowy Składnik</h3>
+  <hr class="w-header my-4 text-center w-75 mb-2">
+
+  <form [formGroup]="ingredientFormGroup" class="p-5" width="70%">
+
+    <div formGroupName="ingredient" class="form-area colored-border colored-border-focus">
+
+      <label for="defaultSaveFormFirstName">Nazwa</label>
+      <input formControlName="name" type="text" id="defaultSaveFormFirstName" class="form-control mb-4" placeholder="Nazwa składnika">
+
+      <label for="defaultSaveFormLastName">Nazwa alternatywna</label>
+      <input formControlName="latinName" type="text" id="defaultSaveFormLastName" class="form-control mb-4" placeholder="Alternatywna nazwa składnika">
+
+      <label for="defaultSaveFormDescription">Opis</label>
+      <textarea formControlName="description" id="defaultSaveFormDescription" class="form-control mb-4" placeholder="Opis składnika"></textarea>
+
+      <hr class="w-header my-4 text-center mt-5 mb-2">
+
+      <label for="defaultSaveFormEmail">Adres do źródła zew. </label>
+      <input formControlName="blogUrl" type="email" id="defaultSaveFormEmail" class="form-control mb-4" placeholder="Adress www źródła zew.">
+
+      <label for="textInput">Adres do zdjęcia</label>
+      <input formControlName="imageUrl" type="text" id="textInput" class="form-control mb-4" placeholder="Adres www zdjęcia">
+
+      <button (click)="onSubmit()" routerLink="/ingredients" class="btn btn-light" type="submit">Dodaj składnik</button>
+    </div>
+  </form>
+
+</div>

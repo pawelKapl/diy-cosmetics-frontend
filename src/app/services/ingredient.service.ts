@@ -14,6 +14,7 @@ export class IngredientService {
 
   private baseUrl = 'http://localhost:8082/api/recipes';
   private baseIngredientsUrl = 'http://localhost:8082/api/ingredients';
+  private baseQuantitiesUrl = 'http://localhost:8082/api/ingredientQuantities';
 
 
   constructor(private httpClient: HttpClient) {
@@ -42,6 +43,15 @@ export class IngredientService {
     this.httpClient.post(this.baseIngredientsUrl, JSON.stringify(value.value), {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     }).subscribe( data => console.log(`Saved Ingredient: ${data}`));
+  }
+
+  saveQuantity(ingredientQuantities: any): Observable<IngredientQuantity[]> {
+    var json = JSON.stringify(ingredientQuantities);
+    console.log(json.substr(1, json.length - 2));
+
+    return this.httpClient.post<IngredientQuantity[]>(this.baseQuantitiesUrl, json.substr(1, json.length - 2), {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    });
   }
 }
 

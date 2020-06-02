@@ -1,0 +1,62 @@
+<div class="container my-5">
+  <h3 class="font-weight-bold text-center dark-grey-text pb-2">Nowa Receptura</h3>
+  <hr class="w-header my-4 text-center w-75 mb-2">
+
+
+  <form [formGroup]="recipeFormGroup" class="p-5" width="70%">
+
+    <div formGroupName="recipe" class="form-area colored-border colored-border-focus">
+
+      <label for="defaultFormControlTools">Kategoria</label>
+      <div class="mb-4">
+        <select multiple formControlName="recipeCategories" class="custom-select" id="defaultFormControlTools">
+          <option [ngValue]="null" disabled>Wybierz kategorie (można wybrać kilka)</option>
+          <option *ngFor="let tempCategory of categoriesList" [ngValue]="tempCategory">
+            {{tempCategory.categoryName}}
+          </option>
+        </select>
+      </div>
+<!--      value="http://localhost:8082/api/recipeCategories/{{tempCategory.id}}-->
+
+      <label for="defaultSaveFormFirstName">Nazwa</label>
+      <input formControlName="name" type="text" id="defaultSaveFormFirstName" class="form-control" placeholder="Nazwa kosmetyku"><br>
+
+      <label for="defaultSaveFormShortDescription">Krótki opis</label>
+      <input formControlName="intro" type="text" id="defaultSaveFormShortDescription" class="form-control" placeholder="Krótki wstęp"><br>
+
+      <label for="defaultSaveFormDescription">Pełny opis</label>
+      <textarea formControlName="description" id="defaultSaveFormDescription" class="form-control" placeholder="Opis kosmetyku"></textarea><br>
+
+      <label for="defaultSaveFormPrepTime">Czas przygotowania</label>
+      <input formControlName="prepTime" type="email" id="defaultSaveFormPrepTime" class="form-control mb-4 col-sm-1" placeholder="min">
+
+      <label for="textInput">Adres do zdjęcia</label>
+      <input formControlName="imageUrl" type="text" id="textInput" class="form-control mb-4" placeholder="Adres www zdjęcia"><br>
+
+      <hr class="w-header my-4 text-center mb-2">
+
+      <label for="defaultSaveFormDifficulty">Trudność</label>
+      <div class="mb-4">
+        <select formControlName="difficulty" class="custom-select" id="defaultSaveFormDifficulty" >
+          <option value="" disabled>Poziom trudności</option>
+          <option value="EASY">EASY</option>
+          <option value="MODERATE">MODERATE</option>
+          <option value="HARD">HARD</option>
+        </select>
+      </div>
+
+      <label for="defaultFormCategory">Lista potrzebych narzędzi</label>
+      <div class="mb-4">
+        <select multiple formControlName="tools" class="custom-select" id="defaultFormCategory">
+          <option [ngValue]="null" disabled>Wybierz narzędzia (można wybrać kilka)</option>
+          <option *ngFor="let tempTool of toolsList" [ngValue]="tempTool">
+            {{tempTool.name}}
+          </option>
+        </select>
+      </div>
+
+      <button (click)="onSubmit()" routerLink="/ingredients" class="btn btn-light" type="submit">Dodaj recepturę</button>
+
+    </div>
+  </form>
+</div>
