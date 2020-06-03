@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Ingredient} from '../../models/ingredient';
 import {IngredientService} from '../../services/ingredient.service';
 import {ActivatedRoute} from '@angular/router';
+import {throwError} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-ingredient-list',
@@ -17,10 +21,13 @@ export class IngredientListComponent implements OnInit {
   theTotalElements = 0;
   order = 'asc';
 
-  constructor(private ingredientService: IngredientService, private route: ActivatedRoute) { }
+  constructor(private ingredientService: IngredientService,
+              private route: ActivatedRoute,
+              private modal: ConfirmationModalComponent) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => this.getIngredients());
+
   }
 
   getIngredients() {
@@ -54,4 +61,30 @@ export class IngredientListComponent implements OnInit {
     };
   }
 
+  open(content) {
+    this.modal.open(content);
+  }
+
+  deleteIngredient(ingredient: Ingredient) {
+
+    this.ingredientService.deleteIngredient(ingredient).pipe(
+      map((res: Response) => res.json()),
+      catchError(this.handleError)
+    ).subscribe(
+      res => console.log('HTTP response', res),
+      err => console.log('HTTP Error', JSON.stringify(err)),
+      () => console.log('HTTP request completed.')
+    );
+  }
+
+  private handleError(err: HttpErrorResponse) {
+    if (JSON.stringify(err).includes('Data Integrity Violation')) {
+
+      this.modal.open(this.modal);
+
+      return throwError(err.message);
+    } else {
+      return throwError(err.message);
+    }
+  }
 }

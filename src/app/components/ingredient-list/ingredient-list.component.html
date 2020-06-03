@@ -1,4 +1,5 @@
 <div class="container my-5">
+  <app-unable-to-delete-modal></app-unable-to-delete-modal>
   <h3 class="font-weight-bold text-center dark-grey-text pb-2">Składniki</h3>
   <hr class="w-header my-4 text-center w-75 mb-5">
 
@@ -27,7 +28,7 @@
           <!-- Table body -->
           <tbody>
 
-          <!-- First row -->
+          <!-- Single row -->
           <tr *ngFor="let tempIngredient of ingredients">
             <td class="align-middle" width="20%">
               <img style="max-width: 70%" src="{{tempIngredient.imageUrl}}" alt="" class="img-fluid z-depth-1">
@@ -41,12 +42,36 @@
             <td class="align-middle" width="50%">{{tempIngredient.description}}</td>
 
             <td class="align-middle"  width="10%">
-              <a href="{{tempIngredient.blogUrl}}" type="button" class="btn btn-light"
-                 data-toggle="tooltip" data-placement="top">Więcej
-              </a>
+              <div class="d-flex align-items-center">
+                <a href="{{tempIngredient.blogUrl}}" type="button" class="btn btn-light d-flex"
+                   data-toggle="tooltip" data-placement="top">Więcej
+                </a>
+                <a title="usuń składnik" class="font-small dark-grey-text ml-2" (click)="open(content)">x</a>
+              </div>
+
             </td>
+
+            <!-- modal delete -->
+            <ng-template #content let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Uwaga! Usuwanie składnika!</h4>
+                <button type="button" class="btn btn-outline-dark btn-sm" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">x</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Czy napewno chcesz usunąć {{tempIngredient.name}}?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(deleteIngredient(tempIngredient))" routerLink="/ingredients">
+                  Usuń
+                </button>
+              </div>
+            </ng-template>
+            <!-- modal delete -->
+
           </tr>
-          <!-- /.First row -->
+          <!-- /.Single row -->
 
           </tbody>
           <!-- /.Table body -->
@@ -72,3 +97,19 @@
 </div>
 
 
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Uwaga! Usuwanie składnika!</h4>
+    <button type="button" class="btn btn-outline-dark btn-sm" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">x</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Czy napewno chcesz usunąć ?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark justify-content-center" routerLink="/ingredients">
+      Usuń
+    </button>
+  </div>
+</ng-template>

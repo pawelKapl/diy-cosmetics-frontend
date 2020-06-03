@@ -3,6 +3,7 @@ import {Recipe} from '../../models/recipe';
 import {RecipeService} from '../../services/recipe.service';
 import {ActivatedRoute} from '@angular/router';
 import {IngredientService} from '../../services/ingredient.service';
+import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -16,7 +17,12 @@ export class RecipeDetailComponent implements OnInit {
 
   constructor(private recipeService: RecipeService,
               private ingredientService: IngredientService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              config: NgbModalConfig,
+              private modalService: NgbModal) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => this.loadRecipe());
@@ -32,5 +38,13 @@ export class RecipeDetailComponent implements OnInit {
         this.recipe = data;
       }
     );
+  }
+
+  open(content) {
+    this.modalService.open(content);
+  }
+
+  delete(recipe: Recipe) {
+    this.recipeService.deleteRecipe(recipe);
   }
 }

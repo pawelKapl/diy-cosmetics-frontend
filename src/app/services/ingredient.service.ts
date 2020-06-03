@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {Ingredient} from '../models/ingredient';
 import {AbstractControl} from '@angular/forms';
 import {UnitOfMeasure} from '../models/unit-of-measure';
 import {environment} from '../../environments/environment';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,11 @@ export class IngredientService {
     this.httpClient.post(this.baseIngredientsUrl, JSON.stringify(value.value), {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     }).subscribe(data => console.log(`Saved Ingredient: ${JSON.stringify(data)}`));
+  }
+
+  deleteIngredient(ingredient: Ingredient): Observable<{}> {
+    console.log(`Deleteing ingredient ${ingredient.name}...`);
+    return this.httpClient.delete(`${this.baseIngredientsUrl}/${ingredient.id}`);
   }
 }
 

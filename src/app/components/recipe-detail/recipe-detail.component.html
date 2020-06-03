@@ -1,10 +1,34 @@
-<div class="container my-5">
+<div class="container my-4">
 
 
   <!--Section: Content-->
   <section class="magazine-section dark-grey-text">
 
     <!-- Section heading -->
+
+    <!-- modal delete -->
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Uwaga! Usuwanie receptury!</h4>
+        <button type="button" class="btn btn-outline-dark btn-sm" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Czy napewno chcesz usunąć tę recepturę?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(delete(recipe))" routerLink="/">
+          Usuń
+        </button>
+      </div>
+    </ng-template>
+
+    <div class="text-right">
+      <a title="usuń recepturę" class="font-small dark-grey-text" (click)="open(content)">x</a>
+    </div>
+    <!-- modal delete -->
+
     <h3 class="font-weight-bold text-center dark-grey-text pb-2">{{recipe.name}}</h3>
     <hr class="w-header text-center w-75 my-4">
     <p class="lead text-center text-muted pt-2 mb-5">{{recipe.intro}}</p>

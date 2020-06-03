@@ -52,6 +52,12 @@ export class RecipeService {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     }).subscribe( data => console.log(`Saved Recipe: ${JSON.stringify(data)}`));
   }
+
+  deleteRecipe(recipe: Recipe) {
+    console.log(`Deleting recipe: ${recipe.name}...`);
+    this.httpClient.delete(`${this.baseUrl}/${recipe.id}`).subscribe(
+      data => console.log(data));
+  }
 }
 
 interface GetResponseRecipes {

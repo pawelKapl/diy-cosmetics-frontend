@@ -17,6 +17,7 @@ import { AddNewIngredientFormComponent } from './components/add-new-ingredient-f
 import {ReactiveFormsModule} from '@angular/forms';
 import { AddNewToolFormComponent } from './components/add-new-tool-form/add-new-tool-form.component';
 import { AddNewRecipeFormComponent } from './components/add-new-recipe-form/add-new-recipe-form.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 
 
 const routes: Routes = [
@@ -43,6 +44,8 @@ const routes: Routes = [
     AddNewIngredientFormComponent,
     AddNewToolFormComponent,
     AddNewRecipeFormComponent,
+    ConfirmationModalComponent,
+
   ],
     imports: [
         BrowserModule,
@@ -50,9 +53,9 @@ const routes: Routes = [
         MDBBootstrapModule.forRoot(),
         RouterModule.forRoot(routes),
         NgbModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
   ],
-  providers: [RecipeService, IngredientService],
+  providers: [RecipeService, IngredientService, ConfirmationModalComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
