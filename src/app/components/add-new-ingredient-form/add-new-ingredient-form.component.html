@@ -4,28 +4,56 @@
 
   <form [formGroup]="ingredientFormGroup" class="p-5" width="70%">
 
-    <div formGroupName="ingredient" class="form-area colored-border colored-border-focus">
+    <div class="form-area colored-border colored-border-focus">
 
       <label for="defaultSaveFormFirstName">Nazwa</label>
-      <input formControlName="name" type="text" id="defaultSaveFormFirstName" class="form-control mb-4" placeholder="Nazwa składnika">
+      <input formControlName="name" type="text" id="defaultSaveFormFirstName" class="form-control mb-4"
+             placeholder="Nazwa składnika">
+      <div *ngIf="name.invalid && (name.dirty || name.touched)"
+           class="alert alert-danger">
+        <div *ngIf="name.errors.required">
+          Nazwa składnika jest wymagana.
+        </div>
+        <div *ngIf="name.errors.minlength">
+          Nazwa musi się składać z conajmniej 3 znaków.
+        </div>
+        <div *ngIf="name.errors.maxlength">
+          Nazwa musi się składać z maksymalnie 50 znaków.
+        </div>
+      </div>
 
       <label for="defaultSaveFormLastName">Nazwa alternatywna</label>
-      <input formControlName="latinName" type="text" id="defaultSaveFormLastName" class="form-control mb-4" placeholder="Alternatywna nazwa składnika">
+      <input formControlName="latinName" type="text" id="defaultSaveFormLastName" class="form-control mb-4"
+             placeholder="Alternatywna nazwa składnika">
 
       <label for="defaultSaveFormDescription">Opis</label>
-      <textarea formControlName="description" id="defaultSaveFormDescription" class="form-control mb-4" placeholder="Opis składnika"></textarea>
+      <textarea formControlName="description" id="defaultSaveFormDescription" class="form-control mb-4"
+                placeholder="Opis składnika"></textarea>
 
       <hr class="w-header my-4 text-center mt-5 mb-2">
 
       <label for="defaultSaveFormEmail">Adres do źródła zew. </label>
-      <input formControlName="blogUrl" type="email" id="defaultSaveFormEmail" class="form-control mb-4" placeholder="Adress www źródła zew.">
+      <input formControlName="blogUrl" type="email" id="defaultSaveFormEmail" class="form-control mb-4"
+             placeholder="Adress www źródła zew.">
 
       <label for="textInput">Adres do zdjęcia</label>
-      <input formControlName="imageUrl" type="text" id="textInput" class="form-control mb-4" placeholder="Adres www zdjęcia">
+      <input formControlName="imageUrl" type="text" id="textInput" class="form-control mb-4"
+             placeholder="Adres www zdjęcia">
+      <div *ngIf="imageUrl.invalid && (imageUrl.dirty || imageUrl.touched)"
+           class="alert alert-danger">
+        <div *ngIf="imageUrl.errors.required">
+          Adres zdjęcia jest wymagany.
+        </div>
+        <div *ngIf="imageUrl.errors.pattern">
+          Nieprawidłowa forma adresu. Adres musi się rozpoczynać od http:// lub https://
+        </div>
+      </div>
 
       <br>
       <hr class="w-header my-4 text-center mb-2">
-      <button (click)="onSubmit()" routerLink="/ingredients" class="btn btn-light" type="submit">Dodaj nowy składnik</button>
+      <button [disabled]="ingredientFormGroup.pristine || ingredientFormGroup.invalid" (click)="onSubmit()"
+              routerLink="/ingredients" class="btn btn-light" type="submit">Dodaj nowy składnik
+      </button>
     </div>
   </form>
 

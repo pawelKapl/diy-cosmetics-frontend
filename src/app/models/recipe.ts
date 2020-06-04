@@ -2,6 +2,7 @@ import {Difficulty} from './difficulty.enum';
 import {Tool} from './tool';
 import {Step} from './step';
 import {IngredientQuantity} from './ingredient-quantity';
+import {RecipeCategory} from './recipe-category';
 
 export class Recipe {
   id: number;
@@ -16,5 +17,6 @@ export class Recipe {
   tools: Tool[];
   steps: Step[];
   ingredientQuantities: IngredientQuantity[];
+  recipeCategories: RecipeCategory[];
 
 }

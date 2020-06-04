@@ -2,21 +2,37 @@
   <h3 class="font-weight-bold text-center dark-grey-text pb-2">Nowe Narzędzie</h3>
   <hr class="w-header my-4 text-center w-75 mb-2">
 
-  <form [formGroup]="toolFormGroup" class="p-5" width="70%">
+  <form [formGroup]="toolFormGroup" class="p-5" width="70%" novalidate>
 
-    <div formGroupName="tool" class="form-area colored-border colored-border-focus">
+    <div class="form-area colored-border colored-border-focus">
+
 
       <label for="defaultSaveFormName">Nazwa</label>
-      <input formControlName="name" type="text" id="defaultSaveFormName" class="form-control mb-4" placeholder="Nazwa narzędzia">
-
+      <input formControlName="name" type="text" id="defaultSaveFormName" class="form-control mb-4"
+             placeholder="Nazwa narzędzia">
+      <div *ngIf="name.invalid && (name.dirty || name.touched)"
+           class="alert alert-danger">
+        <div *ngIf="name.errors.required">
+          Nazwa narzędzia jest wymagana.
+        </div>
+        <div *ngIf="name.errors.minlength">
+          Nazwa musi się składać z conajmniej 3 znaków.
+        </div>
+        <div *ngIf="name.errors.maxlength">
+          Nazwa musi się składać z maksymalnie 50 znaków.
+        </div>
+      </div>
 
       <label for="defaultSaveFormDescription">Krótki opis</label>
-      <textarea formControlName="description" id="defaultSaveFormDescription" class="form-control mb-4" placeholder="Krótki opis narzędzia"></textarea>
+      <textarea formControlName="description" id="defaultSaveFormDescription" class="form-control mb-4"
+                placeholder="Krótki opis narzędzia"></textarea>
 
       <br>
       <hr class="w-header my-4 text-center mb-2">
 
-      <button (click)="onSubmit()" routerLink="/" class="btn btn-light" type="submit">Dodaj nowe narzędzie</button>
+      <button [disabled]="toolFormGroup.invalid || toolFormGroup.pristine" (click)="onSubmit()" routerLink="/"
+              class="btn btn-light" type="submit">Dodaj nowe narzędzie
+      </button>
     </div>
   </form>
 

@@ -12,8 +12,9 @@ Current progress: <br>
 - added ingredients list page view and service
 - added ingredient add form and service, fully armed
 - added recipe add form view 
-- added alerts service and basic errors handling
+- added alerts service and basic crud errors handling
 - almost full CRUD support (except Put's)
+- added validators
 
 Main Page View:
 
@@ -33,8 +34,8 @@ Recipe add form view:
 
 Ingredient add form view: 
 
-![alt text](https://i.imgur.com/ffjN3We.png?1)
+![alt text](https://i.imgur.com/33Cx1p5.png?1)
 
 Ingredients view(in progress):
 
-![alt text](https://i.imgur.com/Oo2tocl.png?1) 
+![alt text](https://i.imgur.com/bmLVTom.png?1)

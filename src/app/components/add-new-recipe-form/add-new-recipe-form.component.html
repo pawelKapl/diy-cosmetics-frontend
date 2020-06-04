@@ -5,7 +5,7 @@
 
   <form [formGroup]="recipeFormGroup" class="p-5" width="70%">
 
-    <div formGroupName="recipe" class="form-area colored-border colored-border-focus">
+    <div class="form-area colored-border colored-border-focus">
 
       <label for="defaultFormControlTools">Kategoria</label>
       <div class="mb-4">
@@ -18,20 +18,66 @@
       </div>
 
       <label for="defaultSaveFormFirstName">Nazwa</label>
-      <input formControlName="name" type="text" id="defaultSaveFormFirstName" class="form-control" placeholder="Nazwa receptury"><br>
+      <input formControlName="name" type="text" id="defaultSaveFormFirstName" class="form-control"
+             placeholder="Nazwa receptury">
 
+      <div *ngIf="name.invalid && (name.dirty || name.touched)"
+           class="alert alert-danger">
+        <div *ngIf="name.errors.required">
+          Nazwa receptury jest wymagana.
+        </div>
+        <div *ngIf="name.errors.minlength">
+          Nazwa musi się składać z conajmniej 3 znaków.
+        </div>
+        <div *ngIf="name.errors.maxlength">
+          Nazwa musi się składać z maksymalnie 50 znaków.
+        </div>
+      </div>
+
+      <br>
       <label for="defaultSaveFormShortDescription">Krótki opis</label>
-      <input formControlName="intro" type="text" id="defaultSaveFormShortDescription" class="form-control" placeholder="Wstępny opis"><br>
+      <input formControlName="intro" type="text" id="defaultSaveFormShortDescription" class="form-control"
+             placeholder="Wstępny opis"><br>
 
       <label for="defaultSaveFormDescription">Pełny opis</label>
-      <textarea formControlName="description" id="defaultSaveFormDescription" class="form-control" placeholder="Opis receptury"></textarea><br>
+      <textarea formControlName="description" id="defaultSaveFormDescription" class="form-control"
+                placeholder="Opis receptury"></textarea><br>
 
       <label for="defaultSaveFormPrepTime">Czas przygotowania</label>
-      <input formControlName="prepTime" type="email" id="defaultSaveFormPrepTime" class="form-control mb-4 col-sm-1" placeholder="sec">
+      <input formControlName="prepTime" type="email" id="defaultSaveFormPrepTime" class="form-control mb-4 col-sm-1"
+             placeholder="sec">
+
+      <div *ngIf="prepTime.invalid && (prepTime.dirty || prepTime.touched)"
+           class="alert alert-danger">
+        <div *ngIf="prepTime.errors.required">
+          Czas przygotowania jest wymagany.
+        </div>
+        <div *ngIf="prepTime.errors.pattern">
+          Dopuszczalne są jedynie cyfry i liczby.
+        </div>
+        <div *ngIf="prepTime.errors.max">
+          Czas przygotowania nie może być dłuższy niż 1000 min.
+        </div>
+        <div *ngIf="prepTime.errors.min">
+          Czas przygotowania nie może być krótszy niż 3 min.
+        </div>
+      </div>
 
       <label for="textInput">Adres do zdjęcia</label>
-      <input formControlName="imageUrl" type="text" id="textInput" class="form-control mb-2" placeholder="Adres www zdjęcia"><br>
+      <input formControlName="imageUrl" type="text" id="textInput" class="form-control mb-2"
+             placeholder="Adres www zdjęcia">
 
+      <div *ngIf="imageUrl.invalid && (imageUrl.dirty || imageUrl.touched)"
+           class="alert alert-danger">
+        <div *ngIf="imageUrl.errors.required">
+          Adres zdjęcia jest wymagany.
+        </div>
+        <div *ngIf="imageUrl.errors.pattern">
+          Nieprawidłowa forma adresu. Adres musi się rozpoczynać od http:// lub https://
+        </div>
+      </div>
+
+      <br>
       <hr class="w-header my-4 text-center mb-2">
 
       <label for="defaultSaveFormDifficulty">Trudność</label>
@@ -42,6 +88,12 @@
           <option value="MODERATE">MODERATE</option>
           <option value="HARD">HARD</option>
         </select>
+      </div>
+      <div *ngIf="difficulty.invalid && (difficulty.dirty || difficulty.touched)"
+           class="alert alert-danger">
+        <div *ngIf="difficulty.errors.required">
+          Podanie poziomu trudności jest wymagane.
+        </div>
       </div>
 
       <label for="defaultFormCategory">Lista potrzebych narzędzi</label>
@@ -66,9 +118,22 @@
 
           <label for="defaultFormSteps">Nazwa kroku {{i + 1}}</label>
           <input type="text" formControlName="name" class="form-control mb-4" placeholder="Nazwa kroku">
+          <div *ngIf="stepCheck(i).invalid && (stepCheck(i).dirty || stepCheck(i).touched)"
+               class="alert alert-danger">
+            <div *ngIf="stepCheck(i).errors.required">
+              Nazwa kroku jest wymagana.
+            </div>
+            <div *ngIf="stepCheck(i).errors.minlength">
+              Nazwa musi się składać z conajmniej 3 znaków.
+            </div>
+            <div *ngIf="stepCheck(i).errors.maxlength">
+              Nazwa musi się składać z maksymalnie 50 znaków.
+            </div>
+          </div>
 
           <label for="defaultFormSteps">Opis</label>
-          <textarea class="form-control" placeholder="Opis kroku" formControlName="detail" class="form-control mb-4"></textarea>
+          <textarea class="form-control" placeholder="Opis kroku" formControlName="detail"
+                    class="form-control mb-4"></textarea>
           <hr class="w-header my-4 text-center mb-2">
 
           <td class="align-middle">
@@ -90,8 +155,19 @@
           <label for="defaultFormIngredients">Nazwa składnika {{i + 1}}</label>
           <select class="form-control mb-5" formControlName="ingredient">
             <option disabled selected [ngValue]=null>Składniki</option>
-            <option *ngFor="let tempIngredient of ingredientList" [ngValue]="tempIngredient">{{tempIngredient.name}}</option>
+            <option *ngFor="let tempIngredient of ingredientList"
+                    [ngValue]="tempIngredient">{{tempIngredient.name}}</option>
           </select>
+
+          <div
+            *ngIf="ingredientQuantityIngredientCheck(i).invalid &&
+                    (ingredientQuantityIngredientCheck(i).dirty ||
+                      ingredientQuantityIngredientCheck(i).touched)"
+            class="alert alert-danger">
+            <div *ngIf="ingredientQuantityIngredientCheck(i).errors.required">
+              Wybór składnika z listy jest wymagany.
+            </div>
+          </div>
 
           <label for="defaultFormIngredients">Ilość</label>
           <div class="form-inline mb-4">
@@ -101,6 +177,36 @@
               <option disabled selected [ngValue]=null>Jednostka</option>
               <option *ngFor="let tempUom of unitOfMeasureList" [ngValue]="tempUom">{{tempUom.uom}}</option>
             </select>
+
+          </div>
+
+          <div
+            *ngIf="ingredientQuantityAmountCheck(i).invalid &&
+                    (ingredientQuantityAmountCheck(i).dirty ||
+                      ingredientQuantityAmountCheck(i).touched)"
+            class="alert alert-danger">
+            <div *ngIf="ingredientQuantityAmountCheck(i).errors.required">
+              Podanie ilości składnika jest wymagane.
+            </div>
+            <div *ngIf="ingredientQuantityAmountCheck(i).errors.pattern">
+              Dopuszczalne są jedynie cyfry i liczby.
+            </div>
+            <div *ngIf="ingredientQuantityAmountCheck(i).errors.max">
+              Ilość składnika nie może być większa niż 10000.
+            </div>
+            <div *ngIf="ingredientQuantityAmountCheck(i).errors.min">
+              lość składnika nie może być mniejsza niż 1.
+            </div>
+          </div>
+
+          <div
+            *ngIf="ingredientQuantityUomCheck(i).invalid &&
+                    (ingredientQuantityUomCheck(i).dirty ||
+                      ingredientQuantityUomCheck(i).touched)"
+            class="alert alert-danger">
+            <div *ngIf="ingredientQuantityUomCheck(i).errors.required">
+              Wybór jednostki z listy jest wymagany.
+            </div>
           </div>
 
           <hr class="w-header my-4 text-center mb-2">
@@ -111,10 +217,12 @@
             </button>
           </td>
         </tr>
-      </table>
-      <br>
+      </table><br>
+
       <hr class="w-header my-4 text-center mb-2">
-      <button (click)="onSubmit()" routerLink="/" class="btn btn-light" type="submit">Dodaj nową recepturę</button>
+      <button [disabled]="recipeFormGroup.invalid || recipeFormGroup.pristine" (click)="onSubmit()" routerLink="/"
+              class="btn btn-light" type="submit">Dodaj nową recepturę
+      </button>
 
     </div>
   </form>

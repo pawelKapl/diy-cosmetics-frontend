@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseURI: 'http://localhost:8082/api'
+  baseURI: 'http://localhost:8082/api',
+  reg: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
 };
 
 
