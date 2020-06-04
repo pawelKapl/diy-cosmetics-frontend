@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RecipeService} from '../../services/recipe.service';
 import {Recipe} from '../../models/recipe';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Alert} from '../alerts/self-closing-alert/self-closing-alert.component';
 import {AlertsService} from '../../services/alerts.service';
 
@@ -20,10 +20,8 @@ export class RecipeListComponent implements OnInit {
   thePageSize = 6;
   theTotalElements = 0;
 
-  alerts: Alert[] = [];
-
-
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute) {
+  constructor(private recipeService: RecipeService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {

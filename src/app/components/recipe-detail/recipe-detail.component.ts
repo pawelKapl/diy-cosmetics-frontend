@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Recipe} from '../../models/recipe';
 import {RecipeService} from '../../services/recipe.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {IngredientService} from '../../services/ingredient.service';
 import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
 
@@ -19,7 +19,8 @@ export class RecipeDetailComponent implements OnInit {
   constructor(private recipeService: RecipeService,
               private ingredientService: IngredientService,
               private route: ActivatedRoute,
-              private modal: ConfirmationModalComponent) {
+              private modal: ConfirmationModalComponent,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -38,11 +39,16 @@ export class RecipeDetailComponent implements OnInit {
     );
   }
 
+  delete(recipe: Recipe) {
+    this.recipeService.deleteRecipe(recipe);
+  }
+
   open(content) {
     this.modal.open(content);
   }
 
-  delete(recipe: Recipe) {
-    this.recipeService.deleteRecipe(recipe);
+  reload() {
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+      this.router.navigate(['/recipeCategory']));
   }
 }

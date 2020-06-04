@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Ingredient} from '../../models/ingredient';
 import {IngredientService} from '../../services/ingredient.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
 import {Alert} from '../alerts/self-closing-alert/self-closing-alert.component';
 
@@ -12,7 +12,6 @@ import {Alert} from '../alerts/self-closing-alert/self-closing-alert.component';
 })
 export class IngredientListComponent implements OnInit {
 
-  alerts: Alert[] = [];
 
   ingredients: Ingredient[] = [];
 
@@ -23,7 +22,8 @@ export class IngredientListComponent implements OnInit {
 
   constructor(private ingredientService: IngredientService,
               private route: ActivatedRoute,
-              private modal: ConfirmationModalComponent) {}
+              private modal: ConfirmationModalComponent,
+              private router: Router) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => this.getIngredients());
@@ -70,5 +70,10 @@ export class IngredientListComponent implements OnInit {
 
     this.ingredientService.deleteIngredient(ingredient);
     this.getIngredients();
+  }
+
+  reload() {
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+      this.router.navigate(['/ingredients']));
   }
 }

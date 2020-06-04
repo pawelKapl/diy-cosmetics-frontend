@@ -18,7 +18,7 @@
         <p>Czy napewno chcesz usunąć {{recipe.name}}?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(delete(recipe))" routerLink="/recipeCategory">
+        <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(delete(recipe)); reload()">
           Usuń
         </button>
       </div>
@@ -67,7 +67,6 @@
 
       </div>
       <!-- Grid column -->
-
 
       <!-- Grid column -->
       <div class="col-lg-5 col-md-12 mb-4">
@@ -185,11 +184,9 @@
 
     </div>
 
-
     <!-- /.Steps Section -->
 
   </section>
   <!--Section: Content-->
-
 
 </div>
