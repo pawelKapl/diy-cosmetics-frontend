@@ -1,5 +1,5 @@
 <div class="container my-4">
-<app-confirmation-modal></app-confirmation-modal>
+  <app-confirmation-modal></app-confirmation-modal>
 
   <!--Section: Content-->
   <section class="magazine-section dark-grey-text">
@@ -18,7 +18,8 @@
         <p>Czy napewno chcesz usunąć {{recipe.name}}?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(delete(recipe)); reload()">
+        <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(delete(recipe))"
+                routerLink="/">
           Usuń
         </button>
       </div>
@@ -70,7 +71,7 @@
 
       <!-- Grid column -->
       <div class="col-lg-5 col-md-12 mb-4">
-      <p class="font-weight-bold dark-grey-text">Lista składników (100ml produktu):</p>
+        <p class="font-weight-bold dark-grey-text">Lista składników (100ml produktu):</p>
         <!-- Ingredients -->
         <div *ngFor="let tempIngredient of recipe.ingredientQuantities" class="single-news mb-4">
 
@@ -157,7 +158,8 @@
 
         <h3 class="font-weight-bold text-center dark-grey-text pb-2">Instrukcja przygotowania</h3>
         <hr class="w-header text-center w-75 my-4">
-        <p class="lead text-center text-muted pt-2 mb-5">Postępuj zgodnie z poniższymi wskazówkami by uzyskać najlepszy rezultat.</p>
+        <p class="lead text-center text-muted pt-2 mb-5">Postępuj zgodnie z poniższymi wskazówkami by uzyskać najlepszy
+          rezultat.</p>
 
         <div class="row align-items-center">
 
@@ -166,7 +168,7 @@
             <ol class="step pl-0">
               <li *ngFor="let tempStep of recipe.steps" class="step-element pb-0">
                 <div class="step-number">
-                  <span class="number">{{recipe.steps.indexOf(tempStep)+1}}</span>
+                  <span class="number">{{recipe.steps.indexOf(tempStep) + 1}}</span>
                 </div>
                 <div class="step-excerpt">
                   <h6 class="font-weight-bold dark-grey-text mb-3">{{tempStep.name}}</h6>

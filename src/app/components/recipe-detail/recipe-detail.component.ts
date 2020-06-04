@@ -46,9 +46,4 @@ export class RecipeDetailComponent implements OnInit {
   open(content) {
     this.modal.open(content);
   }
-
-  reload() {
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-      this.router.navigate(['/recipeCategory']));
-  }
 }

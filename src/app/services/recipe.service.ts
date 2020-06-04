@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Recipe} from '../models/recipe';
 import {RecipeCategory} from '../models/recipe-category';
 import {AbstractControl} from '@angular/forms';
 import {environment} from '../../environments/environment';
-import {ActivatedRoute} from '@angular/router';
 import {AlertsService} from './alerts.service';
 
 @Injectable({
@@ -51,24 +50,34 @@ export class RecipeService {
   }
 
   saveRecipe(recipe: AbstractControl) {
-    console.log(recipe.value);
     this.httpClient.post<HttpResponse<any>>(this.baseUrl, JSON.stringify(recipe.value), {
       observe: 'response',
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     }).subscribe(data => {
-      console.log(`Saved Recipe: ${JSON.stringify(data)}`);
-      if (data.status === 201) {
-        this.alertsService.addNewAlert(`Nowy składnik został pomyślnie dodany`, `success`);
+        console.log(`Saved Recipe: ${JSON.stringify(data)}`);
+        if (data.status === 201) {
+          this.alertsService.addNewAlert(`Nowa receptura została pomyślnie dodana`, `success`);
+        }
+      },
+      error => {
+        console.log(error);
+        this.alertsService.addNewAlert(`Coś poszło nie tak, nie udało się dodać nowej receptury`, `danger`);
       }
-    });
+    );
   }
 
   deleteRecipe(recipe: Recipe) {
     console.log(`Deleting recipe: ${recipe.name}...`);
     this.httpClient.delete<HttpResponse<any>>(`${this.baseUrl}/${recipe.id}`, {observe: 'response'}).subscribe(
       data => {
-        console.log(data.status),
-          this.alertsService.addNewAlert(`Receptura ${recipe.name} nieodwracalnie usunięta!`, 'success');
+        console.log(data);
+        if (data.status === 200) {
+          this.alertsService.addNewAlert(`Receptura ${recipe.name} została nieodwracalnie usunięta!`, 'success');
+        }
+      },
+      error => {
+        console.log(error);
+        this.alertsService.addNewAlert(`Coś poszło nie tak, nie udało się usunąć receptury ${recipe.name}`, `danger`);
       });
   }
 }

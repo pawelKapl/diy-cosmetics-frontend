@@ -3,7 +3,6 @@ import {Ingredient} from '../../models/ingredient';
 import {IngredientService} from '../../services/ingredient.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
-import {Alert} from '../alerts/self-closing-alert/self-closing-alert.component';
 
 @Component({
   selector: 'app-ingredient-list',

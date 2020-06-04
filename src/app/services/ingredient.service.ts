@@ -36,16 +36,19 @@ export class IngredientService {
   }
 
   saveIngredient(value: AbstractControl) {
-    console.log(value.value);
     this.httpClient.post<HttpResponse<any>>(this.baseIngredientsUrl, JSON.stringify(value.value), {
       observe: 'response',
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     }).subscribe(data => {
-      console.log(`Saved Ingredient: ${JSON.stringify(data)}`);
-      if (data.status === 201) {
-        this.alertsService.addNewAlert(`Nowy składnik został pomyślnie dodany`, `success`);
-      }
-    });
+        console.log(`Saved Ingredient: ${JSON.stringify(data)}`);
+        if (data.status === 201) {
+          this.alertsService.addNewAlert(`Nowy składnik został pomyślnie dodany`, `success`);
+        }
+      },
+      error => {
+        console.log(error);
+        this.alertsService.addNewAlert(`Coś poszło nie tak, nie udało się dodać nowej receptury`, `danger`);
+      });
   }
 
   deleteIngredient(ingredient: Ingredient) {
@@ -63,6 +66,9 @@ export class IngredientService {
           if (err.status === 409) {
             this.alertsService
               .addNewAlert(`Nie można usunąć składnika ${ingredient.name}, gdyż jest wykorzystywany w recepturach`, 'danger');
+          } else {
+            this.alertsService
+              .addNewAlert(`Coś poszło nie tak, nie można usunąć składnika ${ingredient.name}`, 'danger');
           }
         },
         () => console.log(`Http Request Completed.`)
