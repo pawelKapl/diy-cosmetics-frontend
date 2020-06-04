@@ -2,10 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Ingredient} from '../../models/ingredient';
 import {IngredientService} from '../../services/ingredient.service';
 import {ActivatedRoute} from '@angular/router';
-import {throwError} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
 import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
+import {Alert} from '../alerts/self-closing-alert/self-closing-alert.component';
 
 @Component({
   selector: 'app-ingredient-list',
@@ -13,6 +11,8 @@ import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-mod
   styleUrls: ['./ingredient-list.component.css']
 })
 export class IngredientListComponent implements OnInit {
+
+  alerts: Alert[] = [];
 
   ingredients: Ingredient[] = [];
 
@@ -49,8 +49,9 @@ export class IngredientListComponent implements OnInit {
     }
   }
 
-  inverseOrder(): void {
+  inverseOrderAndRefresh(): void {
     this.order = this.order === 'asc' ? 'desc' : 'asc';
+    this.ngOnInit();
   }
 
   private processResults() {
@@ -67,24 +68,7 @@ export class IngredientListComponent implements OnInit {
 
   deleteIngredient(ingredient: Ingredient) {
 
-    this.ingredientService.deleteIngredient(ingredient).pipe(
-      map((res: Response) => res.json()),
-      catchError(this.handleError)
-    ).subscribe(
-      res => console.log('HTTP response', res),
-      err => console.log('HTTP Error', JSON.stringify(err)),
-      () => console.log('HTTP request completed.')
-    );
-  }
-
-  private handleError(err: HttpErrorResponse) {
-    if (JSON.stringify(err).includes('Data Integrity Violation')) {
-
-      this.modal.open(this.modal);
-
-      return throwError(err.message);
-    } else {
-      return throwError(err.message);
-    }
+    this.ingredientService.deleteIngredient(ingredient);
+    this.getIngredients();
   }
 }

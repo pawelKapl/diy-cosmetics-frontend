@@ -1,5 +1,5 @@
 <div class="container my-4">
-
+<app-confirmation-modal></app-confirmation-modal>
 
   <!--Section: Content-->
   <section class="magazine-section dark-grey-text">
@@ -15,10 +15,10 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Czy napewno chcesz usunąć tę recepturę?</p>
+        <p>Czy napewno chcesz usunąć {{recipe.name}}?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(delete(recipe))" routerLink="/">
+        <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(delete(recipe))" routerLink="/recipeCategory">
           Usuń
         </button>
       </div>

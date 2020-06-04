@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {Observable, Subject} from 'rxjs';
 import {Recipe} from '../models/recipe';
 import {RecipeCategory} from '../models/recipe-category';
 import {AbstractControl} from '@angular/forms';
 import {environment} from '../../environments/environment';
+import {ActivatedRoute} from '@angular/router';
+import {AlertsService} from './alerts.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +16,15 @@ export class RecipeService {
   private baseUrl = `${environment.baseURI}/recipes`;
   private categoriesUrl = `${environment.baseURI}/recipeCategories`;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+              private alertsService: AlertsService) {
+  }
 
   getRecipeListByCategoryPaginate(thePage: number,
                                   thePageSize: number,
                                   categoryId: number): Observable<GetResponseRecipes> {
     const searchUrl = `${this.baseUrl}?cat=${categoryId}`
-                      + `&size=${thePageSize}&page=${thePage}`;
+      + `&size=${thePageSize}&page=${thePage}`;
     return this.httpClient.get<GetResponseRecipes>(searchUrl);
   }
 
@@ -33,7 +37,7 @@ export class RecipeService {
     console.log(`pageSize: ${thePageSize} pageNumber: ${thePage}`);
     const recipesUrl = `${this.baseUrl}?size=${thePageSize}&page=${thePage}`;
     return this.httpClient
-                .get<GetResponseRecipes>(recipesUrl);
+      .get<GetResponseRecipes>(recipesUrl);
   }
 
   getRecipeSearchResults(query: string): Observable<Recipe[]> {
@@ -48,23 +52,32 @@ export class RecipeService {
 
   saveRecipe(recipe: AbstractControl) {
     console.log(recipe.value);
-    this.httpClient.post(this.baseUrl, JSON.stringify(recipe.value), {
+    this.httpClient.post<HttpResponse<any>>(this.baseUrl, JSON.stringify(recipe.value), {
+      observe: 'response',
       headers: new HttpHeaders().set('Content-Type', 'application/json')
-    }).subscribe( data => console.log(`Saved Recipe: ${JSON.stringify(data)}`));
+    }).subscribe(data => {
+      console.log(`Saved Recipe: ${JSON.stringify(data)}`);
+      if (data.status === 201) {
+        this.alertsService.addNewAlert(`Nowy składnik został pomyślnie dodany`, `success`);
+      }
+    });
   }
 
   deleteRecipe(recipe: Recipe) {
     console.log(`Deleting recipe: ${recipe.name}...`);
-    this.httpClient.delete(`${this.baseUrl}/${recipe.id}`).subscribe(
-      data => console.log(data));
+    this.httpClient.delete<HttpResponse<any>>(`${this.baseUrl}/${recipe.id}`, {observe: 'response'}).subscribe(
+      data => {
+        console.log(data.status),
+          this.alertsService.addNewAlert(`Receptura ${recipe.name} nieodwracalnie usunięta!`, 'success');
+      });
   }
 }
 
 interface GetResponseRecipes {
-    content: Recipe[];
-    size: number;
-    totalElements: number;
-    totalPages: number;
-    number: number;
+  content: Recipe[];
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  number: number;
 }
 

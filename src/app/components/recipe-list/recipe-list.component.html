@@ -3,7 +3,7 @@
   <hr class="w-header text-center w-75 my-4">
 
   <app-recipe-category-menu></app-recipe-category-menu>
-
+  <app-self-closing-alert></app-self-closing-alert>
   <section>
 
     <!--Tab panels-->
@@ -22,7 +22,8 @@
             <a class="card hoverable mb-4" data-toggle="modal" data-target="#basicExampleModal">
 
               <!-- Card image -->
-              <img routerLink="/recipe/{{recipe.id}}" class="card-img-top" src="{{recipe.imageUrl}}" alt="Card image cap">
+              <img routerLink="/recipe/{{recipe.id}}" class="card-img-top" src="{{recipe.imageUrl}}"
+                   alt="Card image cap">
 
               <!-- Card content -->
               <div class="card-body">
@@ -53,9 +54,9 @@
 <div>
   <div *ngIf="theTotalElements > 6" class="pagination pg-blue-grey d-flex justify-content-center">
     <ngb-pagination class="" [(page)]="thePageNumber"
-                      [pageSize]="thePageSize"
-                      [collectionSize]="theTotalElements"
-                      (pageChange)="getRecipeList()">
+                    [pageSize]="thePageSize"
+                    [collectionSize]="theTotalElements"
+                    (pageChange)="getRecipeList()">
     </ngb-pagination>
   </div>
 </div>

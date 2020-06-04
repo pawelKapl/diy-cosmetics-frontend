@@ -3,7 +3,7 @@ import {Recipe} from '../../models/recipe';
 import {RecipeService} from '../../services/recipe.service';
 import {ActivatedRoute} from '@angular/router';
 import {IngredientService} from '../../services/ingredient.service';
-import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
+import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -15,13 +15,11 @@ export class RecipeDetailComponent implements OnInit {
   recipe: Recipe = new Recipe();
   private recipeId: number;
 
+
   constructor(private recipeService: RecipeService,
               private ingredientService: IngredientService,
               private route: ActivatedRoute,
-              config: NgbModalConfig,
-              private modalService: NgbModal) {
-    config.backdrop = 'static';
-    config.keyboard = false;
+              private modal: ConfirmationModalComponent) {
   }
 
   ngOnInit(): void {
@@ -41,7 +39,7 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content);
+    this.modal.open(content);
   }
 
   delete(recipe: Recipe) {
