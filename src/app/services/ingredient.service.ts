@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Ingredient} from '../models/ingredient';
 import {AbstractControl} from '@angular/forms';
 import {UnitOfMeasure} from '../models/unit-of-measure';
 import {environment} from '../../environments/environment';
+import {AlertsService} from './alerts.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class IngredientService {
   private baseUomUrl = `${environment.baseURI}/units`;
 
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private alertsService: AlertsService) {
   }
 
   getUnitsOfMeasure(): Observable<UnitOfMeasure[]> {
@@ -35,16 +37,43 @@ export class IngredientService {
 
   saveIngredient(value: AbstractControl) {
     console.log(value.value);
-    this.httpClient.post(this.baseIngredientsUrl, JSON.stringify(value.value), {
+    this.httpClient.post<HttpResponse<any>>(this.baseIngredientsUrl, JSON.stringify(value.value), {
+      observe: 'response',
       headers: new HttpHeaders().set('Content-Type', 'application/json')
-    }).subscribe(data => console.log(`Saved Ingredient: ${JSON.stringify(data)}`));
+    }).subscribe(data => {
+      console.log(`Saved Ingredient: ${JSON.stringify(data)}`);
+      if (data.status === 201) {
+        this.alertsService.addNewAlert(`Nowy składnik został pomyślnie dodany`, `success`);
+      }
+    });
+  }
+
+  deleteIngredient(ingredient: Ingredient) {
+    console.log(`Deleteing ingredient ${ingredient.name}...`);
+    return this.httpClient
+      .delete<HttpResponse<any>>(`${this.baseIngredientsUrl}/${ingredient.id}`, {observe: 'response'})
+      .subscribe(
+        res => {
+          console.log(res);
+          if (res.status === 200) {
+            this.alertsService.addNewAlert(`Składnik ${ingredient.name} trwale usunięty!`, 'success');
+          }
+        },
+        err => {
+          if (err.status === 409) {
+            this.alertsService
+              .addNewAlert(`Nie można usunąć składnika ${ingredient.name}, gdyż jest wykorzystywany w recepturach`, 'danger');
+          }
+        },
+        () => console.log(`Http Request Completed.`)
+      );
   }
 }
 
 interface GetResponseIngredients {
-    content: Ingredient[];
-    size: number;
-    totalElements: number;
-    totalPages: number;
-    number: number;
+  content: Ingredient[];
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  number: number;
 }

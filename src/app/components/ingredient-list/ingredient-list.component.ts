@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Ingredient} from '../../models/ingredient';
 import {IngredientService} from '../../services/ingredient.service';
 import {ActivatedRoute} from '@angular/router';
+import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
+import {Alert} from '../alerts/self-closing-alert/self-closing-alert.component';
 
 @Component({
   selector: 'app-ingredient-list',
@@ -10,6 +12,8 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class IngredientListComponent implements OnInit {
 
+  alerts: Alert[] = [];
+
   ingredients: Ingredient[] = [];
 
   thePageNumber = 1;
@@ -17,10 +21,13 @@ export class IngredientListComponent implements OnInit {
   theTotalElements = 0;
   order = 'asc';
 
-  constructor(private ingredientService: IngredientService, private route: ActivatedRoute) { }
+  constructor(private ingredientService: IngredientService,
+              private route: ActivatedRoute,
+              private modal: ConfirmationModalComponent) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => this.getIngredients());
+
   }
 
   getIngredients() {
@@ -42,8 +49,9 @@ export class IngredientListComponent implements OnInit {
     }
   }
 
-  inverseOrder(): void {
+  inverseOrderAndRefresh(): void {
     this.order = this.order === 'asc' ? 'desc' : 'asc';
+    this.ngOnInit();
   }
 
   private processResults() {
@@ -54,4 +62,13 @@ export class IngredientListComponent implements OnInit {
     };
   }
 
+  open(content) {
+    this.modal.open(content);
+  }
+
+  deleteIngredient(ingredient: Ingredient) {
+
+    this.ingredientService.deleteIngredient(ingredient);
+    this.getIngredients();
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {IngredientService} from '../../services/ingredient.service';
 
@@ -11,10 +11,10 @@ export class AddNewIngredientFormComponent implements OnInit {
 
   ingredientFormGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private ingredientService: IngredientService) { }
+  constructor(private formBuilder: FormBuilder, private ingredientService: IngredientService) {
+  }
 
   ngOnInit(): void {
-
     this.ingredientFormGroup = this.formBuilder.group({
       ingredient: this.formBuilder.group({
         name: [''],

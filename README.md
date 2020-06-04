@@ -6,22 +6,24 @@ Frontend: Angular 9 <br>
 Backend: Spring Boot - repo: https://github.com/darkonion/diy-cosmetics-database<br>
 
 Current progress: <br>
-- loaded example recipes on the main page - from h2 embedded database on backend <br>
+- loaded example recipes on the main page - from h2 embedded database on backend
 - added recipe details view
 - added pagination support
 - added ingredients list page view and service
 - added ingredient add form and service, fully armed
 - added recipe add form view 
+- added alerts service and basic errors handling
+- almost full CRUD support (except Put's)
 
-Main Page View(in progress):
+Main Page View:
 
-![alt text](https://i.imgur.com/L0HRbZh.png?1)
+![alt text](https://i.imgur.com/lNnkPdX.png?1)
 
-Detail View(in progress):
+Detail View:
 
 ![alt text](https://i.imgur.com/VPjgAJV.png?1)
 
-Detail View(in progress):
+Detail View:
 
 ![alt text](https://i.imgur.com/TDVhETK.png?1)
 

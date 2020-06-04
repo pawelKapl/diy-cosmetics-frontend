@@ -1,66 +1,94 @@
 <div class="container my-5">
+
+  <app-confirmation-modal></app-confirmation-modal>
   <h3 class="font-weight-bold text-center dark-grey-text pb-2">Składniki</h3>
   <hr class="w-header my-4 text-center w-75 mb-5">
+  <app-self-closing-alert></app-self-closing-alert>
 
-    <!--Section: Content-->
-    <section class="dark-grey-text">
+  <!--Section: Content-->
+  <section class="dark-grey-text">
 
-      <div class="table-responsive">
+    <div class="table-responsive">
 
-        <table class="table product-table mb-0">
+      <table class="table product-table mb-0">
 
-          <!-- Table head -->
-          <thead class="mdb-color lighten-5">
-          <tr>
-            <th>
-              <strong>Składnik</strong>
-            </th>
-            <th></th>
-            <th>
-              <strong>Opis</strong>
-            </th>
-            <th><a (click)="inverseOrder(); getIngredients()"><i class="fas fa-sort-alpha-up mr-3"></i></a></th>
-          </tr>
-          </thead>
-          <!-- /.Table head -->
+        <!-- Table head -->
+        <thead class="mdb-color lighten-5">
+        <tr>
+          <th>
+            <strong>Składnik</strong>
+          </th>
+          <th></th>
+          <th>
+            <strong>Opis</strong>
+          </th>
+          <th><a (click)="inverseOrderAndRefresh(); getIngredients()"><i class="fas fa-sort-alpha-up mr-3"></i></a></th>
+        </tr>
+        </thead>
+        <!-- /.Table head -->
 
-          <!-- Table body -->
-          <tbody>
+        <!-- Table body -->
+        <tbody>
 
-          <!-- First row -->
-          <tr *ngFor="let tempIngredient of ingredients">
-            <td class="align-middle" width="20%">
-              <img style="max-width: 70%" src="{{tempIngredient.imageUrl}}" alt="" class="img-fluid z-depth-1">
-            </td>
-            <td class="align-middle" width="20%">
-              <h5 class="mt-3">
-                <strong>{{tempIngredient.name}}</strong>
-              </h5>
-              <p class="text-muted">{{tempIngredient.latinName}}</p>
-            </td>
-            <td class="align-middle" width="50%">{{tempIngredient.description}}</td>
+        <!-- Single row -->
+        <tr *ngFor="let tempIngredient of ingredients">
+          <td class="align-middle" width="20%">
+            <img style="max-width: 70%" src="{{tempIngredient.imageUrl}}" alt="" class="img-fluid z-depth-1">
+          </td>
+          <td class="align-middle" width="20%">
+            <h5 class="mt-3">
+              <strong>{{tempIngredient.name}}</strong>
+            </h5>
+            <p class="text-muted">{{tempIngredient.latinName}}</p>
+          </td>
+          <td class="align-middle" width="50%">{{tempIngredient.description}}</td>
 
-            <td class="align-middle"  width="10%">
-              <a href="{{tempIngredient.blogUrl}}" type="button" class="btn btn-light"
+          <td class="align-middle" width="10%">
+            <div class="d-flex align-items-center">
+              <a href="{{tempIngredient.blogUrl}}" type="button" class="btn btn-light d-flex"
                  data-toggle="tooltip" data-placement="top">Więcej
               </a>
-            </td>
-          </tr>
-          <!-- /.First row -->
+              <a title="usuń składnik" class="font-small dark-grey-text ml-2" (click)="open(content)">x</a>
+            </div>
 
-          </tbody>
-          <!-- /.Table body -->
+          </td>
 
-        </table>
+          <!-- modal delete -->
+          <ng-template #content let-c="close" let-d="dismiss">
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Uwaga! Usuwanie składnika!</h4>
+              <button type="button" class="btn btn-outline-dark btn-sm" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">x</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Czy napewno chcesz usunąć {{tempIngredient.name}}?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark justify-content-center"
+                      (click)="d(deleteIngredient(tempIngredient))" routerLink="/">
+                Usuń
+              </button>
+            </div>
+          </ng-template>
+          <!-- modal delete -->
 
-      </div>
+        </tr>
+        <!-- /.Single row -->
+
+        </tbody>
+        <!-- /.Table body -->
+
+      </table>
+
+    </div>
 
 
-    </section>
-    <!--Section: Content-->
+  </section>
+  <!--Section: Content-->
 
 
-  </div>
+</div>
 
 
 <div *ngIf="theTotalElements > thePageSize" class="pagination pg-blue-grey d-flex justify-content-center">
@@ -72,3 +100,19 @@
 </div>
 
 
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Uwaga! Usuwanie składnika!</h4>
+    <button type="button" class="btn btn-outline-dark btn-sm" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">x</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Czy napewno chcesz usunąć ?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark justify-content-center" routerLink="/ingredients">
+      Usuń
+    </button>
+  </div>
+</ng-template>

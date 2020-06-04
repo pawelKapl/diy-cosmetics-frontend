@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RecipeService} from '../../services/recipe.service';
 import {Recipe} from '../../models/recipe';
 import {ActivatedRoute} from '@angular/router';
+import {Alert} from '../alerts/self-closing-alert/self-closing-alert.component';
+import {AlertsService} from '../../services/alerts.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -18,11 +20,16 @@ export class RecipeListComponent implements OnInit {
   thePageSize = 6;
   theTotalElements = 0;
 
+  alerts: Alert[] = [];
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute) { }
+
+  constructor(private recipeService: RecipeService, private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(() => { this.getRecipeList(); });
+    this.route.paramMap.subscribe(() => {
+      this.getRecipeList();
+    });
   }
 
   getRecipeList() {
@@ -42,8 +49,8 @@ export class RecipeListComponent implements OnInit {
     console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
 
     this.recipeService.getFullRecipeListPaginate(this.thePageNumber - 1,
-                                                        this.thePageSize)
-                                                        .subscribe(this.processResult());
+      this.thePageSize)
+      .subscribe(this.processResult());
   }
 
   private handleRecipeSearchResults() {
@@ -64,9 +71,9 @@ export class RecipeListComponent implements OnInit {
     this.previousCategoryId = this.currentCategoryId;
 
     this.recipeService.getRecipeListByCategoryPaginate(this.thePageNumber - 1,
-                                                              this.thePageSize,
-                                                              this.currentCategoryId)
-                                                              .subscribe(this.processResult());
+      this.thePageSize,
+      this.currentCategoryId)
+      .subscribe(this.processResult());
   }
 
   private processResult() {
