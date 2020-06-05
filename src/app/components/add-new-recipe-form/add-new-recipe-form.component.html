@@ -1,17 +1,16 @@
 <div class="container my-5">
-  <h3 class="font-weight-bold text-center dark-grey-text pb-2">Nowa Receptura</h3>
+  <h3 class="font-weight-bold text-center dark-grey-text pb-2">Dodawanie/Edycja składnika</h3>
   <hr class="w-header my-4 text-center w-75 mb-2">
 
-
-  <form [formGroup]="recipeFormGroup" class="p-5" width="70%">
+  <form [formGroup]="recipeFormGroup" class="p-5" width="70%" *ngIf="recipeFormGroup">
 
     <div class="form-area colored-border colored-border-focus">
 
       <label for="defaultFormControlTools">Kategoria</label>
       <div class="mb-4">
-        <select multiple formControlName="recipeCategories" class="custom-select" id="defaultFormControlTools">
-          <option [ngValue]="null" disabled>Wybierz kategorie (można wybrać kilka)</option>
-          <option *ngFor="let tempCategory of categoriesList" [ngValue]="tempCategory">
+        <select [compareWith]="CategoryById" class="custom-select"
+                id="defaultFormControlTools" formControlName="recipeCategories" multiple>
+          <option *ngFor="let tempCategory of categoriesList" [value]="tempCategory">
             {{tempCategory.categoryName}}
           </option>
         </select>
@@ -98,130 +97,136 @@
 
       <label for="defaultFormCategory">Lista potrzebych narzędzi</label>
       <div class="mb-5">
-        <select multiple formControlName="tools" class="custom-select" id="defaultFormCategory">
+        <select [compareWith]="ToolById" multiple formControlName="tools" class="custom-select" id="defaultFormCategory">
           <option [ngValue]="null" disabled>Wybierz narzędzia (można wybrać kilka)</option>
-          <option *ngFor="let tempTool of toolsList" [ngValue]="tempTool">
+          <option *ngFor="let tempTool of toolsList" [value]="tempTool">
             {{tempTool.name}}
           </option>
         </select>
       </div>
 
-      <hr class="w-header text-center mb-4 mt-5">
 
-      <label for="defaultFormSteps">Kroki</label>
-      <table class="table table-borderless" formArrayName="steps" id="defaultFormSteps">
-        <tr>
-          <td width="80%"></td>
-          <td><a (click)="addStep()" class="ml-3 text-info">+Dodaj Krok</a></td>
-        </tr>
-        <tr *ngFor="let step of steps().controls; let i=index" [formGroupName]="i">
+      <div *ngIf="!update">
+        <hr class="w-header text-center mb-4 mt-5">
+        <label for="defaultFormSteps">Kroki</label>
+        <table class="table table-borderless" formArrayName="steps" id="defaultFormSteps">
+          <tr>
+            <td width="80%"></td>
+            <td><a (click)="addStep()" class="ml-3 text-info">+Dodaj Krok</a></td>
+          </tr>
+          <tr *ngFor="let step of steps().controls; let i=index" [formGroupName]="i">
 
-          <label for="defaultFormSteps">Nazwa kroku {{i + 1}}</label>
-          <input type="text" formControlName="name" class="form-control mb-4" placeholder="Nazwa kroku">
-          <div *ngIf="stepCheck(i).invalid && (stepCheck(i).dirty || stepCheck(i).touched)"
-               class="alert alert-danger">
-            <div *ngIf="stepCheck(i).errors.required">
-              Nazwa kroku jest wymagana.
+            <label for="defaultFormSteps">Nazwa kroku {{i + 1}}</label>
+            <input type="text" formControlName="name" class="form-control mb-4" placeholder="Nazwa kroku">
+
+            <div *ngIf="stepCheck(i).invalid && (stepCheck(i).dirty || stepCheck(i).touched)"
+                 class="alert alert-danger">
+              <div *ngIf="stepCheck(i).errors.required">
+                Nazwa kroku jest wymagana.
+              </div>
+              <div *ngIf="stepCheck(i).errors.minlength">
+                Nazwa musi się składać z conajmniej 3 znaków.
+              </div>
+              <div *ngIf="stepCheck(i).errors.maxlength">
+                Nazwa musi się składać z maksymalnie 50 znaków.
+              </div>
             </div>
-            <div *ngIf="stepCheck(i).errors.minlength">
-              Nazwa musi się składać z conajmniej 3 znaków.
-            </div>
-            <div *ngIf="stepCheck(i).errors.maxlength">
-              Nazwa musi się składać z maksymalnie 50 znaków.
-            </div>
-          </div>
 
-          <label for="defaultFormSteps">Opis</label>
-          <textarea class="form-control" placeholder="Opis kroku" formControlName="detail"
-                    class="form-control mb-4"></textarea>
-          <hr class="w-header my-4 text-center mb-2">
+            <label for="defaultFormSteps">Opis</label>
+            <textarea class="form-control" placeholder="Opis kroku" formControlName="detail"
+                      class="form-control mb-4"></textarea>
+            <hr class="w-header my-4 text-center mb-2">
 
-          <td class="align-middle">
-            <button (click)="removeStep(i)" class="ml-5 btn btn-danger btn-sm">
-              <i class="far fa-trash-alt"></i>
-            </button>
-          </td>
-        </tr>
-      </table>
+            <td class="align-middle">
+              <button (click)="removeStep(i)" class="ml-5 btn btn-danger btn-sm">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
 
-      <label for="defaultFormIngredients">Składniki</label>
-      <table class="table table-borderless" formArrayName="ingredientQuantities" id="defaultFormIngredients">
-        <tr>
-          <td width="80%"></td>
-          <td><a (click)="addQuantity()" class="ml-3 text-info">+Dodaj Składnik</a></td>
-        </tr>
+        <label for="defaultFormIngredients">Składniki</label>
+        <table class="table table-borderless" formArrayName="ingredientQuantities" id="defaultFormIngredients">
+          <tr>
+            <td width="80%"></td>
+            <td><a (click)="addQuantity()" class="ml-3 text-info">+Dodaj Składnik</a></td>
+          </tr>
 
-        <tr *ngFor="let step of quantities().controls; let i=index" [formGroupName]="i">
-          <label for="defaultFormIngredients">Nazwa składnika {{i + 1}}</label>
-          <select class="form-control mb-5" formControlName="ingredient">
-            <option disabled selected [ngValue]=null>Składniki</option>
-            <option *ngFor="let tempIngredient of ingredientList"
-                    [ngValue]="tempIngredient">{{tempIngredient.name}}</option>
-          </select>
+          <tr *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+            <label for="defaultFormIngredients">Nazwa składnika {{i + 1}}</label>
+            <select class="form-control mb-5" formControlName="ingredient">
 
-          <div
-            *ngIf="ingredientQuantityIngredientCheck(i).invalid &&
-                    (ingredientQuantityIngredientCheck(i).dirty ||
-                      ingredientQuantityIngredientCheck(i).touched)"
-            class="alert alert-danger">
-            <div *ngIf="ingredientQuantityIngredientCheck(i).errors.required">
-              Wybór składnika z listy jest wymagany.
-            </div>
-          </div>
-
-          <label for="defaultFormIngredients">Ilość</label>
-          <div class="form-inline mb-4">
-            <input class="form-control" placeholder="Ilosc" class="form-control col-sm-1" formControlName="amount">
-
-            <select class="form-control col-sm-2 ml-2" formControlName="unitOfMeasure">
-              <option disabled selected [ngValue]=null>Jednostka</option>
-              <option *ngFor="let tempUom of unitOfMeasureList" [ngValue]="tempUom">{{tempUom.uom}}</option>
+              <option disabled [value]="null">Wybież składnik</option>
+              <option *ngFor="let tempIngredient of ingredientList"
+                      [value]="tempIngredient">{{tempIngredient.name}}</option>
             </select>
 
-          </div>
 
-          <div
-            *ngIf="ingredientQuantityAmountCheck(i).invalid &&
-                    (ingredientQuantityAmountCheck(i).dirty ||
-                      ingredientQuantityAmountCheck(i).touched)"
-            class="alert alert-danger">
-            <div *ngIf="ingredientQuantityAmountCheck(i).errors.required">
-              Podanie ilości składnika jest wymagane.
+            <div
+              *ngIf="ingredientQuantityIngredientCheck(i).invalid &&
+                      (ingredientQuantityIngredientCheck(i).dirty ||
+                        ingredientQuantityIngredientCheck(i).touched)"
+              class="alert alert-danger">
+              <div *ngIf="ingredientQuantityIngredientCheck(i).errors.required">
+                Wybór składnika z listy jest wymagany.
+              </div>
             </div>
-            <div *ngIf="ingredientQuantityAmountCheck(i).errors.pattern">
-              Dopuszczalne są jedynie cyfry i liczby.
-            </div>
-            <div *ngIf="ingredientQuantityAmountCheck(i).errors.max">
-              Ilość składnika nie może być większa niż 10000.
-            </div>
-            <div *ngIf="ingredientQuantityAmountCheck(i).errors.min">
-              lość składnika nie może być mniejsza niż 1.
-            </div>
-          </div>
 
-          <div
-            *ngIf="ingredientQuantityUomCheck(i).invalid &&
-                    (ingredientQuantityUomCheck(i).dirty ||
-                      ingredientQuantityUomCheck(i).touched)"
-            class="alert alert-danger">
-            <div *ngIf="ingredientQuantityUomCheck(i).errors.required">
-              Wybór jednostki z listy jest wymagany.
+            <label for="defaultFormIngredients">Ilość</label>
+            <div class="form-inline mb-4">
+              <input class="form-control" placeholder="Ilosc" class="form-control col-sm-1" formControlName="amount">
+
+              <select class="form-control col-sm-2 ml-2" formControlName="unitOfMeasure">
+                <option disabled [ngValue]="null">Jednostka</option>
+                <option *ngFor="let tempUom of unitOfMeasureList" [value]="tempUom">{{tempUom.uom}}</option>
+              </select>
+
             </div>
-          </div>
 
-          <hr class="w-header my-4 text-center mb-2">
+            <div
+              *ngIf="ingredientQuantityAmountCheck(i).invalid &&
+                      (ingredientQuantityAmountCheck(i).dirty ||
+                        ingredientQuantityAmountCheck(i).touched)"
+              class="alert alert-danger">
+              <div *ngIf="ingredientQuantityAmountCheck(i).errors.required">
+                Podanie ilości składnika jest wymagane.
+              </div>
+              <div *ngIf="ingredientQuantityAmountCheck(i).errors.pattern">
+                Dopuszczalne są jedynie cyfry i liczby.
+              </div>
+              <div *ngIf="ingredientQuantityAmountCheck(i).errors.max">
+                Ilość składnika nie może być większa niż 10000.
+              </div>
+              <div *ngIf="ingredientQuantityAmountCheck(i).errors.min">
+                lość składnika nie może być mniejsza niż 1.
+              </div>
+            </div>
 
-          <td class="align-middle">
-            <button (click)="removeQuantity(i)" class="ml-5 btn btn-danger btn-sm">
-              <i class="far fa-trash-alt"></i>
-            </button>
-          </td>
-        </tr>
-      </table><br>
+            <div
+              *ngIf="ingredientQuantityUomCheck(i).invalid &&
+                      (ingredientQuantityUomCheck(i).dirty ||
+                        ingredientQuantityUomCheck(i).touched)"
+              class="alert alert-danger">
+              <div *ngIf="ingredientQuantityUomCheck(i).errors.required">
+                Wybór jednostki z listy jest wymagany.
+              </div>
+            </div>
+
+            <hr class="w-header my-4 text-center mb-2">
+
+            <td class="align-middle">
+              <button (click)="removeQuantity(i)" class="ml-5 btn btn-danger btn-sm">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
+        <br>
+      </div>
 
       <hr class="w-header my-4 text-center mb-2">
       <button [disabled]="recipeFormGroup.invalid || recipeFormGroup.pristine" (click)="onSubmit()" routerLink="/"
-              class="btn btn-light" type="submit">Dodaj nową recepturę
+              class="btn btn-light" type="submit">Dodaj/Zaktualizuj
       </button>
 
     </div>

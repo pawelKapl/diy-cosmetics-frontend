@@ -1,8 +1,8 @@
 <div class="container my-5">
-  <h3 class="font-weight-bold text-center dark-grey-text pb-2">Nowy Składnik</h3>
+  <h3 class="font-weight-bold text-center dark-grey-text pb-2">Dodawanie/Edycja składnika</h3>
   <hr class="w-header my-4 text-center w-75 mb-2">
 
-  <form [formGroup]="ingredientFormGroup" class="p-5" width="70%">
+  <form *ngIf="ingredientFormGroup" [formGroup]="ingredientFormGroup" class="p-5" width="70%">
 
     <div class="form-area colored-border colored-border-focus">
 
@@ -52,7 +52,7 @@
       <br>
       <hr class="w-header my-4 text-center mb-2">
       <button [disabled]="ingredientFormGroup.pristine || ingredientFormGroup.invalid" (click)="onSubmit()"
-              routerLink="/ingredients" class="btn btn-light" type="submit">Dodaj nowy składnik
+              routerLink="/ingredients" class="btn btn-light" type="submit">Dodaj/Zaktualizuj
       </button>
     </div>
   </form>

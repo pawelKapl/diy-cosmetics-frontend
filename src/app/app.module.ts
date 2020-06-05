@@ -22,6 +22,9 @@ import { SelfClosingAlertComponent } from './components/alerts/self-closing-aler
 
 
 const routes: Routes = [
+  {path: 'recipes/update/:id', component: AddNewRecipeFormComponent},
+  {path: 'tools/update/:id', component: AddNewToolFormComponent},
+  {path: 'ingredients/update/:id', component: AddNewIngredientFormComponent},
   {path: 'recipes/new', component: AddNewRecipeFormComponent},
   {path: 'tools/new', component: AddNewToolFormComponent},
   {path: 'ingredients/new', component: AddNewIngredientFormComponent},
@@ -55,7 +58,7 @@ const routes: Routes = [
         MDBBootstrapModule.forRoot(),
         RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
         NgbModule,
-        ReactiveFormsModule,
+        ReactiveFormsModule
   ],
   providers: [RecipeService, IngredientService, ConfirmationModalComponent],
   bootstrap: [AppComponent]

@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Ingredient} from '../models/ingredient';
-import {AbstractControl} from '@angular/forms';
+import {AbstractControl, FormGroup} from '@angular/forms';
 import {UnitOfMeasure} from '../models/unit-of-measure';
 import {environment} from '../../environments/environment';
 import {AlertsService} from './alerts.service';
+import {catchError} from 'rxjs/operators';
 
 
 @Injectable({
@@ -32,7 +33,12 @@ export class IngredientService {
   }
 
   getIngredientById(id: number): Observable<Ingredient> {
-    return this.httpClient.get<Ingredient>(`${this.baseIngredientsUrl}/${id}`);
+    return this.httpClient.get<Ingredient>(`${this.baseIngredientsUrl}/${id}`)
+      .pipe(
+        catchError((err) => {
+          this.alertsService.addNewAlert(`Nie można odnaleźć składnika id: ${id}`, `danger`);
+          return of(err);
+        }));
   }
 
   saveIngredient(value: AbstractControl) {
@@ -73,6 +79,22 @@ export class IngredientService {
         },
         () => console.log(`Http Request Completed.`)
       );
+  }
+
+  updateIngredient(ingredient: AbstractControl) {
+    this.httpClient.put<HttpResponse<any>>(this.baseIngredientsUrl, JSON.stringify(ingredient.value), {
+      observe: 'response',
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    }).subscribe(data => {
+        console.log(`Updated Ingredient: ${JSON.stringify(data)}`);
+        if (data.status === 201) {
+          this.alertsService.addNewAlert(`Składnik został pomyślnie zaktualizowany`, `success`);
+        }
+      },
+      error => {
+        console.log(error);
+        this.alertsService.addNewAlert(`Coś poszło nie tak, nie udało się zaktualizować składnika`, `danger`);
+      });
   }
 }
 

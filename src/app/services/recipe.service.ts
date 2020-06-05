@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Recipe} from '../models/recipe';
 import {RecipeCategory} from '../models/recipe-category';
 import {AbstractControl} from '@angular/forms';
 import {environment} from '../../environments/environment';
 import {AlertsService} from './alerts.service';
+import {catchError} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class RecipeService {
   private categoriesUrl = `${environment.baseURI}/recipeCategories`;
 
   constructor(private httpClient: HttpClient,
-              private alertsService: AlertsService) {
+              private alertsService: AlertsService,
+              private router: Router) {
   }
 
   getRecipeListByCategoryPaginate(thePage: number,
@@ -46,7 +49,12 @@ export class RecipeService {
   }
 
   getRecipe(id: number): Observable<Recipe> {
-    return this.httpClient.get<Recipe>(`${this.baseUrl}/${id}`);
+    return this.httpClient.get<Recipe>(`${this.baseUrl}/${id}`)
+      .pipe(
+        catchError((err) => {
+          this.router.navigate(['/']);
+          return of(err);
+        }));
   }
 
   saveRecipe(recipe: AbstractControl) {
@@ -64,6 +72,22 @@ export class RecipeService {
         this.alertsService.addNewAlert(`Coś poszło nie tak, nie udało się dodać nowej receptury`, `danger`);
       }
     );
+  }
+
+  updateRecipe(recipe: AbstractControl) {
+    this.httpClient.put<HttpResponse<any>>(this.baseUrl, JSON.stringify(recipe.value), {
+      observe: 'response',
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    }).subscribe(data => {
+        console.log(`Updated Recipe: ${JSON.stringify(data)}`);
+        if (data.status === 201) {
+          this.alertsService.addNewAlert(`Receptura została pomyślnie zaktualizowana`, `success`);
+        }
+      },
+      error => {
+        console.log(error);
+        this.alertsService.addNewAlert(`Coś poszło nie tak, nie udało się zaktualizować receptury`, `danger`);
+      });
   }
 
   deleteRecipe(recipe: Recipe) {

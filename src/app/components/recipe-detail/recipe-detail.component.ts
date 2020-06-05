@@ -19,15 +19,14 @@ export class RecipeDetailComponent implements OnInit {
   constructor(private recipeService: RecipeService,
               private ingredientService: IngredientService,
               private route: ActivatedRoute,
-              private modal: ConfirmationModalComponent,
-              private router: Router) {
+              private modal: ConfirmationModalComponent) {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(() => this.loadRecipe());
+    this.route.paramMap.subscribe(() => this.loadRecipeAndSortSteps());
   }
 
-  private loadRecipe() {
+  private loadRecipeAndSortSteps() {
     this.recipeId = +this.route.snapshot.paramMap.get('id');
 
     console.log(`loading recipe with id: ${this.recipeId}`);
@@ -35,6 +34,7 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService.getRecipe(this.recipeId).subscribe(
       data => {
         this.recipe = data;
+        this.recipe.steps.sort((s1, s2) => s1.seq - s2.seq);
       }
     );
   }

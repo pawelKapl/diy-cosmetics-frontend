@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Tool} from '../../models/tool';
 import {ToolService} from '../../services/tool.service';
@@ -11,6 +11,7 @@ import {Recipe} from '../../models/recipe';
 import {environment} from '../../../environments/environment';
 import {Step} from '../../models/step';
 import {IngredientQuantity} from '../../models/ingredient-quantity';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-add-new-recipe-form',
@@ -27,44 +28,75 @@ export class AddNewRecipeFormComponent implements OnInit {
 
   recipe: Recipe = new Recipe();
   step: Step = new Step();
+  stepCount = 0;
+
   ingredientQuantity: IngredientQuantity = new IngredientQuantity();
+
+  private promise: Promise<unknown>;
+  update: boolean;
 
   constructor(private toolService: ToolService,
               private formBuilder: FormBuilder,
               private recipeService: RecipeService,
-              private ingredientService: IngredientService) { }
+              private ingredientService: IngredientService,
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(() => this.populatingIfUpdate());
+  }
+
+  private getFormGroup() {
     this.getToolList();
     this.getCategoryList();
     this.getIngredientList();
     this.getUnitOfMeasureList();
+
     this.recipeFormGroup = this.formBuilder.group({
-        recipeCategories: new FormControl(this.recipe.recipeCategories),
-        name: new FormControl(this.recipe.name, [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(50)
-        ]),
-        intro: new FormControl(this.recipe.intro),
-        description: new FormControl(this.recipe.description),
-        difficulty: new FormControl(this.recipe.difficulty, [
-          Validators.required
-        ]),
-        prepTime: new FormControl(this.recipe.prepTime, [
-          Validators.required,
-          Validators.max(1000),
-          Validators.min(3),
-          Validators.pattern('[0-9]+')
-        ]),
-        tools: new FormControl(this.recipe.tools),
-        imageUrl: new FormControl(this.recipe.imageUrl, [
-          Validators.required,
-          Validators.pattern(environment.reg)
-        ]),
-        steps: this.formBuilder.array([]),
-        ingredientQuantities: this.formBuilder.array([])
+      id: new FormControl(this.recipe.id),
+      recipeCategories: new FormControl(this.recipe.recipeCategories as RecipeCategory[]),
+      name: new FormControl(this.recipe.name, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50)
+      ]),
+      intro: new FormControl(this.recipe.intro),
+      description: new FormControl(this.recipe.description),
+      difficulty: new FormControl(this.recipe.difficulty, [
+        Validators.required
+      ]),
+      prepTime: new FormControl(this.recipe.prepTime, [
+        Validators.required,
+        Validators.max(1000),
+        Validators.min(3),
+        Validators.pattern('[0-9]+')
+      ]),
+      tools: new FormControl(this.recipe.tools),
+      imageUrl: new FormControl(this.recipe.imageUrl, [
+        Validators.required,
+        Validators.pattern(environment.reg)
+      ]),
+      steps: this.formBuilder.array([]),
+      ingredientQuantities: this.formBuilder.array([])
     });
+  }
+
+  private populatingIfUpdate() {
+    this.update = this.route.snapshot.paramMap.has('id');
+
+    if (this.update) {
+      let id: number = +this.route.snapshot.paramMap.get('id');
+      this.promise = new Promise((resolve) => {
+        this.recipeService.getRecipe(id).subscribe(data => {
+          this.recipe = data, resolve(data);
+        });
+      });
+      this.promise.then(() => {
+        this.getFormGroup();
+      });
+    } else {
+      this.getFormGroup();
+    }
   }
 
   get name() {
@@ -113,6 +145,7 @@ export class AddNewRecipeFormComponent implements OnInit {
 
   newQuantity(): FormGroup {
     return this.formBuilder.group({
+      id: new FormControl(this.ingredientQuantity.id),
       ingredient: new FormControl(this.ingredientQuantity.ingredient, Validators.required),
       amount: new FormControl(this.ingredientQuantity.amount, [
         Validators.required,
@@ -130,6 +163,8 @@ export class AddNewRecipeFormComponent implements OnInit {
 
   newStep(): FormGroup {
     return this.formBuilder.group({
+      id: new FormControl(this.step.id),
+      seq: new FormControl(this.stepCount++),
       name: new FormControl(this.step.name, [
         Validators.required,
         Validators.minLength(3),
@@ -173,6 +208,18 @@ export class AddNewRecipeFormComponent implements OnInit {
 
   onSubmit() {
     console.log(JSON.stringify(this.recipeFormGroup.value));
-    this.recipeService.saveRecipe(this.recipeFormGroup);
+    if (this.update) {
+      this.recipeService.updateRecipe(this.recipeFormGroup);
+    } else {
+      this.recipeService.saveRecipe(this.recipeFormGroup);
+    }
+  }
+
+  CategoryById(c1: RecipeCategory, c2: RecipeCategory): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+
+  ToolById(t1: Tool, t2: Tool): boolean {
+    return t1 && t2 ? t1.id === t2.id : t1 === t2;
   }
 }
