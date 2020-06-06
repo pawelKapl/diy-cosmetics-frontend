@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Recipe} from '../../models/recipe';
 import {RecipeService} from '../../services/recipe.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IngredientService} from '../../services/ingredient.service';
 import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
+import {StepService} from '../../services/step.service';
+import {IngredientQuantityService} from '../../services/ingredient-quantity.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -17,9 +18,11 @@ export class RecipeDetailComponent implements OnInit {
 
 
   constructor(private recipeService: RecipeService,
-              private ingredientService: IngredientService,
               private route: ActivatedRoute,
-              private modal: ConfirmationModalComponent) {
+              private modal: ConfirmationModalComponent,
+              private router: Router,
+              private stepService: StepService,
+              private quantityService: IngredientQuantityService) {
   }
 
   ngOnInit(): void {
@@ -39,11 +42,24 @@ export class RecipeDetailComponent implements OnInit {
     );
   }
 
-  delete(recipe: Recipe) {
+  deleteRecipe(recipe: Recipe) {
     this.recipeService.deleteRecipe(recipe);
   }
 
   open(content) {
     this.modal.open(content);
+  }
+
+  deleteStep(id: number) {
+    this.stepService.deleteStep(id);
+  }
+
+  deleteQuantity(id: number) {
+    this.quantityService.deleteIngredientQuantity(id);
+  }
+
+  reload() {
+    setTimeout(() => this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+      this.router.navigate([`/recipe/${this.recipe.id}`])), 150);
   }
 }

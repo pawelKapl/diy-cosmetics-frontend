@@ -1,0 +1,77 @@
+<div class="ml-3 my-1">
+  <a title="usuń recepturę" class="font-small dark-grey-text"
+     (click)="open(newQuantityForm);">+ dodaj nowy składnik</a>
+</div>
+
+<ng-template #newQuantityForm let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-add-quantity">Nowy składnik receptury</h4>
+    <button type="button" class="btn btn-outline-dark btn-sm" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">x</span>
+    </button>
+  </div>
+
+  <form [formGroup]="quantityForm" class="p-5" width="70%">
+
+    <div class="form-area colored-border colored-border-focus">
+
+      <label>Nazwa składnika</label>
+      <select class="form-control mb-3" formControlName="ingredient">
+        <option disabled [ngValue]="null">Wybież składnik</option>
+        <option *ngFor="let tempIngredient of ingredientList"
+                [ngValue]="tempIngredient">{{tempIngredient.name}}</option>
+      </select>
+
+      <div
+        *ngIf="ingredient.invalid && (ingredient.dirty || ingredient.touched)"
+        class="alert alert-danger">
+        <div *ngIf="ingredient.errors.required">
+          Wybór składnika z listy jest wymagany.
+        </div>
+      </div>
+
+      <label>Ilość</label>
+      <div class="form-inline mb-4">
+        <input class="form-control" placeholder="Ilosc" class="form-control col-sm-3" formControlName="amount">
+
+        <select class="form-control col-sm-4 ml-2" formControlName="unitOfMeasure">
+          <option disabled [ngValue]="null">Jednostka</option>
+          <option *ngFor="let tempUom of unitOfMeasureList" [ngValue]="tempUom">{{tempUom.uom}}</option>
+        </select>
+
+      </div>
+
+      <div
+        *ngIf="amount.invalid && (amount.dirty || amount.touched)"
+        class="alert alert-danger">
+        <div *ngIf="amount.errors.required">
+          Podanie ilości składnika jest wymagane.
+        </div>
+        <div *ngIf="amount.errors.pattern">
+          Dopuszczalne są jedynie cyfry i liczby.
+        </div>
+        <div *ngIf="amount.errors.max">
+          Ilość składnika nie może być większa niż 10000.
+        </div>
+        <div *ngIf="amount.errors.min">
+          Ilość składnika nie może być mniejsza niż 1.
+        </div>
+      </div>
+
+      <div
+        *ngIf="uom.invalid && (uom.dirty || uom.touched)"
+        class="alert alert-danger">
+        <div *ngIf="uom.errors.required">
+          Wybór jednostki z listy jest wymagany.
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(addQuantity()); reload()"
+            routerLink="/">
+      Dodaj krok
+    </button>
+  </div>
+</ng-template>

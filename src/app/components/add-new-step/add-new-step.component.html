@@ -1,0 +1,47 @@
+<div class="ml-5 my-3">
+  <a title="usuń recepturę" class="font-small dark-grey-text"
+     (click)="open(newStepForm);">+ dodaj nowy krok</a>
+</div>
+
+<ng-template #newStepForm let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-add-step">Nowy krok</h4>
+    <button type="button" class="btn btn-outline-dark btn-sm" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">x</span>
+    </button>
+  </div>
+
+  <form [formGroup]="stepForm" class="p-5" width="70%" *ngIf="stepForm">
+
+    <div class="form-area colored-border colored-border-focus">
+      <label>Nazwa kroku</label>
+      <input type="text" formControlName="name" class="form-control mb-4" placeholder="Nazwa kroku">
+
+      <div *ngIf="name.invalid && (name.dirty || name.touched)"
+           class="alert alert-danger">
+        <div *ngIf="name.errors.required">
+          Nazwa receptury jest wymagana.
+        </div>
+        <div *ngIf="name.errors.minlength">
+          Nazwa musi się składać z conajmniej 3 znaków.
+        </div>
+        <div *ngIf="name.errors.maxlength">
+          Nazwa musi się składać z maksymalnie 50 znaków.
+        </div>
+      </div>
+
+      <label>Opis</label>
+      <textarea class="form-control" placeholder="Opis kroku" formControlName="detail"
+                class="form-control mb-4"></textarea>
+
+    </div>
+
+  </form>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(addStep()); reload()"
+            routerLink="`/recipe/{{recipeId}}`">
+      Dodaj krok
+    </button>
+  </div>
+</ng-template>

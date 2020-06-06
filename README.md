@@ -22,7 +22,7 @@ Main Page View:
 
 Detail View:
 
-![alt text](https://i.imgur.com/VPjgAJV.png?1)
+![alt text](https://i.imgur.com/T0qZ5dg.png?1)
 
 Detail View:
 

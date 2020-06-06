@@ -66,13 +66,12 @@ export class IngredientListComponent implements OnInit {
   }
 
   deleteIngredient(ingredient: Ingredient) {
-
     this.ingredientService.deleteIngredient(ingredient);
     this.getIngredients();
   }
 
   reload() {
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-      this.router.navigate(['/ingredients']));
+    setTimeout(() => this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+      this.router.navigate(['/ingredients'])), 150);
   }
 }

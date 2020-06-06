@@ -47,11 +47,7 @@ export class AddNewRecipeFormComponent implements OnInit {
   }
 
   private getFormGroup() {
-    this.getToolList();
-    this.getCategoryList();
-    this.getIngredientList();
-    this.getUnitOfMeasureList();
-
+    this.populateSelectors();
     this.recipeFormGroup = this.formBuilder.group({
       id: new FormControl(this.recipe.id),
       recipeCategories: new FormControl(this.recipe.recipeCategories as RecipeCategory[]),
@@ -81,6 +77,13 @@ export class AddNewRecipeFormComponent implements OnInit {
     });
   }
 
+  private populateSelectors() {
+    this.getToolList();
+    this.getCategoryList();
+    this.getIngredientList();
+    this.getUnitOfMeasureList();
+  }
+
   private populatingIfUpdate() {
     this.update = this.route.snapshot.paramMap.has('id');
 
@@ -97,6 +100,33 @@ export class AddNewRecipeFormComponent implements OnInit {
     } else {
       this.getFormGroup();
     }
+  }
+
+  newStep(): FormGroup {
+    return this.formBuilder.group({
+      id: new FormControl(this.step.id),
+      seq: new FormControl(this.stepCount++),
+      name: new FormControl(this.step.name, [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50)
+      ]),
+      detail: new FormControl(this.step.detail)
+    });
+  }
+
+  newQuantity(): FormGroup {
+    return this.formBuilder.group({
+      id: new FormControl(this.ingredientQuantity.id),
+      ingredient: new FormControl(this.ingredientQuantity.ingredient, Validators.required),
+      amount: new FormControl(this.ingredientQuantity.amount, [
+        Validators.required,
+        Validators.max(10000),
+        Validators.min(1),
+        Validators.pattern('[0-9]+')
+      ]),
+      unitOfMeasure: new FormControl(this.ingredientQuantity.unitOfMeasure, Validators.required)
+    });
   }
 
   get name() {
@@ -143,35 +173,8 @@ export class AddNewRecipeFormComponent implements OnInit {
     this.quantities().removeAt(i);
   }
 
-  newQuantity(): FormGroup {
-    return this.formBuilder.group({
-      id: new FormControl(this.ingredientQuantity.id),
-      ingredient: new FormControl(this.ingredientQuantity.ingredient, Validators.required),
-      amount: new FormControl(this.ingredientQuantity.amount, [
-        Validators.required,
-        Validators.max(10000),
-        Validators.min(1),
-        Validators.pattern('[0-9]+')
-      ]),
-      unitOfMeasure: new FormControl(this.ingredientQuantity.unitOfMeasure, Validators.required)
-    });
-  }
-
   steps(): FormArray {
     return this.recipeFormGroup.get('steps') as FormArray;
-  }
-
-  newStep(): FormGroup {
-    return this.formBuilder.group({
-      id: new FormControl(this.step.id),
-      seq: new FormControl(this.stepCount++),
-      name: new FormControl(this.step.name, [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50)
-      ]),
-      detail: new FormControl(this.step.detail)
-    });
   }
 
   addStep() {
@@ -195,7 +198,7 @@ export class AddNewRecipeFormComponent implements OnInit {
   }
 
   private getIngredientList() {
-    this.ingredientService.getFullIngredientList(0, 10, 'asc').subscribe(
+    this.ingredientService.getFullIngredientList(0, 100, 'asc').subscribe(
       data => this.ingredientList = data.content
     );
   }
@@ -206,6 +209,14 @@ export class AddNewRecipeFormComponent implements OnInit {
     );
   }
 
+  compareCategoryById(c1: RecipeCategory, c2: RecipeCategory): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+
+  compareToolById(t1: Tool, t2: Tool): boolean {
+    return t1 && t2 ? t1.id === t2.id : t1 === t2;
+  }
+
   onSubmit() {
     console.log(JSON.stringify(this.recipeFormGroup.value));
     if (this.update) {
@@ -213,13 +224,5 @@ export class AddNewRecipeFormComponent implements OnInit {
     } else {
       this.recipeService.saveRecipe(this.recipeFormGroup);
     }
-  }
-
-  CategoryById(c1: RecipeCategory, c2: RecipeCategory): boolean {
-    return c1 && c2 ? c1.id === c2.id : c1 === c2;
-  }
-
-  ToolById(t1: Tool, t2: Tool): boolean {
-    return t1 && t2 ? t1.id === t2.id : t1 === t2;
   }
 }

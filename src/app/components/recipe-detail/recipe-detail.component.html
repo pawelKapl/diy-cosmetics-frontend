@@ -6,33 +6,16 @@
 
     <!-- Section heading -->
 
-    <!-- modal delete -->
-    <ng-template #content let-c="close" let-d="dismiss">
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Uwaga! Usuwanie receptury!</h4>
-        <button type="button" class="btn btn-outline-dark btn-sm" aria-label="Close" (click)="d('Cross click')">
-          <span aria-hidden="true">x</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Czy napewno chcesz usunąć {{recipe.name}}?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(delete(recipe))"
-                routerLink="/">
-          Usuń
-        </button>
-      </div>
-    </ng-template>
-
     <div class="text-right">
-      <a title="usuń recepturę" class="font-small dark-grey-text" (click)="open(content)">x</a>
+      <a title="usuń składnik" class="font-small dark-grey-text mr-2" routerLink="/recipes/update/{{recipe.id}}">u</a>
+      <a title="usuń recepturę" class="font-small dark-grey-text" (click)="open(deleteConfirmation)">x</a>
     </div>
-    <!-- modal delete -->
 
     <h3 class="font-weight-bold text-center dark-grey-text pb-2">{{recipe.name}}</h3>
     <hr class="w-header text-center w-75 my-4">
     <p class="lead text-center text-muted pt-2 mb-5">{{recipe.intro}}</p>
+
+    <app-self-closing-alert></app-self-closing-alert>
 
     <!-- Grid row -->
     <div class="row">
@@ -96,7 +79,10 @@
             <div class="col-md-9">
 
               <!-- Excerpt -->
-              <p class="font-weight-bold dark-grey-text">{{tempIngredient.ingredient.name}}</p>
+              <p class="font-weight-bold dark-grey-text">{{tempIngredient.ingredient.name}}
+                <a title="usuń recepturę" class="font-small dark-grey-text"
+                   (click)="deleteQuantity(tempIngredient.id); reload()">&nbsp;x</a>
+              </p>
               <div class="d-flex justify-content-between">
                 <div class="col-11 text-truncate pl-0 mb-3">
                   <a href="#!" class="dark-grey-text">Potrzebna ilość: <span class="font-weight-bold dark-grey-text">
@@ -113,6 +99,11 @@
           </div>
           <!-- Grid row -->
 
+        </div>
+
+        <app-add-new-quantity [recipeId]="recipe.id"></app-add-new-quantity>
+        <div *ngIf="recipe.ingredientQuantities?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
+          Brak składników.
         </div>
         <!-- /.Ingredients -->
         <br><br>
@@ -138,6 +129,10 @@
 
           </div>
           <!-- Grid row -->
+
+          <div *ngIf="recipe.tools?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
+            Brak potrzebnego wyposażenia.
+          </div>
 
         </div>
 
@@ -165,17 +160,28 @@
 
           <div class="col-lg-12 mb-4">
 
+            <!-- Single Step -->
             <ol class="step pl-0">
               <li *ngFor="let tempStep of recipe.steps" class="step-element pb-0">
                 <div class="step-number">
                   <span class="number">{{recipe.steps.indexOf(tempStep) + 1}}</span>
                 </div>
                 <div class="step-excerpt">
-                  <h6 class="font-weight-bold dark-grey-text mb-3">{{tempStep.name}}</h6>
+                  <h6 class="font-weight-bold dark-grey-text mb-3">{{tempStep.name}}
+                    <a title="usuń recepturę" class="font-small dark-grey-text"
+                       (click)="deleteStep(tempStep.id); reload()">&nbsp;x</a>
+                  </h6>
                   <p class="text-muted">{{tempStep.detail}}</p>
                 </div>
               </li>
             </ol>
+            <!-- Single Step -->
+
+            <app-add-new-step [recipeId]="recipe.id"></app-add-new-step>
+
+            <div *ngIf="recipe.steps?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
+              Brak kroków.
+            </div>
 
           </div>
 
@@ -192,3 +198,26 @@
   <!--Section: Content-->
 
 </div>
+
+<!-- Modals -->
+
+<ng-template #deleteConfirmation let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-recipe-delete-conf">Uwaga! Usuwanie receptury!</h4>
+    <button type="button" class="btn btn-outline-dark btn-sm" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">x</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Czy napewno chcesz usunąć {{recipe.name}}?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(deleteRecipe(recipe))"
+            routerLink="/">Usuń
+    </button>
+  </div>
+</ng-template>
+
+
+
+<!-- Modals -->

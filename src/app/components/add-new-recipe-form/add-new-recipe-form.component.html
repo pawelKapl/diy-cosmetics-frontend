@@ -8,9 +8,9 @@
 
       <label for="defaultFormControlTools">Kategoria</label>
       <div class="mb-4">
-        <select [compareWith]="CategoryById" class="custom-select"
+        <select [compareWith]="compareCategoryById" class="custom-select"
                 id="defaultFormControlTools" formControlName="recipeCategories" multiple>
-          <option *ngFor="let tempCategory of categoriesList" [value]="tempCategory">
+          <option *ngFor="let tempCategory of categoriesList" [ngValue]="tempCategory">
             {{tempCategory.categoryName}}
           </option>
         </select>
@@ -23,7 +23,7 @@
       <div *ngIf="name.invalid && (name.dirty || name.touched)"
            class="alert alert-danger">
         <div *ngIf="name.errors.required">
-          Nazwa receptury jest wymagana.
+          Nazwa kroku jest wymagana.
         </div>
         <div *ngIf="name.errors.minlength">
           Nazwa musi się składać z conajmniej 3 znaków.
@@ -82,7 +82,7 @@
       <label for="defaultSaveFormDifficulty">Trudność</label>
       <div class="mb-4">
         <select class="form-control" id="defaultSaveFormDifficulty" formControlName="difficulty">
-          <option selected disabled [ngValue]=null>Poziom trudnosci</option>
+          <option selected disabled [value]=null>Poziom trudnosci</option>
           <option value="EASY">EASY</option>
           <option value="MODERATE">MODERATE</option>
           <option value="HARD">HARD</option>
@@ -97,8 +97,8 @@
 
       <label for="defaultFormCategory">Lista potrzebych narzędzi</label>
       <div class="mb-5">
-        <select [compareWith]="ToolById" multiple formControlName="tools" class="custom-select" id="defaultFormCategory">
-          <option [ngValue]="null" disabled>Wybierz narzędzia (można wybrać kilka)</option>
+        <select [compareWith]="compareToolById" multiple formControlName="tools" class="custom-select" id="defaultFormCategory">
+          <option [value]="null" disabled>Wybierz narzędzia (można wybrać kilka)</option>
           <option *ngFor="let tempTool of toolsList" [value]="tempTool">
             {{tempTool.name}}
           </option>
@@ -116,7 +116,7 @@
           </tr>
           <tr *ngFor="let step of steps().controls; let i=index" [formGroupName]="i">
 
-            <label for="defaultFormSteps">Nazwa kroku {{i + 1}}</label>
+            <label for="defaultFormSteps">Nazwa kroku{{i + 1}}</label>
             <input type="text" formControlName="name" class="form-control mb-4" placeholder="Nazwa kroku">
 
             <div *ngIf="stepCheck(i).invalid && (stepCheck(i).dirty || stepCheck(i).touched)"
@@ -156,9 +156,9 @@
             <label for="defaultFormIngredients">Nazwa składnika {{i + 1}}</label>
             <select class="form-control mb-5" formControlName="ingredient">
 
-              <option disabled [value]="null">Wybież składnik</option>
+              <option disabled [ngValue]="null">Wybież składnik</option>
               <option *ngFor="let tempIngredient of ingredientList"
-                      [value]="tempIngredient">{{tempIngredient.name}}</option>
+                      [ngValue]="tempIngredient">{{tempIngredient.name}}</option>
             </select>
 
 
@@ -178,7 +178,7 @@
 
               <select class="form-control col-sm-2 ml-2" formControlName="unitOfMeasure">
                 <option disabled [ngValue]="null">Jednostka</option>
-                <option *ngFor="let tempUom of unitOfMeasureList" [value]="tempUom">{{tempUom.uom}}</option>
+                <option *ngFor="let tempUom of unitOfMeasureList" [ngValue]="tempUom">{{tempUom.uom}}</option>
               </select>
 
             </div>
