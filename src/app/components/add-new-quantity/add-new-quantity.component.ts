@@ -5,7 +5,6 @@ import {UnitOfMeasure} from '../../models/unit-of-measure';
 import {IngredientService} from '../../services/ingredient.service';
 import {IngredientQuantityService} from '../../services/ingredient-quantity.service';
 import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
-import {Router} from '@angular/router';
 import {IngredientQuantity} from '../../models/ingredient-quantity';
 
 @Component({
@@ -27,8 +26,7 @@ export class AddNewQuantityComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private ingredientService: IngredientService,
               private ingredientQuantityService: IngredientQuantityService,
-              private modal: ConfirmationModalComponent,
-              private router: Router) {
+              private modal: ConfirmationModalComponent) {
   }
 
   ngOnInit(): void {
@@ -78,10 +76,5 @@ export class AddNewQuantityComponent implements OnInit {
 
   open(content) {
     this.modal.open(content);
-  }
-
-  reload() {
-    setTimeout(() => this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-      this.router.navigate([`/recipe/${this.recipeId}`])), 150);
   }
 }

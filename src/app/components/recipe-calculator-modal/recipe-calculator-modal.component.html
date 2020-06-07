@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between">
   <p class="font-weight-bold dark-grey-text">Lista składników ({{userAmount.value}}ml produktu):</p>
-  <a title="Kalkulator receptury" class="font-small dark-grey-text text-right"
+  <a *ngIf="ingredients.length > 0" title="Kalkulator receptury" class="font-small dark-grey-text text-right"
      (click)="open(recipeCalculatorForm);"><i class="fas fa-calculator"></i></a>
 </div>
 
@@ -29,7 +29,7 @@
           Dopuszczalne są jedynie cyfry i liczby.
         </div>
         <div *ngIf="userAmount.errors.max">
-          Ilość składnika nie może być większa niż 10000.
+          Ilość składnika nie może być większa niż 1000.
         </div>
         <div *ngIf="userAmount.errors.min">
           Ilość składnika nie może być mniejsza niż 1.
@@ -44,15 +44,14 @@
       <p class="font-weight-bold dark-grey-text">{{tempIngredient.ingredient.name}}</p>
       <p class="dark-grey-text">Potrzebna ilość: &nbsp;
         <span class="font-weight-bold text-info">
-                    {{tempIngredient.calculatedAmount | number:'1.0-1'}}{{tempIngredient.unitOfMeasure.uom}}
+          {{tempIngredient.calculatedAmount | number:'1.0-1'}}{{tempIngredient.unitOfMeasure.uom}}
         </span>
       </p>
     </div>
-
   </div>
 
   <div class="modal-footer">
-    <button [disabled]="userAmountForm.invalid" type="button" class="btn btn-outline-dark justify-content-center"
+    <button [disabled]="userAmountForm.invalid" type="button" class="btn btn-outline-dark"
             (click)="calculate()">
       Oblicz!
     </button>

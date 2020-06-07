@@ -1,5 +1,5 @@
 <div class="ml-3 my-1">
-  <a title="usuń recepturę" class="font-small dark-grey-text"
+  <a class="font-small dark-grey-text"
      (click)="open(newQuantityForm);">+ dodaj nowy składnik</a>
 </div>
 
@@ -67,8 +67,8 @@
   </form>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(addQuantity()); reload()"
-            routerLink="/">
+    <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(addQuantity())"
+            routerLink="/recipe/{{recipeId}}">
       Dodaj krok
     </button>
   </div>

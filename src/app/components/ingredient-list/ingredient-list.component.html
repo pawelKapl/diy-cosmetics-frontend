@@ -48,14 +48,16 @@
               <a href="{{tempIngredient.blogUrl}}" type="button" class="btn btn-light d-flex"
                  data-toggle="tooltip" data-placement="top">Więcej
               </a>
-              <a title="edytuj składnik" class="font-small dark-grey-text ml-2" routerLink="/ingredients/update/{{tempIngredient.id}}">u</a>
-              <a title="usuń składnik" class="font-small dark-grey-text ml-2" (click)="open(content)">x</a>
+              <div *ngIf="userCheck()">
+                <a title="edytuj składnik" class="font-small dark-grey-text ml-2" routerLink="/ingredients/update/{{tempIngredient.id}}">u</a>
+                <a title="usuń składnik" class="font-small dark-grey-text ml-2" (click)="open(deleteConfirmation)">x</a>
+              </div>
             </div>
 
           </td>
 
           <!-- modal delete -->
-          <ng-template #content let-c="close" let-d="dismiss">
+          <ng-template #deleteConfirmation let-c="close" let-d="dismiss">
             <div class="modal-header">
               <h4 class="modal-title" id="modal-basic-title">Uwaga! Usuwanie składnika!</h4>
               <button type="button" class="btn btn-outline-dark btn-sm" aria-label="Close" (click)="d('Cross click')">
@@ -67,7 +69,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-dark justify-content-center"
-                      (click)="d(deleteIngredient(tempIngredient)); reload()" routerLink="/ingredients?refresh=1">
+                      (click)="d(deleteIngredient(tempIngredient));" routerLink="/ingredients">
                 Usuń
               </button>
             </div>

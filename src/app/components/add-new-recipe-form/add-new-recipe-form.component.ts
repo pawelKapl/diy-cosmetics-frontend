@@ -11,7 +11,8 @@ import {Recipe} from '../../models/recipe';
 import {environment} from '../../../environments/environment';
 import {Step} from '../../models/step';
 import {IngredientQuantity} from '../../models/ingredient-quantity';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-add-new-recipe-form',
@@ -39,11 +40,20 @@ export class AddNewRecipeFormComponent implements OnInit {
               private formBuilder: FormBuilder,
               private recipeService: RecipeService,
               private ingredientService: IngredientService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private authenticationService: AuthenticationService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
+    this.isAuthenticated();
     this.route.paramMap.subscribe(() => this.populatingIfUpdate());
+  }
+
+  private isAuthenticated() {
+    if (!this.authenticationService.isUserLoggedIn()) {
+      this.router.navigateByUrl('/login');
+    }
   }
 
   private getFormGroup() {

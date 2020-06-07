@@ -15,6 +15,7 @@ Current progress: <br>
 - added alerts service and basic crud errors handling
 - almost full CRUD support (except Put's)
 - added validators
+- added spring security basic auth support for admin operations and cruds
 
 Main Page View:
 
@@ -43,3 +44,6 @@ Ingredient add form view:
 Ingredients view(in progress):
 
 ![alt text](https://i.imgur.com/bmLVTom.png?1)
+
+Login Page: 
+![alt text](https://i.imgur.com/gIpSyje.png?1)

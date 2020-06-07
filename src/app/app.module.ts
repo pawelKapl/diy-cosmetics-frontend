@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
 
 import {AppComponent} from './app.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RecipeService} from './services/recipe.service';
 import {RecipeListComponent} from './components/recipe-list/recipe-list.component';
 import {RecipeCategoryMenuComponent} from './components/recipe-category-menu/recipe-category-menu.component';
@@ -14,7 +14,7 @@ import {IngredientService} from './services/ingredient.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IngredientListComponent} from './components/ingredient-list/ingredient-list.component';
 import {AddNewIngredientFormComponent} from './components/add-new-ingredient-form/add-new-ingredient-form.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AddNewToolFormComponent} from './components/add-new-tool-form/add-new-tool-form.component';
 import {AddNewRecipeFormComponent} from './components/add-new-recipe-form/add-new-recipe-form.component';
 import {ConfirmationModalComponent} from './components/confirmation-modal/confirmation-modal.component';
@@ -25,6 +25,10 @@ import { AddNewQuantityComponent } from './components/add-new-quantity/add-new-q
 import { AddNewStepComponent } from './components/add-new-step/add-new-step.component';
 import { RecipeCalculatorModalComponent } from './components/recipe-calculator-modal/recipe-calculator-modal.component';
 import {ToolsListComponent} from './components/tools-list/tools-list.component';
+import { LoginPageComponent } from './components/login-page/login-page.component';
+import {AuthenticationService} from './services/authentication.service';
+import {HttpInterceptorService} from './services/http-interceptor.service';
+import { LoginWidgetComponent } from './components/login-widget/login-widget.component';
 
 
 const routes: Routes = [
@@ -41,6 +45,7 @@ const routes: Routes = [
   {path: 'recipeCategory', component: RecipeListComponent},
   {path: 'search/:query', component: RecipeListComponent},
   {path: 'recipe/:id', component: RecipeDetailComponent},
+  {path: 'login', component: LoginPageComponent},
   {path: '', component: RecipeListComponent}
 ];
 
@@ -60,7 +65,9 @@ const routes: Routes = [
     AddNewQuantityComponent,
     AddNewStepComponent,
     RecipeCalculatorModalComponent,
-    ToolsListComponent
+    ToolsListComponent,
+    LoginPageComponent,
+    LoginWidgetComponent
 
   ],
   imports: [
@@ -69,9 +76,15 @@ const routes: Routes = [
     MDBBootstrapModule.forRoot(),
     RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true
+    },
     RecipeService,
     IngredientService,
     IngredientQuantityService,

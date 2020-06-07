@@ -48,7 +48,7 @@
 
         <!-- Dropdown -->
         <!-- Example single danger button -->
-        <li class="nav-link btn-group" mdbDropdown>
+        <li *ngIf="userCheck()" class="nav-link btn-group" mdbDropdown>
           <a mdbDropdownToggle type="button" class="dropdown-toggle"
              style="height: auto; width: 30px">Admin</a>
           <div class="dropdown-menu dropdown-primary">
@@ -81,6 +81,7 @@
   <!-- Footer Section -->
   <footer class="page-footer font-small mdb-color lighten-2">
 
+    <app-login-widget></app-login-widget>
     <!-- Footer Elements -->
     <div class="container">
 

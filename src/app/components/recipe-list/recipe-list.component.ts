@@ -4,6 +4,7 @@ import {Recipe} from '../../models/recipe';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Alert} from '../alerts/self-closing-alert/self-closing-alert.component';
 import {AlertsService} from '../../services/alerts.service';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -21,13 +22,15 @@ export class RecipeListComponent implements OnInit {
   theTotalElements = 0;
 
   constructor(private recipeService: RecipeService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
       this.getRecipeList();
     });
+    console.log(this.authenticationService.isUserLoggedIn());
   }
 
   getRecipeList() {

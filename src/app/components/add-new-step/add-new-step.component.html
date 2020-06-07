@@ -1,5 +1,5 @@
 <div class="ml-5 my-3">
-  <a title="usuń recepturę" class="font-small dark-grey-text"
+  <a class="font-small dark-grey-text"
      (click)="open(newStepForm);">+ dodaj nowy krok</a>
 </div>
 
@@ -39,8 +39,8 @@
   </form>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(addStep()); reload()"
-            routerLink="`/recipe/{{recipeId}}`">
+    <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(addStep())"
+            routerLink="/recipe/{{recipeId}}">
       Dodaj krok
     </button>
   </div>

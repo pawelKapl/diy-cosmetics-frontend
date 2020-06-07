@@ -3,6 +3,7 @@ import {Ingredient} from '../../models/ingredient';
 import {IngredientService} from '../../services/ingredient.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-ingredient-list',
@@ -22,7 +23,7 @@ export class IngredientListComponent implements OnInit {
   constructor(private ingredientService: IngredientService,
               private route: ActivatedRoute,
               private modal: ConfirmationModalComponent,
-              private router: Router) {}
+              private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => this.getIngredients());
@@ -70,8 +71,7 @@ export class IngredientListComponent implements OnInit {
     this.getIngredients();
   }
 
-  reload() {
-    setTimeout(() => this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-      this.router.navigate(['/ingredients'])), 150);
+  userCheck() {
+    return this.authenticationService.isUserLoggedIn();
   }
 }

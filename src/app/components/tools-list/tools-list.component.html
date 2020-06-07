@@ -14,8 +14,8 @@
           <td>{{tempTool.name}}</td>
           <td>{{tempTool.description}}</td>
           <td>
-            <a title="usuń narzędzie" class="font-small dark-grey-text ml-2" routerLink="/tools/update/{{tempTool.id}}">u</a>
-            <a title="edytuj narzędzie" class="font-small dark-grey-text ml-2" (click)="open(deleteConfirmation)">x</a>
+            <a title="edytuj narzędzie" class="font-small dark-grey-text ml-2" routerLink="/tools/update/{{tempTool.id}}">u</a>
+            <a title="usuń narzędzie" class="font-small dark-grey-text ml-2" (click)="open(deleteConfirmation)">x</a>
           </td>
 
           <ng-template #deleteConfirmation let-c="close" let-d="dismiss">
@@ -37,11 +37,8 @@
 
         </tr>
       </table>
-
     </div>
-
   </section>
-
 </div>
 
 

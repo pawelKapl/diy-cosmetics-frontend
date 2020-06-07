@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToolService} from '../../services/tool.service';
 import {Tool} from '../../models/tool';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-add-new-tool-form',
@@ -19,11 +20,20 @@ export class AddNewToolFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private toolService: ToolService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private authenticationService: AuthenticationService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
+    this.isAuthenticated();
     this.route.paramMap.subscribe(() => this.populatingIfUpdate());
+  }
+
+  private isAuthenticated() {
+    if (!this.authenticationService.isUserLoggedIn()) {
+      this.router.navigateByUrl('/login');
+    }
   }
 
   private getFormGroup() {

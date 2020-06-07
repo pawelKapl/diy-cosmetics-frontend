@@ -3,7 +3,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {IngredientService} from '../../services/ingredient.service';
 import {Ingredient} from '../../models/ingredient';
 import {environment} from '../../../environments/environment';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-add-new-ingredient-form',
@@ -21,11 +22,20 @@ export class AddNewIngredientFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private ingredientService: IngredientService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private authenticationService: AuthenticationService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
+    this.isAuthenticated();
     this.route.paramMap.subscribe(() => this.populatingIfUpdate());
+  }
+
+  private isAuthenticated() {
+    if (!this.authenticationService.isUserLoggedIn()) {
+      this.router.navigateByUrl('/login');
+    }
   }
 
   private getFormGroup() {

@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
 import {StepService} from '../../services/step.service';
 import {IngredientQuantityService} from '../../services/ingredient-quantity.service';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -20,7 +21,7 @@ export class RecipeDetailComponent implements OnInit {
   constructor(private recipeService: RecipeService,
               private route: ActivatedRoute,
               private modal: ConfirmationModalComponent,
-              private router: Router,
+              private authenticationService: AuthenticationService,
               private stepService: StepService,
               private quantityService: IngredientQuantityService) {
   }
@@ -59,8 +60,8 @@ export class RecipeDetailComponent implements OnInit {
     this.quantityService.deleteIngredientQuantity(id);
   }
 
-  reload() {
-    setTimeout(() => this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-      this.router.navigate([`/recipe/${this.recipe.id}`])), 150);
+  userCheck() {
+    return this.authenticationService.isUserLoggedIn();
   }
+
 }

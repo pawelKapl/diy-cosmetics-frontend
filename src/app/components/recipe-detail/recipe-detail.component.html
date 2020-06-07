@@ -6,7 +6,7 @@
 
     <!-- Section heading -->
 
-    <div class="text-right">
+    <div *ngIf="userCheck()" class="text-right">
       <a title="edytuj recepturę" class="font-small dark-grey-text mr-2" routerLink="/recipes/update/{{recipe.id}}">u</a>
       <a title="usuń recepturę" class="font-small dark-grey-text" (click)="open(deleteConfirmation)">x</a>
     </div>
@@ -83,8 +83,8 @@
 
               <!-- Excerpt -->
               <p class="font-weight-bold dark-grey-text">{{tempIngredient.ingredient.name}}
-                <a title="usuń recepturę" class="font-small dark-grey-text"
-                   (click)="deleteQuantity(tempIngredient.id); reload()">&nbsp;x</a>
+                <a *ngIf="userCheck()" title="usuń recepturę" class="font-small dark-grey-text"
+                   (click)="deleteQuantity(tempIngredient.id)">&nbsp;x</a>
               </p>
               <div class="d-flex justify-content-between">
                 <div class="col-11 text-truncate pl-0 mb-3">
@@ -104,7 +104,7 @@
 
         </div>
 
-        <app-add-new-quantity [recipeId]="recipe.id"></app-add-new-quantity>
+        <app-add-new-quantity *ngIf="userCheck()" [recipeId]="recipe.id"></app-add-new-quantity>
         <div *ngIf="recipe.ingredientQuantities?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
           Brak składników.
         </div>
@@ -171,8 +171,8 @@
                 </div>
                 <div class="step-excerpt">
                   <h6 class="font-weight-bold dark-grey-text mb-3">{{tempStep.name}}
-                    <a title="usuń recepturę" class="font-small dark-grey-text"
-                       (click)="deleteStep(tempStep.id); reload()">&nbsp;x</a>
+                    <a *ngIf="userCheck()" title="usuń krok" class="font-small dark-grey-text"
+                       (click)="deleteStep(tempStep.id);">&nbsp;x</a>
                   </h6>
                   <p class="text-muted">{{tempStep.detail}}</p>
                 </div>
@@ -180,7 +180,7 @@
             </ol>
             <!-- Single Step -->
 
-            <app-add-new-step [recipeId]="recipe.id"></app-add-new-step>
+            <app-add-new-step *ngIf="userCheck()" [recipeId]="recipe.id"></app-add-new-step>
 
             <div *ngIf="recipe.steps?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
               Brak kroków.
