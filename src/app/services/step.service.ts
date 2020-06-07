@@ -3,6 +3,7 @@ import {AlertsService} from './alerts.service';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {AbstractControl} from '@angular/forms';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ import {AbstractControl} from '@angular/forms';
 export class StepService {
 
   private baseUrl = environment.baseURI;
+
+  private operationSuccessfulEvent: Subject<boolean> = new Subject();
 
   constructor(private alertsService: AlertsService,
               private httpClient: HttpClient) {
@@ -26,6 +29,7 @@ export class StepService {
         console.log(`Updated Recipe: ${JSON.stringify(data)}`);
         if (data.status === 201) {
           this.alertsService.addNewAlert(`Nowy krok został pomyślnie dodany do receptury`, `success`);
+          this.operationSuccessfulEvent.next(true);
         }
       },
       error => {
@@ -43,6 +47,7 @@ export class StepService {
         console.log(data);
         if (data.status === 200) {
           this.alertsService.addNewAlert(`Krok został nieodwracalnie usunięty!`, 'success');
+          this.operationSuccessfulEvent.next(true);
         }
       },
       error => {
@@ -51,5 +56,8 @@ export class StepService {
       });
   }
 
+  get operationSuccessEvent(): Observable<boolean> {
+    return this.operationSuccessfulEvent.asObservable();
+  }
 
 }

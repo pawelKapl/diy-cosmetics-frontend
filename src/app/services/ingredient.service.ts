@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {Ingredient} from '../models/ingredient';
 import {AbstractControl, FormGroup} from '@angular/forms';
 import {UnitOfMeasure} from '../models/unit-of-measure';
@@ -16,6 +16,8 @@ export class IngredientService {
 
   private baseIngredientsUrl = `${environment.baseURI}/ingredients`;
   private baseUomUrl = `${environment.baseURI}/units`;
+
+  private operationSuccessfulEvent: Subject<boolean> = new Subject();
 
 
   constructor(private httpClient: HttpClient, private alertsService: AlertsService) {
@@ -49,6 +51,7 @@ export class IngredientService {
         console.log(`Saved Ingredient: ${JSON.stringify(data)}`);
         if (data.status === 201) {
           this.alertsService.addNewAlert(`Nowy składnik został pomyślnie dodany`, `success`);
+          this.operationSuccessfulEvent.next(true);
         }
       },
       error => {
@@ -65,6 +68,7 @@ export class IngredientService {
         res => {
           console.log(res);
           if (res.status === 200) {
+            this.operationSuccessfulEvent.next(true);
             this.alertsService.addNewAlert(`Składnik ${ingredient.name} trwale usunięty!`, 'success');
           }
         },
@@ -88,6 +92,7 @@ export class IngredientService {
     }).subscribe(data => {
         console.log(`Updated Ingredient: ${JSON.stringify(data)}`);
         if (data.status === 201) {
+          this.operationSuccessfulEvent.next(true);
           this.alertsService.addNewAlert(`Składnik został pomyślnie zaktualizowany`, `success`);
         }
       },
@@ -95,6 +100,10 @@ export class IngredientService {
         console.log(error);
         this.alertsService.addNewAlert(`Coś poszło nie tak, nie udało się zaktualizować składnika`, `danger`);
       });
+  }
+
+  get operationSuccessEvent(): Observable<boolean> {
+    return this.operationSuccessfulEvent.asObservable();
   }
 }
 

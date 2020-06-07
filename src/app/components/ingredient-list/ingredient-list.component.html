@@ -83,6 +83,9 @@
         <!-- /.Table body -->
 
       </table>
+      <div *ngIf="ingredients?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
+        Brak składników.
+      </div>
 
     </div>
 

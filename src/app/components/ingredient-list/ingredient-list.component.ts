@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Ingredient} from '../../models/ingredient';
 import {IngredientService} from '../../services/ingredient.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -26,6 +26,7 @@ export class IngredientListComponent implements OnInit {
               private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
+    this.ingredientService.operationSuccessEvent.subscribe(() => this.getIngredients());
     this.route.paramMap.subscribe(() => this.getIngredients());
 
   }
@@ -68,7 +69,6 @@ export class IngredientListComponent implements OnInit {
 
   deleteIngredient(ingredient: Ingredient) {
     this.ingredientService.deleteIngredient(ingredient);
-    this.getIngredients();
   }
 
   userCheck() {

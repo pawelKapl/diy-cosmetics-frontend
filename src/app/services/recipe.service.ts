@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {Recipe} from '../models/recipe';
 import {RecipeCategory} from '../models/recipe-category';
 import {AbstractControl} from '@angular/forms';
@@ -17,6 +17,8 @@ export class RecipeService {
 
   private baseUrl = `${environment.baseURI}/recipes`;
   private categoriesUrl = `${environment.baseURI}/recipeCategories`;
+
+  private operationSuccessfulEvent: Subject<boolean> = new Subject();
 
   constructor(private httpClient: HttpClient,
               private alertsService: AlertsService,
@@ -66,6 +68,7 @@ export class RecipeService {
         console.log(`Saved Recipe: ${JSON.stringify(data)}`);
         if (data.status === 201) {
           this.alertsService.addNewAlert(`Nowa receptura została pomyślnie dodana`, `success`);
+          this.operationSuccessfulEvent.next(true);
         }
       },
       error => {
@@ -83,6 +86,7 @@ export class RecipeService {
         console.log(`Updated Recipe: ${JSON.stringify(data)}`);
         if (data.status === 201) {
           this.alertsService.addNewAlert(`Receptura została pomyślnie zaktualizowana`, `success`);
+          this.operationSuccessfulEvent.next(true);
         }
       },
       error => {
@@ -98,12 +102,17 @@ export class RecipeService {
         console.log(data);
         if (data.status === 200) {
           this.alertsService.addNewAlert(`Receptura ${recipe.name} została nieodwracalnie usunięta!`, 'success');
+          this.operationSuccessfulEvent.next(true);
         }
       },
       error => {
         console.log(error);
         this.alertsService.addNewAlert(`Coś poszło nie tak, nie udało się usunąć receptury ${recipe.name}`, `danger`);
       });
+  }
+
+  get operationSuccessEvent(): Observable<boolean> {
+    return this.operationSuccessfulEvent.asObservable();
   }
 }
 

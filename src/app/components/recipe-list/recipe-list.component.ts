@@ -34,6 +34,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   getRecipeList() {
+    this.recipeService.operationSuccessEvent.subscribe(() => this.getRecipeList());
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
     const hasQuery: boolean = this.route.snapshot.paramMap.has('query');
 

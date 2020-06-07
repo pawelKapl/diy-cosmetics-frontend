@@ -17,11 +17,16 @@ export class ToolsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.toolService.operationSuccessEvent.subscribe(() => this.getToolList());
+    this.getToolList();
+  }
+
+  private getToolList() {
     this.toolService.getToolsList().subscribe(data => this.tools = data);
   }
 
-  deleteTool(id: number) {
-
+  deleteTool(tool: Tool) {
+    this.toolService.deleteTool(tool);
   }
 
   open(content) {

@@ -27,6 +27,8 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.stepService.operationSuccessEvent.subscribe(() => this.loadRecipeAndSortSteps());
+    this.quantityService.operationSuccessEvent.subscribe(() => this.loadRecipeAndSortSteps());
     this.route.paramMap.subscribe(() => this.loadRecipeAndSortSteps());
   }
 
@@ -63,5 +65,4 @@ export class RecipeDetailComponent implements OnInit {
   userCheck() {
     return this.authenticationService.isUserLoggedIn();
   }
-
 }

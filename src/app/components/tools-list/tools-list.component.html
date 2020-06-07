@@ -29,7 +29,7 @@
               <p>Czy napewno chcesz usunąć {{tempTool.name}}?</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(deleteTool(tempTool.id))"
+              <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(deleteTool(tempTool))"
                       routerLink="/tools">Usuń
               </button>
             </div>
@@ -37,6 +37,9 @@
 
         </tr>
       </table>
+      <div *ngIf="tools?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
+        Brak narzędzi.
+      </div>
     </div>
   </section>
 </div>
