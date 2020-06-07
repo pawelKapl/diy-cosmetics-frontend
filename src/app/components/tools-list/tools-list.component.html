@@ -1,0 +1,48 @@
+<div class="container my-5">
+  <h3 class="font-weight-bold text-center dark-grey-text pb-2">Narzędzia</h3>
+  <hr class="w-header text-center w-75 my-4">
+
+  <app-self-closing-alert></app-self-closing-alert>
+  <app-confirmation-modal></app-confirmation-modal>
+
+  <section class="dark-grey-text">
+
+    <div class="table-responsive">
+
+      <table class="table product-table mb-0 mt-5">
+        <tr *ngFor="let tempTool of tools">
+          <td>{{tempTool.name}}</td>
+          <td>{{tempTool.description}}</td>
+          <td>
+            <a title="usuń narzędzie" class="font-small dark-grey-text ml-2" routerLink="/tools/update/{{tempTool.id}}">u</a>
+            <a title="edytuj narzędzie" class="font-small dark-grey-text ml-2" (click)="open(deleteConfirmation)">x</a>
+          </td>
+
+          <ng-template #deleteConfirmation let-c="close" let-d="dismiss">
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-recipe-delete-conf">Uwaga! Usuwanie receptury!</h4>
+              <button type="button" class="btn btn-outline-dark btn-sm" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">x</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Czy napewno chcesz usunąć {{tempTool.name}}?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(deleteTool(tempTool.id))"
+                      routerLink="/tools">Usuń
+              </button>
+            </div>
+          </ng-template>
+
+        </tr>
+      </table>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+

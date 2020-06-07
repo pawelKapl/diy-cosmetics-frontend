@@ -7,7 +7,7 @@
     <!-- Section heading -->
 
     <div class="text-right">
-      <a title="usuń składnik" class="font-small dark-grey-text mr-2" routerLink="/recipes/update/{{recipe.id}}">u</a>
+      <a title="edytuj recepturę" class="font-small dark-grey-text mr-2" routerLink="/recipes/update/{{recipe.id}}">u</a>
       <a title="usuń recepturę" class="font-small dark-grey-text" (click)="open(deleteConfirmation)">x</a>
     </div>
 
@@ -54,7 +54,10 @@
 
       <!-- Grid column -->
       <div class="col-lg-5 col-md-12 mb-4">
-        <p class="font-weight-bold dark-grey-text">Lista składników (100ml produktu):</p>
+
+          <app-recipe-calculator-modal [ingredients]="recipe.ingredientQuantities"></app-recipe-calculator-modal>
+
+
         <!-- Ingredients -->
         <div *ngFor="let tempIngredient of recipe.ingredientQuantities" class="single-news mb-4">
 
@@ -86,7 +89,7 @@
               <div class="d-flex justify-content-between">
                 <div class="col-11 text-truncate pl-0 mb-3">
                   <a href="#!" class="dark-grey-text">Potrzebna ilość: <span class="font-weight-bold dark-grey-text">
-                    {{tempIngredient.amount}} {{tempIngredient.unitOfMeasure.uom}}</span></a>
+                    {{tempIngredient.calculatedAmount | number:'1.0-1'}} {{tempIngredient.unitOfMeasure.uom}}</span></a>
                 </div>
                 <a routerLink="/ingredients/{{tempIngredient.ingredient.id}}">
                   <i class="fas fa-angle-double-right dark-grey-text"></i>

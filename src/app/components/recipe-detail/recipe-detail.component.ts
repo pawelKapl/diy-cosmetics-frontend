@@ -38,6 +38,7 @@ export class RecipeDetailComponent implements OnInit {
       data => {
         this.recipe = data;
         this.recipe.steps.sort((s1, s2) => s1.seq - s2.seq);
+        this.recipe.ingredientQuantities.forEach(i => i.calculatedAmount = i.amount);
       }
     );
   }

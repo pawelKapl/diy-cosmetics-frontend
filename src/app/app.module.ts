@@ -23,6 +23,8 @@ import {StepService} from './services/step.service';
 import {IngredientQuantityService} from './services/ingredient-quantity.service';
 import { AddNewQuantityComponent } from './components/add-new-quantity/add-new-quantity.component';
 import { AddNewStepComponent } from './components/add-new-step/add-new-step.component';
+import { RecipeCalculatorModalComponent } from './components/recipe-calculator-modal/recipe-calculator-modal.component';
+import {ToolsListComponent} from './components/tools-list/tools-list.component';
 
 
 const routes: Routes = [
@@ -34,6 +36,7 @@ const routes: Routes = [
   {path: 'ingredients/new', component: AddNewIngredientFormComponent},
   {path: 'ingredients/:id', component: IngredientListComponent},
   {path: 'ingredients', component: IngredientListComponent},
+  {path: 'tools', component: ToolsListComponent},
   {path: 'recipeCategory/:id', component: RecipeListComponent},
   {path: 'recipeCategory', component: RecipeListComponent},
   {path: 'search/:query', component: RecipeListComponent},
@@ -56,6 +59,8 @@ const routes: Routes = [
     SelfClosingAlertComponent,
     AddNewQuantityComponent,
     AddNewStepComponent,
+    RecipeCalculatorModalComponent,
+    ToolsListComponent
 
   ],
   imports: [

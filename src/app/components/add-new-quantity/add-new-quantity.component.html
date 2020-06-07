@@ -41,8 +41,7 @@
 
       </div>
 
-      <div
-        *ngIf="amount.invalid && (amount.dirty || amount.touched)"
+      <div *ngIf="amount.invalid && (amount.dirty || amount.touched)"
         class="alert alert-danger">
         <div *ngIf="amount.errors.required">
           Podanie ilości składnika jest wymagane.
@@ -58,8 +57,7 @@
         </div>
       </div>
 
-      <div
-        *ngIf="uom.invalid && (uom.dirty || uom.touched)"
+      <div *ngIf="uom.invalid && (uom.dirty || uom.touched)"
         class="alert alert-danger">
         <div *ngIf="uom.errors.required">
           Wybór jednostki z listy jest wymagany.

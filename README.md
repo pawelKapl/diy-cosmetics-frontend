@@ -32,6 +32,10 @@ Recipe add form view:
 
 ![alt text](https://i.imgur.com/OjwSyYs.png?1)
 
+Recipe calculator: 
+
+![alt text](https://i.imgur.com/9gZdWSQ.png?1)
+
 Ingredient add form view: 
 
 ![alt text](https://i.imgur.com/33Cx1p5.png?1)
