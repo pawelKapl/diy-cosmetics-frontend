@@ -1,4 +1,4 @@
-<div class="container my-4">
+<div class="container my-5">
   <app-confirmation-modal></app-confirmation-modal>
 
   <!--Section: Content-->
@@ -11,9 +11,9 @@
       <a title="usuń recepturę" class="font-small dark-grey-text" (click)="open(deleteConfirmation)">x</a>
     </div>
 
-    <h3 class="font-weight-bold text-center dark-grey-text pb-2">{{recipe.name}}</h3>
+    <h3 class="text-center dark-grey-text pb-2">{{recipe.name}}</h3>
     <hr class="w-header text-center w-75 my-4">
-    <p class="lead text-center text-muted pt-2 mb-5">{{recipe.intro}}</p>
+    <p class="text-center nav-link text-uppercase text-black-50 pt-2 mb-5">{{recipe.intro}}</p>
 
     <app-self-closing-alert></app-self-closing-alert>
 
@@ -105,7 +105,7 @@
         </div>
 
         <app-add-new-quantity *ngIf="userCheck()" [recipeId]="recipe.id"></app-add-new-quantity>
-        <div *ngIf="recipe.ingredientQuantities?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
+        <div *ngIf="recipe.ingredientQuantities?.length == 0" class="alert pink lighten-5 col-md-12 mb-5" role="alert">
           Brak składników.
         </div>
         <!-- /.Ingredients -->
@@ -133,7 +133,7 @@
           </div>
           <!-- Grid row -->
 
-          <div *ngIf="recipe.tools?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
+          <div *ngIf="recipe.tools?.length == 0" class="alert pink lighten-5 col-md-12 mb-5" role="alert">
             Brak potrzebnego wyposażenia.
           </div>
 
@@ -182,7 +182,7 @@
 
             <app-add-new-step *ngIf="userCheck()" [recipeId]="recipe.id"></app-add-new-step>
 
-            <div *ngIf="recipe.steps?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
+            <div *ngIf="recipe.steps?.length == 0" class="alert pink lighten-5 col-md-12 mb-5" role="alert">
               Brak kroków.
             </div>
 

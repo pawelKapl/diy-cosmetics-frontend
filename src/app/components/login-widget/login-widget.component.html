@@ -1,10 +1,10 @@
-<div class="container p-1 font-small">
-  <div *ngIf="userCheck()">
-    <p class="mb-0">Logged: {{getUserName()}}</p>
-    <a (click)="logout()" routerLink="/">Logout</a>
+<div class="container p-2 font-small">
+  <div class="nav-link" *ngIf="userCheck()">
+    <p class="mb-2"><i class="fas fa-user mr-2"></i>{{getUserName()}}</p>
+    <a (click)="logout()" routerLink="/"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
   </div>
 
   <div *ngIf="!userCheck()">
-    <a routerLink="/login">Login</a>
+    <a class="nav-link" routerLink="/login"><i class="fas fa-sign-in-alt mr-2"></i>Login</a>
   </div>
 </div>

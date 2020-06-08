@@ -1,7 +1,7 @@
 <div class="container my-5">
 
   <app-confirmation-modal></app-confirmation-modal>
-  <h3 class="font-weight-bold text-center dark-grey-text pb-2">Składniki</h3>
+  <h3 class="text-center dark-grey-text pb-2">Składniki</h3>
   <hr class="w-header my-4 text-center w-75 mb-5">
   <app-self-closing-alert></app-self-closing-alert>
 
@@ -10,17 +10,17 @@
 
     <div class="table-responsive">
 
-      <table class="table product-table mb-0">
+      <table class="table product-table table-cart-v-1 mt-3">
 
         <!-- Table head -->
-        <thead class="mdb-color lighten-5">
-        <tr>
+        <thead class="table-borderless">
+        <tr class ="text-uppercase text-black-50">
           <th>
-            <strong>Składnik</strong>
+            Składnik
           </th>
           <th></th>
           <th>
-            <strong>Opis</strong>
+            Opis
           </th>
           <th><a (click)="inverseOrderAndRefresh(); getIngredients()"><i class="fas fa-sort-alpha-up mr-3"></i></a></th>
         </tr>
@@ -83,7 +83,7 @@
         <!-- /.Table body -->
 
       </table>
-      <div *ngIf="ingredients?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
+      <div *ngIf="ingredients?.length == 0" class="alert pink lighten-5 col-md-12 mb-5" role="alert">
         Brak składników.
       </div>
 

@@ -22,7 +22,7 @@ Current progress: <br>
 
 Main Page View:
 
-![alt text](https://i.imgur.com/lNnkPdX.png?1)
+![alt text](https://i.imgur.com/1nv0SxZ.png?1)
 
 Detail View:
 

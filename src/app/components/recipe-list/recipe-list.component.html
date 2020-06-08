@@ -1,5 +1,5 @@
 <div class="container my-5">
-  <h3 class="font-weight-bold text-center dark-grey-text pb-2">Receptury</h3>
+  <h3 class="text-center dark-grey-text pb-2">Receptury</h3>
   <hr class="w-header text-center w-75 my-4">
 
   <app-recipe-category-menu></app-recipe-category-menu>
@@ -46,13 +46,13 @@
   </section>
   <!-- Section -->
 
-  <div *ngIf="recipes?.length == 0" class="alert alert-info col-md-12 mb-5" role="alert">
+  <div *ngIf="recipes?.length == 0" class="alert pink lighten-5 col-md-12 mb-5" role="alert">
     Brak receptur.
   </div>
 
 </div>
 <div>
-  <div *ngIf="theTotalElements > 6" class="pagination pg-blue-grey d-flex justify-content-center">
+  <div *ngIf="theTotalElements > 6" class="pagination d-flex justify-content-center">
     <ngb-pagination class="" [(page)]="thePageNumber"
                     [pageSize]="thePageSize"
                     [collectionSize]="theTotalElements"
