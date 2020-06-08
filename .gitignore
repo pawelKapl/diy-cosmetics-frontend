@@ -17,6 +17,8 @@ speed-measure-plugin*.json
 # IDEs and editors
 /.idea
 .project
+.dockerfile
+.dockerignore
 .classpath
 .c9/
 *.launch
@@ -40,6 +42,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+/nginx
 
 # System Files
 .DS_Store

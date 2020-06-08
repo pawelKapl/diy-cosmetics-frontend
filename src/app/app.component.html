@@ -22,34 +22,20 @@
   </div>
   <!-- Jumbotron -->
 
-  <!--Navbar-->
-  <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-2">
-
-    <!-- Navbar brand -->
-    <a class="fas fa-home white-text mr-md-4 mr-0 fa-2x" routerLink="/"></a>
-
-    <!-- Collapse button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
-            aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="basicExampleNav">
-
-      <!-- Links -->
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark mdb-color lighten-2 ie-nav" [containerInside]="false">
+    <mdb-navbar-brand>
+      <a class="fas fa-home white-text mr-md-4 mr-0 fa-2x" routerLink="/"></a>
+    </mdb-navbar-brand>
+    <links>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/">Receptury</a>
+        <li class="nav-item waves-light" mdbWavesEffect>
+          <a class="nav-link" routerLink="/">Receptury<span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item waves-light" mdbWavesEffect>
           <a class="nav-link" routerLink="/ingredients">Składniki</a>
         </li>
-
-        <!-- Dropdown -->
-        <!-- Example single danger button -->
-        <li *ngIf="userCheck()" class="nav-link btn-group" mdbDropdown>
-          <a mdbDropdownToggle type="button" class="dropdown-toggle"
+        <li *ngIf="userCheck()" class="nav-link waves-light btn-group" mdbDropdown>
+          <a mdbDropdownToggle type="button" class="dropdown-toggle waves-light"
              style="height: auto; width: 30px">Admin</a>
           <div class="dropdown-menu dropdown-primary">
             <a class="dropdown-item" routerLink="/ingredients/new">Dodaj nowy składnik</a>
@@ -59,18 +45,19 @@
             <a class="dropdown-item" routerLink="/tools">Lista narzędzi</a>
           </div>
         </li>
-
       </ul>
-      <!-- /. Links -->
+      <ul class="navbar-nav nav-flex-icons">
+        <li class="nav-item waves-light" mdbWavesEffect>
+          <a href="https://www.instagram.com/biologicznieczynny" class="nav-link"><mdb-icon fab icon="instagram"></mdb-icon></a>
+        </li>
+        <li class="nav-item waves-light" mdbWavesEffect>
+          <a class="nav-link mr-3" href="http://www.biologicznieczynny.pl"><mdb-icon fab icon="fab fa-bootstrap"></mdb-icon></a>
+        </li>
+        <app-search-bar></app-search-bar>
+      </ul>
+    </links>
+  </mdb-navbar>
 
-      <!-- Search Bar -->
-      <app-search-bar></app-search-bar>
-      <!-- /.Search Bar -->
-
-    </div>
-    <!-- Collapsible content -->
-
-  </nav>
 
   <!--/.Navbar-->
 

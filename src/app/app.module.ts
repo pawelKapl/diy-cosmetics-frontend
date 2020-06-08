@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {MDBBootstrapModule, NavbarModule} from 'angular-bootstrap-md';
 
 import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -26,9 +26,9 @@ import { AddNewStepComponent } from './components/add-new-step/add-new-step.comp
 import { RecipeCalculatorModalComponent } from './components/recipe-calculator-modal/recipe-calculator-modal.component';
 import {ToolsListComponent} from './components/tools-list/tools-list.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
-import {AuthenticationService} from './services/authentication.service';
 import {HttpInterceptorService} from './services/http-interceptor.service';
 import { LoginWidgetComponent } from './components/login-widget/login-widget.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 const routes: Routes = [
@@ -71,9 +71,11 @@ const routes: Routes = [
 
   ],
   imports: [
-    BrowserModule,
-    HttpClientModule,
     MDBBootstrapModule.forRoot(),
+    BrowserAnimationsModule,
+    BrowserModule,
+    NavbarModule,
+    HttpClientModule,
     RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
     NgbModule,
     ReactiveFormsModule,
