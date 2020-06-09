@@ -36,14 +36,14 @@
 
           <!-- Data -->
           <div class="news-data d-flex justify-content-between">
-            <div class="deep-orange-text">
+            <div class="pink-text">
               <h6 class="font-weight-bold"><i class="fas fa-clock pr-2"></i>{{recipe.prepTime}} min</h6>
             </div>
             <p class="font-weight-bold dark-grey-text"><i class="fas fa-clock-o pr-2"></i>{{recipe.dateUpdated}}</p>
           </div>
 
           <!-- Excerpt -->
-          <h3 class="font-weight-bold dark-grey-text mb-3"><a>O kosmetyku słów kilka...</a></h3>
+          <h3 class="dark-grey-text mb-3"><a>O kosmetyku słów kilka...</a></h3>
           <p class="dark-grey-text">{{recipe.description}}</p>
 
         </div>
@@ -154,7 +154,7 @@
       <!-- Section -->
       <section>
 
-        <h3 class="font-weight-bold text-center dark-grey-text pb-2">Instrukcja przygotowania</h3>
+        <h3 class="text-center dark-grey-text pb-2">Instrukcja przygotowania</h3>
         <hr class="w-header text-center w-75 my-4">
         <p class="lead text-center text-muted pt-2 mb-5">Postępuj zgodnie z poniższymi wskazówkami by uzyskać najlepszy
           rezultat.</p>
@@ -167,7 +167,7 @@
             <ol class="step pl-0">
               <li *ngFor="let tempStep of recipe.steps" class="step-element pb-0">
                 <div class="step-number">
-                  <span class="number">{{recipe.steps.indexOf(tempStep) + 1}}</span>
+                  <span class="number pink lighten-5">{{recipe.steps.indexOf(tempStep) + 1}}</span>
                 </div>
                 <div class="step-excerpt">
                   <h6 class="font-weight-bold dark-grey-text mb-3">{{tempStep.name}}
