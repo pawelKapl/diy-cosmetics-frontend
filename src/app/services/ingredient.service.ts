@@ -102,26 +102,6 @@ export class IngredientService {
       });
   }
 
-  getReplacements(ingredientId: number): Observable<Ingredient[]> {
-    const replacementURL = `${this.baseIngredientsUrl}/${ingredientId}/replacements`;
-    return this.httpClient.get<Ingredient[]>(replacementURL);
-  }
-
-  saveReplacements(replacements: AbstractControl) {
-    const ingredientId = +replacements.get('id').value;
-    const replacementURL = `${this.baseIngredientsUrl}/${ingredientId}/replacements`;
-    this.httpClient.post(replacementURL, JSON.stringify(replacements.get('replacements').value), {
-      observe: 'response',
-      headers: new HttpHeaders().set('Content-Type', 'application/json')
-    }).subscribe(() => console.log(`Replacements added succesfully`),
-      error => {
-        console.log(error),
-          this.alertsService
-            .addNewAlert(`Coś poszło nie tak, nie udało się zaktualizować listy zamienników dla składnika`, `danger`);
-      }
-    );
-  }
-
   get operationSuccessEvent(): Observable<boolean> {
     return this.operationSuccessfulEvent.asObservable();
   }

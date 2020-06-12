@@ -136,7 +136,8 @@ export class AddNewRecipeFormComponent implements OnInit {
         Validators.min(1),
         Validators.pattern('[0-9]+')
       ]),
-      unitOfMeasure: new FormControl(this.ingredientQuantity.unitOfMeasure, Validators.required)
+      unitOfMeasure: new FormControl(this.ingredientQuantity.unitOfMeasure, Validators.required),
+      replacements: new FormControl(this.ingredientQuantity.replacements)
     });
   }
 

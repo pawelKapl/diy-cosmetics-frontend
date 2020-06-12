@@ -117,7 +117,7 @@
           </tr>
           <tr *ngFor="let step of steps().controls; let i=index" [formGroupName]="i">
 
-            <label for="defaultFormSteps">Nazwa kroku{{i + 1}}</label>
+            <label for="defaultFormSteps">Nazwa kroku {{i + 1}}</label>
             <input type="text" formControlName="name" class="form-control mb-4" placeholder="Nazwa kroku">
 
             <div *ngIf="stepCheck(i).invalid && (stepCheck(i).dirty || stepCheck(i).touched)"
@@ -201,6 +201,18 @@
               <div *ngIf="ingredientQuantityAmountCheck(i).errors.min">
                 lość składnika nie może być mniejsza niż 1.
               </div>
+            </div>
+
+            <br>
+            <label for="replacementsForm">Lista zamienników</label>
+            <div class="mb-5">
+              <select multiple formControlName="replacements" class="custom-select"
+                      id="replacementsForm">
+                <option [value]="null" disabled>Wybierz zamienniki</option>
+                <option *ngFor="let tempIngredient of ingredientList" [value]="tempIngredient">
+                  {{tempIngredient.name}}
+                </option>
+              </select>
             </div>
 
             <div

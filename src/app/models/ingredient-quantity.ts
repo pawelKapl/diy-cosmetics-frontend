@@ -7,4 +7,5 @@ export class IngredientQuantity {
   calculatedAmount: number = this.amount;
   ingredient: Ingredient;
   unitOfMeasure: UnitOfMeasure;
+  replacements: Ingredient[];
 }

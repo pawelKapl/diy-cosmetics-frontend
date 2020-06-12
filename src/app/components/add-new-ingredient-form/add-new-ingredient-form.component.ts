@@ -56,8 +56,7 @@ export class AddNewIngredientFormComponent implements OnInit {
       imageUrl: new FormControl(this.ingredient.imageUrl, [
         Validators.required,
         Validators.pattern(environment.reg)
-      ]),
-      replacements: new FormControl(this.replacements)
+      ])
     });
   }
 
@@ -69,9 +68,6 @@ export class AddNewIngredientFormComponent implements OnInit {
       this.promise = new Promise((resolve) => {
         this.ingredientService.getIngredientById(id).subscribe(data => {
           this.ingredient = data, resolve(data);
-        });
-        this.ingredientService.getReplacements(id).subscribe(data => {
-          this.replacements = data;
         });
       });
       this.promise.then(() => this.getFormGroup());
@@ -88,10 +84,6 @@ export class AddNewIngredientFormComponent implements OnInit {
     return this.ingredientFormGroup.get('imageUrl');
   }
 
-  compareIngredientById(i1: Ingredient, i2: Ingredient): boolean {
-    return i1 && i2 ? i1.id === i2.id : i1 === i2;
-  }
-
   private getIngredientList() {
     this.ingredientService.getFullIngredientList(0, 100, 'asc').subscribe(
       data => {
@@ -104,7 +96,6 @@ export class AddNewIngredientFormComponent implements OnInit {
     console.log('Handling submit button', this.ingredientFormGroup.get('id'));
     if (this.update) {
       this.ingredientService.updateIngredient(this.ingredientFormGroup);
-      this.ingredientService.saveReplacements(this.ingredientFormGroup);
     } else {
       this.ingredientService.saveIngredient(this.ingredientFormGroup);
     }

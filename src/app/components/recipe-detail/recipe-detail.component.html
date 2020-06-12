@@ -92,7 +92,7 @@
                   <a href="#!" class="dark-grey-text">Potrzebna ilość: <span class="font-weight-bold dark-grey-text">
                     {{tempIngredient.calculatedAmount | number:'1.0-1'}} {{tempIngredient.unitOfMeasure.uom}}</span></a>
                 </div>
-               <app-ingredient-replacements-modal ingredientId="{{tempIngredient.ingredient.id}}"></app-ingredient-replacements-modal>
+               <app-ingredient-replacements-modal [replacements]="tempIngredient.replacements"></app-ingredient-replacements-modal>
               </div>
 
             </div>

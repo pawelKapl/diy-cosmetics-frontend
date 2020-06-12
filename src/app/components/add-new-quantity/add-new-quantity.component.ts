@@ -6,6 +6,7 @@ import {IngredientService} from '../../services/ingredient.service';
 import {IngredientQuantityService} from '../../services/ingredient-quantity.service';
 import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
 import {IngredientQuantity} from '../../models/ingredient-quantity';
+import {RecipeCategory} from '../../models/recipe-category';
 
 @Component({
   selector: 'app-add-new-quantity',
@@ -41,7 +42,8 @@ export class AddNewQuantityComponent implements OnInit {
         Validators.min(1),
         Validators.pattern('[0-9]+')
       ]),
-      unitOfMeasure: new FormControl(this.ingredientQuantity.unitOfMeasure, Validators.required)
+      unitOfMeasure: new FormControl(this.ingredientQuantity.unitOfMeasure, Validators.required),
+      replacements: new FormControl(this.ingredientQuantity.replacements)
     });
   }
 

@@ -49,19 +49,6 @@
         </div>
       </div>
 
-      <div *ngIf="update">
-        <label for="defaultFormCategory">Lista zamienników</label>
-        <div class="mb-5">
-          <select [compareWith]="compareIngredientById" multiple formControlName="replacements" class="custom-select"
-                  id="defaultFormCategory">
-            <option [value]="null" disabled>Wybierz zamienniki</option>
-            <option *ngFor="let tempIngredient of ingredientList" [value]="tempIngredient">
-              {{tempIngredient.name}}
-            </option>
-          </select>
-        </div>
-      </div>
-
       <br>
       <hr class="w-header my-4 text-center mb-2">
       <button [disabled]="ingredientFormGroup.pristine || ingredientFormGroup.invalid" (click)="onSubmit()"

@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
-import {IngredientService} from '../../services/ingredient.service';
 import {Ingredient} from '../../models/ingredient';
 
 @Component({
@@ -11,16 +10,12 @@ import {Ingredient} from '../../models/ingredient';
 export class IngredientReplacementsModalComponent implements OnInit {
 
   @Input()
-  ingredientId: number;
-
   replacements: Ingredient[] = [];
 
-  constructor(private modal: ConfirmationModalComponent,
-              private ingredientService: IngredientService) {
+  constructor(private modal: ConfirmationModalComponent) {
   }
 
   ngOnInit(): void {
-    this.ingredientService.getReplacements(this.ingredientId).subscribe(data => this.replacements = data);
   }
 
   open(content) {

@@ -42,7 +42,7 @@
       </div>
 
       <div *ngIf="amount.invalid && (amount.dirty || amount.touched)"
-        class="alert alert-danger">
+           class="alert alert-danger">
         <div *ngIf="amount.errors.required">
           Podanie ilości składnika jest wymagane.
         </div>
@@ -58,18 +58,31 @@
       </div>
 
       <div *ngIf="uom.invalid && (uom.dirty || uom.touched)"
-        class="alert alert-danger">
+           class="alert alert-danger">
         <div *ngIf="uom.errors.required">
           Wybór jednostki z listy jest wymagany.
         </div>
       </div>
     </div>
+
+    <label for="defaultFormCategory">Lista zamienników</label>
+    <div class="mb-5">
+      <select multiple formControlName="replacements" class="custom-select"
+              id="defaultFormCategory">
+        <option [value]="null" disabled>Wybierz zamienniki</option>
+        <option *ngFor="let tempIngredient of ingredientList" [value]="tempIngredient">
+          {{tempIngredient.name}}
+        </option>
+      </select>
+    </div>
+
   </form>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark justify-content-center" (click)="d(addQuantity())"
+    <button type="button" [disabled]="quantityForm.invalid || quantityForm.pristine"
+            class="btn btn-outline-dark justify-content-center" (click)="d(addQuantity())"
             routerLink="/recipe/{{recipeId}}">
-      Dodaj krok
+      Dodaj składnik
     </button>
   </div>
 </ng-template>
