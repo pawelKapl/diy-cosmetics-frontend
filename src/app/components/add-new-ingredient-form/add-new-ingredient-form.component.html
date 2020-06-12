@@ -18,7 +18,7 @@
           Nazwa musi się składać z conajmniej 3 znaków.
         </div>
         <div *ngIf="name.errors.maxlength">
-          Nazwa musi się składać z maksymalnie 50 znaków.
+          Nazwa musi się składać z maksymalnie 25 znaków.
         </div>
       </div>
 
@@ -46,6 +46,19 @@
         </div>
         <div *ngIf="imageUrl.errors.pattern">
           Nieprawidłowa forma adresu. Adres musi się rozpoczynać od http:// lub https://
+        </div>
+      </div>
+
+      <div *ngIf="update">
+        <label for="defaultFormCategory">Lista zamienników</label>
+        <div class="mb-5">
+          <select [compareWith]="compareIngredientById" multiple formControlName="replacements" class="custom-select"
+                  id="defaultFormCategory">
+            <option [value]="null" disabled>Wybierz zamienniki</option>
+            <option *ngFor="let tempIngredient of ingredientList" [value]="tempIngredient">
+              {{tempIngredient.name}}
+            </option>
+          </select>
         </div>
       </div>
 

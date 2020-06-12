@@ -32,13 +32,13 @@ export class IngredientListComponent implements OnInit {
   }
 
   getIngredients() {
-    let id: number = +this.route.snapshot.paramMap.get('id');
+    const id: number = +this.route.snapshot.paramMap.get('id');
 
     if (id > 0) {
 
       console.log(`ingredient id: ${id}`);
 
-      this.ingredients.splice(0, this.ingredients.length);
+      this.ingredients = [];
 
       this.ingredientService.getIngredientById(id).subscribe(
         data => this.ingredients.push(data)

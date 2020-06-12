@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Recipe} from '../../models/recipe';
 import {RecipeService} from '../../services/recipe.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
 import {StepService} from '../../services/step.service';
 import {IngredientQuantityService} from '../../services/ingredient-quantity.service';
@@ -27,9 +27,14 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.eventSubscriptions();
+    this.route.paramMap.subscribe(() => this.loadRecipeAndSortSteps());
+  }
+
+  private eventSubscriptions() {
     this.stepService.operationSuccessEvent.subscribe(() => this.loadRecipeAndSortSteps());
     this.quantityService.operationSuccessEvent.subscribe(() => this.loadRecipeAndSortSteps());
-    this.route.paramMap.subscribe(() => this.loadRecipeAndSortSteps());
+    this.recipeService.operationSuccessEvent.subscribe(() => this.loadRecipeAndSortSteps());
   }
 
   private loadRecipeAndSortSteps() {

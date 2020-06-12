@@ -82,7 +82,8 @@
             <div class="col-md-9">
 
               <!-- Excerpt -->
-              <p class="font-weight-bold dark-grey-text">{{tempIngredient.ingredient.name}}
+              <p class="font-weight-bold dark-grey-text">
+                <a class="dark-grey-text" routerLink="/ingredients/{{tempIngredient.ingredient.id}}">{{tempIngredient.ingredient.name}}</a>
                 <a *ngIf="userCheck()" title="usuń recepturę" class="font-small dark-grey-text"
                    (click)="deleteQuantity(tempIngredient.id)">&nbsp;x</a>
               </p>
@@ -91,9 +92,7 @@
                   <a href="#!" class="dark-grey-text">Potrzebna ilość: <span class="font-weight-bold dark-grey-text">
                     {{tempIngredient.calculatedAmount | number:'1.0-1'}} {{tempIngredient.unitOfMeasure.uom}}</span></a>
                 </div>
-                <a routerLink="/ingredients/{{tempIngredient.ingredient.id}}">
-                  <i class="fas fa-angle-double-right dark-grey-text"></i>
-                </a>
+               <app-ingredient-replacements-modal ingredientId="{{tempIngredient.ingredient.id}}"></app-ingredient-replacements-modal>
               </div>
 
             </div>

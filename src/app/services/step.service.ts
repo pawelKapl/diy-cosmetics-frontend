@@ -21,7 +21,6 @@ export class StepService {
 
   addStep(id: number, step: AbstractControl) {
     const addUrl = `${this.baseUrl}/recipes/${id}/steps`;
-
     this.httpClient.post<HttpResponse<any>>(addUrl, JSON.stringify(step.value), {
       observe: 'response',
       headers: new HttpHeaders().set('Content-Type', 'application/json')
@@ -41,7 +40,6 @@ export class StepService {
 
   deleteStep(stepId: number) {
     const deleteUrl = `${this.baseUrl}/steps/${stepId}`;
-
     this.httpClient.delete<HttpResponse<any>>(deleteUrl, {observe: 'response'}).subscribe(
       data => {
         console.log(data);

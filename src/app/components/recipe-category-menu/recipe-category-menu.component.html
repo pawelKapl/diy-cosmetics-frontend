@@ -7,7 +7,7 @@
     <!-- Nav tabs -->
     <ul class="nav nav-pills flex-center flex-wrap mb-5" role="tablist">
       <li *ngFor="let tempRecipeCategory of recipeCategoryList" class="nav-item">
-        <a routerLink="/recipeCategory/{{tempRecipeCategory.id}}" class="nav-link text-uppercase text-black-50 thumbnail"
+        <a routerLink="/recipeCategory/{{tempRecipeCategory.id}}" class="nav-link text-uppercase text-black-50"
            data-toggle="tab" role="tab">{{tempRecipeCategory.categoryName}}</a>
       </li>
     </ul>

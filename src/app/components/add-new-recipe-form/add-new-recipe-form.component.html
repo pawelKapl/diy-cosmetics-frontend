@@ -43,8 +43,8 @@
                 placeholder="Opis receptury"></textarea><br>
 
       <label for="defaultSaveFormPrepTime">Czas przygotowania</label>
-      <input formControlName="prepTime" type="email" id="defaultSaveFormPrepTime" class="form-control mb-4 col-sm-1"
-             placeholder="sec">
+      <input formControlName="prepTime" type="email" id="defaultSaveFormPrepTime" class="form-control mb-4 col-sm-2"
+             placeholder="min">
 
       <div *ngIf="prepTime.invalid && (prepTime.dirty || prepTime.touched)"
            class="alert alert-danger">
@@ -97,7 +97,8 @@
 
       <label for="defaultFormCategory">Lista potrzebych narzędzi</label>
       <div class="mb-5">
-        <select [compareWith]="compareToolById" multiple formControlName="tools" class="custom-select" id="defaultFormCategory">
+        <select [compareWith]="compareToolById" multiple formControlName="tools" class="custom-select"
+                id="defaultFormCategory">
           <option [value]="null" disabled>Wybierz narzędzia (można wybrać kilka)</option>
           <option *ngFor="let tempTool of toolsList" [value]="tempTool">
             {{tempTool.name}}
@@ -225,8 +226,12 @@
       </div>
 
       <hr class="w-header my-4 text-center mb-2">
-      <button [disabled]="recipeFormGroup.invalid || recipeFormGroup.pristine" (click)="onSubmit()" routerLink="/"
-              class="btn btn-light" type="submit">Dodaj/Zaktualizuj
+      <button *ngIf="!update" [disabled]="recipeFormGroup.invalid || recipeFormGroup.pristine" (click)="onSubmit()" routerLink="/"
+              class="btn btn-light" type="submit">Dodaj
+      </button>
+
+      <button *ngIf="update" [disabled]="recipeFormGroup.invalid || recipeFormGroup.pristine" (click)="onSubmit()"
+              routerLink="/recipe/{{recipe.id}}" class="btn btn-light" type="submit">Zaktualizuj
       </button>
 
     </div>

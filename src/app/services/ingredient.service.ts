@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable, of, Subject} from 'rxjs';
 import {Ingredient} from '../models/ingredient';
-import {AbstractControl, FormGroup} from '@angular/forms';
+import {AbstractControl} from '@angular/forms';
 import {UnitOfMeasure} from '../models/unit-of-measure';
 import {environment} from '../../environments/environment';
 import {AlertsService} from './alerts.service';
@@ -100,6 +100,26 @@ export class IngredientService {
         console.log(error);
         this.alertsService.addNewAlert(`Coś poszło nie tak, nie udało się zaktualizować składnika`, `danger`);
       });
+  }
+
+  getReplacements(ingredientId: number): Observable<Ingredient[]> {
+    const replacementURL = `${this.baseIngredientsUrl}/${ingredientId}/replacements`;
+    return this.httpClient.get<Ingredient[]>(replacementURL);
+  }
+
+  saveReplacements(replacements: AbstractControl) {
+    const ingredientId = +replacements.get('id').value;
+    const replacementURL = `${this.baseIngredientsUrl}/${ingredientId}/replacements`;
+    this.httpClient.post(replacementURL, JSON.stringify(replacements.get('replacements').value), {
+      observe: 'response',
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    }).subscribe(() => console.log(`Replacements added succesfully`),
+      error => {
+        console.log(error),
+          this.alertsService
+            .addNewAlert(`Coś poszło nie tak, nie udało się zaktualizować listy zamienników dla składnika`, `danger`);
+      }
+    );
   }
 
   get operationSuccessEvent(): Observable<boolean> {

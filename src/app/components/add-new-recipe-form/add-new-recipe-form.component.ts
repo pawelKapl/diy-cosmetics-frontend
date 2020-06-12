@@ -28,6 +28,7 @@ export class AddNewRecipeFormComponent implements OnInit {
   ingredientList: Ingredient[] = [];
 
   recipe: Recipe = new Recipe();
+
   step: Step = new Step();
   stepCount = 0;
 

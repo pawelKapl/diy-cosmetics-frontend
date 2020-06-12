@@ -29,6 +29,7 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import {HttpInterceptorService} from './services/http-interceptor.service';
 import { LoginWidgetComponent } from './components/login-widget/login-widget.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { IngredientReplacementsModalComponent } from './components/ingredient-replacements-modal/ingredient-replacements-modal.component';
 
 
 const routes: Routes = [
@@ -67,7 +68,8 @@ const routes: Routes = [
     RecipeCalculatorModalComponent,
     ToolsListComponent,
     LoginPageComponent,
-    LoginWidgetComponent
+    LoginWidgetComponent,
+    IngredientReplacementsModalComponent
 
   ],
   imports: [

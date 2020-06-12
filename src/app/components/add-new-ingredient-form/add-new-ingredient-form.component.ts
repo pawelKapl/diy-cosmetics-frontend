@@ -14,10 +14,13 @@ import {AuthenticationService} from '../../services/authentication.service';
 export class AddNewIngredientFormComponent implements OnInit {
 
   ingredientFormGroup: FormGroup;
-  ingredient: Ingredient = new Ingredient();
+
+  ingredient = new Ingredient();
+  replacements: Ingredient[] = [];
+  ingredientList: Ingredient[] = [];
 
   private promise: Promise<unknown>;
-  private update: boolean;
+  update: boolean;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -39,12 +42,13 @@ export class AddNewIngredientFormComponent implements OnInit {
   }
 
   private getFormGroup() {
+    this.getIngredientList();
     this.ingredientFormGroup = this.formBuilder.group({
       id: new FormControl(this.ingredient.id),
       name: new FormControl(this.ingredient.name, [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(50)
+        Validators.maxLength(25)
       ]),
       latinName: new FormControl(this.ingredient.name),
       description: new FormControl(this.ingredient.description),
@@ -52,7 +56,8 @@ export class AddNewIngredientFormComponent implements OnInit {
       imageUrl: new FormControl(this.ingredient.imageUrl, [
         Validators.required,
         Validators.pattern(environment.reg)
-      ])
+      ]),
+      replacements: new FormControl(this.replacements)
     });
   }
 
@@ -60,10 +65,13 @@ export class AddNewIngredientFormComponent implements OnInit {
     this.update = this.route.snapshot.paramMap.has('id');
 
     if (this.update) {
-      let id: number = +this.route.snapshot.paramMap.get('id');
+      const id: number = +this.route.snapshot.paramMap.get('id');
       this.promise = new Promise((resolve) => {
         this.ingredientService.getIngredientById(id).subscribe(data => {
           this.ingredient = data, resolve(data);
+        });
+        this.ingredientService.getReplacements(id).subscribe(data => {
+          this.replacements = data;
         });
       });
       this.promise.then(() => this.getFormGroup());
@@ -80,14 +88,25 @@ export class AddNewIngredientFormComponent implements OnInit {
     return this.ingredientFormGroup.get('imageUrl');
   }
 
+  compareIngredientById(i1: Ingredient, i2: Ingredient): boolean {
+    return i1 && i2 ? i1.id === i2.id : i1 === i2;
+  }
+
+  private getIngredientList() {
+    this.ingredientService.getFullIngredientList(0, 100, 'asc').subscribe(
+      data => {
+        this.ingredientList = data.content,
+          this.ingredientList = this.ingredientList.filter(r => r.id !== this.ingredient.id);
+      });
+  }
+
   onSubmit() {
     console.log('Handling submit button', this.ingredientFormGroup.get('id'));
     if (this.update) {
       this.ingredientService.updateIngredient(this.ingredientFormGroup);
+      this.ingredientService.saveReplacements(this.ingredientFormGroup);
     } else {
       this.ingredientService.saveIngredient(this.ingredientFormGroup);
     }
   }
-
-
 }
