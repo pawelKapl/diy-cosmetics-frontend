@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
+import {Component, OnInit} from '@angular/core';
 import {IngredientQuantity} from '../../models/ingredient-quantity';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MDBModalRef} from 'angular-bootstrap-md';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-recipe-calculator-modal',
@@ -10,12 +11,13 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class RecipeCalculatorModalComponent implements OnInit {
 
-  @Input()
   ingredients: IngredientQuantity[];
 
   userAmountForm: FormGroup;
 
-  constructor(private modal: ConfirmationModalComponent,
+  action: Subject<any> = new Subject<any>();
+
+  constructor(public modalRef: MDBModalRef,
               private formBuilder: FormBuilder) {
   }
 
@@ -23,19 +25,15 @@ export class RecipeCalculatorModalComponent implements OnInit {
     this.userAmountForm = this.formBuilder.group({
       userAmount: new FormControl(100, [
         Validators.required,
-        Validators.max(1000),
         Validators.min(1),
         Validators.pattern('[0-9]+')
       ])
     });
   }
 
-  open(content) {
-    this.modal.open(content);
-  }
-
   calculate() {
     console.log(this.userAmount.value);
+    this.action.next(this.userAmount.value);
     this.ingredients.forEach(i => {
       i.calculatedAmount = i.amount * (+this.userAmount.value / 100);
     });

@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {MDBBootstrapModule, NavbarModule} from 'angular-bootstrap-md';
+import {MDBBootstrapModule, MDBModalService, NavbarModule} from 'angular-bootstrap-md';
 
 import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -30,6 +30,9 @@ import {HttpInterceptorService} from './services/http-interceptor.service';
 import { LoginWidgetComponent } from './components/login-widget/login-widget.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { IngredientReplacementsModalComponent } from './components/ingredient-replacements-modal/ingredient-replacements-modal.component';
+import { CalculatorModalComponent } from './components/modals/calculator-modal/calculator-modal.component';
+import { ReplacementsModalComponent } from './components/modals/replacements-modal/replacements-modal.component';
+import { ImagePopupModalComponent } from './components/modals/image-popup-modal/image-popup-modal.component';
 
 
 const routes: Routes = [
@@ -69,7 +72,10 @@ const routes: Routes = [
     ToolsListComponent,
     LoginPageComponent,
     LoginWidgetComponent,
-    IngredientReplacementsModalComponent
+    IngredientReplacementsModalComponent,
+    CalculatorModalComponent,
+    ReplacementsModalComponent,
+    ImagePopupModalComponent
 
   ],
   imports: [

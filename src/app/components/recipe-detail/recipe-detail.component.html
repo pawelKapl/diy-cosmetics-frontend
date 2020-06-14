@@ -7,7 +7,8 @@
     <!-- Section heading -->
 
     <div *ngIf="userCheck()" class="text-right">
-      <a title="edytuj recepturę" class="font-small dark-grey-text mr-2" routerLink="/recipes/update/{{recipe.id}}">u</a>
+      <a title="edytuj recepturę" class="font-small dark-grey-text mr-2"
+         routerLink="/recipes/update/{{recipe.id}}">u</a>
       <a title="usuń recepturę" class="font-small dark-grey-text" (click)="open(deleteConfirmation)">x</a>
     </div>
 
@@ -19,7 +20,7 @@
 
     <!-- Grid row -->
     <div class="row">
-
+      <app-image-popup-modal [imageURL]="recipe.imageUrl"></app-image-popup-modal>
       <!-- Grid column -->
       <div class="col-lg-7 col-md-12 mb-4">
 
@@ -28,10 +29,12 @@
 
           <!-- Image -->
           <div class="view overlay rounded z-depth-1-half mb-4">
-            <img class="img-fluid" src="{{recipe.imageUrl}}" alt="Sample image">
-            <a>
-              <div class="mask rgba-white-slight"></div>
-            </a>
+            <app-image-popup-modal [imageURL]="recipe.imageUrl">
+              <img class="img-fluid" src="{{recipe.imageUrl}}" alt="Sample image">
+              <a>
+                <div class="mask waves-effect waves-light rgba-white-slight" mdbWavesEffect></div>
+              </a>
+            </app-image-popup-modal>
           </div>
 
           <!-- Data -->
@@ -43,7 +46,7 @@
           </div>
 
           <!-- Excerpt -->
-          <h3 class="dark-grey-text mb-3"><a>O kosmetyku słów kilka...</a></h3>
+          <h3 class="dark-grey-text mb-3">O kosmetyku słów kilka...</h3>
           <p class="dark-grey-text">{{recipe.description}}</p>
 
         </div>
@@ -54,12 +57,10 @@
 
       <!-- Grid column -->
       <div class="col-lg-5 col-md-12 mb-4">
-
-          <app-recipe-calculator-modal [ingredients]="recipe.ingredientQuantities"></app-recipe-calculator-modal>
-
+        <app-calculator-modal [ingredients]="recipe.ingredientQuantities"></app-calculator-modal>
 
         <!-- Ingredients -->
-        <div *ngFor="let tempIngredient of recipe.ingredientQuantities" class="single-news mb-4">
+        <div *ngFor="let tempIngredient of recipe.ingredientQuantities" class="single-news mb-2">
 
           <!-- Grid row -->
           <div class="row">
@@ -68,11 +69,13 @@
             <div class="col-md-3">
 
               <!--Image-->
-              <div class="view overlay rounded z-depth-1 mb-4">
-                <img class="img-fluid" src="{{tempIngredient.ingredient.imageUrl}}" alt="Sample image">
-                <a>
-                  <div class="mask rgba-white-slight"></div>
-                </a>
+              <div class="view overlay rounded z-depth-1">
+                <app-image-popup-modal [imageURL]="tempIngredient.ingredient.imageUrl">
+                  <img class="img-fluid" src="{{tempIngredient.ingredient.imageUrl}}" alt="Sample image">
+                  <a>
+                    <div class="mask rgba-white-slight"></div>
+                  </a>
+                </app-image-popup-modal>
               </div>
 
             </div>
@@ -83,16 +86,17 @@
 
               <!-- Excerpt -->
               <p class="font-weight-bold dark-grey-text">
-                <a class="dark-grey-text" routerLink="/ingredients/{{tempIngredient.ingredient.id}}">{{tempIngredient.ingredient.name}}</a>
+                <a class="dark-grey-text" mdbTooltip="Szczegóły" placement="right"
+                   routerLink="/ingredients/{{tempIngredient.ingredient.id}}">{{tempIngredient.ingredient.name}}</a>
                 <a *ngIf="userCheck()" title="usuń recepturę" class="font-small dark-grey-text"
                    (click)="deleteQuantity(tempIngredient.id)">&nbsp;x</a>
               </p>
               <div class="d-flex justify-content-between">
                 <div class="col-11 text-truncate pl-0 mb-3">
-                  <a href="#!" class="dark-grey-text">Potrzebna ilość: <span class="font-weight-bold dark-grey-text">
-                    {{tempIngredient.calculatedAmount | number:'1.0-1'}} {{tempIngredient.unitOfMeasure.uom}}</span></a>
+                  <p class="grey-text">Potrzebna ilość: <span class="font-weight-bold dark-grey-text">
+                    {{tempIngredient.calculatedAmount | number:'1.0-1'}} {{tempIngredient.unitOfMeasure.uom}}</span></p>
                 </div>
-               <app-ingredient-replacements-modal [replacements]="tempIngredient.replacements"></app-ingredient-replacements-modal>
+                <app-replacements-modal [replacements]="tempIngredient.replacements"></app-replacements-modal>
               </div>
 
             </div>
@@ -111,20 +115,23 @@
         <br><br>
         <p class="font-weight-bold dark-grey-text">Lista przydatnego wyposażenia:</p>
         <!-- Tools -->
-        <div class="single-news mb-4">
+        <div class="single-news mb-2">
 
           <!-- Grid row -->
           <div class="row">
+
+            <!-- Grid column -->
             <div class="col-md-12">
 
-              <!-- Excerpt -->
-              <ul class="list-group list-group-flush">
-                <li *ngFor="let tempTool of recipe.tools" class="list-group-item">
-                  <p style="display: inline;" class="fas fa-arrow-right form-inline"></p>
-                  <p style="display: inline;" class="font-weight-bold dark-grey-text ">&nbsp; {{tempTool.name}}</p>
-                  <p style="text-indent: 23px;">{{tempTool.description}}</p>
-                </li>
-              </ul>
+              <div class="row pb-1" *ngFor="let tempTool of recipe.tools">
+                <div class="col-2 col-md-1">
+                  <mdb-icon fas icon="reply" size="sm" class="pink-text"></mdb-icon>
+                </div>
+                <div class="col-10">
+                  <h6 class="font-weight-bold text-left mb-3 dark-grey-text">{{tempTool.name}}</h6>
+                  <p class="grey-text text-left">{{tempTool.description}}</p>
+                </div>
+              </div>
 
             </div>
             <!-- Grid column -->
@@ -219,7 +226,6 @@
     </button>
   </div>
 </ng-template>
-
 
 
 <!-- Modals -->

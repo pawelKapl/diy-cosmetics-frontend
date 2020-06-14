@@ -9,7 +9,7 @@ export class AppComponent {
   title = 'diy-cosmetics-frontend';
 
   userCheck() {
-    let user = sessionStorage.getItem('authenticatedUser');
+    const user = sessionStorage.getItem('authenticatedUser');
     if (user === null) {
       return false;
     } else {

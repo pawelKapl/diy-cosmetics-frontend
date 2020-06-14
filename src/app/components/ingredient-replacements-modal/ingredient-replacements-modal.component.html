@@ -1,25 +1,22 @@
-<a *ngIf="replacements?.length !== 0" (click)="open(ingredientReplacements)">
-  <i title="Lista Zamienników" class="fas fa-sync-alt dark-grey-text"></i>
-</a>
-
-<ng-template #ingredientReplacements let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-add-quantity">Lista zamienników</h4>
-    <button type="button" class="btn btn-outline-dark btn-sm" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">x</span>
-    </button>
+<div class="modal-content">
+  <div class="modal-header pt-2 pb-1 amy-crisp-gradient">
+    <h6 class="text-white" id="modal-add-quantity">Lista zamienników</h6>
+    <a class="close text-white" aria-label="Close" (click)="close()">
+      ×
+    </a>
   </div>
 
-  <div class="form-area colored-border colored-border-focus p-5">
+  <div class="modal-body p-5">
 
-    <div *ngFor="let tempIngredient of replacements" class="single-news mb-4">
-      <a routerLink="/ingredients/{{tempIngredient.id}}" (click)="d()" class="font-weight-bold dark-grey-text">
+    <div *ngFor="let tempIngredient of replacements">
+      <a routerLink="/ingredients/{{tempIngredient.id}}" (click)="close()" class="font-weight-bold dark-grey-text">
         <i class="fas fa-angle-right mr-2"></i> {{tempIngredient.name}}</a>
     </div>
 
   </div>
 
-  <div class="modal-footer">
+  <div class="modal-footer font-small">
     *zamiana składnika nie wpłynie na podstawowe właściwości komsetyku
   </div>
-</ng-template>
+</div>
+

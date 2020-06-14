@@ -106,21 +106,21 @@ button.close {
 }
 
 .colored-border textarea {
-  border: 1px solid #698bc4;
+  border: 1px solid rgb(253, 195, 218);
 }
 
 .colored-border input {
-  border: 1px solid #698bc4;
+  border: 1px solid rgb(253, 195, 218);
 }
 
 .colored-border .form-control:focus {
-  border: 1px solid #7283a7;
+  border: 1px solid rgb(253, 195, 218);
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
 }
 
 .colored-border-focus .form-control:focus {
-  border: 1px solid #4a60ba;
-  box-shadow: 0 0 0 0.2rem rgba(125, 140, 219, 0.25);
+  border: 1px solid rgb(252, 178, 206);
+  box-shadow: 0 0 0 0.2rem rgba(202, 125, 219, 0.25);
 }
 
 .pagination.pg-pink .page-item.active .page-link {

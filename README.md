@@ -24,9 +24,13 @@ Main Page View:
 
 ![alt text](https://i.imgur.com/1nv0SxZ.png?1)
 
+Recipe calculator: 
+
+![alt text](https://i.imgur.com/Hl1tMLv.png?1)
+
 Detail View:
 
-![alt text](https://i.imgur.com/T0qZ5dg.png?1)
+![alt text](https://i.imgur.com/aY8b5DZ.png?1)
 
 Detail View:
 
@@ -35,10 +39,6 @@ Detail View:
 Recipe add form view: 
 
 ![alt text](https://i.imgur.com/OjwSyYs.png?1)
-
-Recipe calculator: 
-
-![alt text](https://i.imgur.com/9gZdWSQ.png?1)
 
 Ingredient add form view: 
 

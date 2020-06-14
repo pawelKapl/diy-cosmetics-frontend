@@ -1,0 +1,10 @@
+<a (click)="imageModal.show()"><ng-content></ng-content></a>
+
+<div mdbModal #imageModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <img class="img-fluid" src="{{imageURL}}">
+    </div>
+  </div>
+</div>

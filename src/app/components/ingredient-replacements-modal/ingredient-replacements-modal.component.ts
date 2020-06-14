@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
+import {Component, OnInit} from '@angular/core';
 import {Ingredient} from '../../models/ingredient';
+import {MDBModalRef} from 'angular-bootstrap-md';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-ingredient-replacements-modal',
@@ -9,17 +10,17 @@ import {Ingredient} from '../../models/ingredient';
 })
 export class IngredientReplacementsModalComponent implements OnInit {
 
-  @Input()
   replacements: Ingredient[] = [];
 
-  constructor(private modal: ConfirmationModalComponent) {
+  action: Subject<boolean> = new Subject<boolean>();
+
+  constructor(public modalRef: MDBModalRef) {
   }
 
   ngOnInit(): void {
   }
 
-  open(content) {
-    this.modal.open(content);
+  close() {
+    this.action.next(true);
   }
-
 }

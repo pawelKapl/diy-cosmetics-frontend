@@ -1,0 +1,5 @@
+<div class="d-flex justify-content-between">
+  <p class="font-weight-bold dark-grey-text">Lista składników ({{userAmount}}ml produktu):</p>
+  <a *ngIf="ingredients?.length !== 0" mdbTooltip="Kalkulator receptury" placement="top" class="font-small dark-grey-text text-right"
+     (click)="openModal()"><i class="fas fa-calculator"></i></a>
+</div>
