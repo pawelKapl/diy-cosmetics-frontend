@@ -30,6 +30,10 @@ Recipe calculator:
 
 Detail View:
 
+![alt text](https://i.imgur.com/nJ4kQSX.png)
+
+Detail View:
+
 ![alt text](https://i.imgur.com/aY8b5DZ.png?1)
 
 Detail View:
