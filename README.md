@@ -5,7 +5,7 @@ Project for www.biologicznieczynny.pl - as an extension for storing, processing 
 Frontend: Angular 9 <br>
 Backend: Spring Boot - repo: https://github.com/darkonion/diy-cosmetics-database<br>
 
-Website available at: http://80.211.242.18:8080/
+Website available at: http://diy.biologicznieczynny.pl/
 
 Current progress: <br>
 - loaded example recipes on the main page - from h2 embedded database on backend
